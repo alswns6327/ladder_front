@@ -1,10 +1,12 @@
 import styled from "styled-components";
 import Button from "../common/Button";
+import { Link } from "react-router-dom";
 
 const BookChapterListTemplateBlock = styled.div`
   width: 1150;
   margin-left: 150px;
   background-color: red;
+  position: relative;
 `;
 
 const BookTopHeader = styled.div`
@@ -21,6 +23,13 @@ const BookChapterList = styled.div`
   flex-direction: column;
 `;
 
+const BookRightMenu = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: aqua;
+`;
+
 const BookChapterListTemplate = () => {
   return (
     <BookChapterListTemplateBlock>
@@ -28,12 +37,15 @@ const BookChapterListTemplate = () => {
         <Button>1</Button>
       </BookTopHeader>
       <BookChapterList>
-        <div>chapter 1</div>
-        <div>chapter 2</div>
-        <div>chapter 3</div>
-        <div>chapter 4</div>
-        <div>chapter 5</div>
+        <Link to={"/book/content"}>chapter 1</Link>
+        <Link to={"/book/content"}>chapter 2</Link>
+        <Link to={"/book/content"}>chapter 3</Link>
+        <Link to={"/book/content"}>chapter 4</Link>
+        <Link to={"/book/content"}>chapter 5</Link>
       </BookChapterList>
+      <BookRightMenu>
+        <Button>이전으로</Button>
+      </BookRightMenu>
     </BookChapterListTemplateBlock>
   );
 };

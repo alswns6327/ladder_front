@@ -40,7 +40,7 @@ const Header = () => {
         </UserButtonBox>
       </TopHeader>
       <SubHeader>
-        <Banner>꿈의 사다리</Banner>
+        <Banner>오름 기록</Banner>
       </SubHeader>
     </HeaderBlock>
   );

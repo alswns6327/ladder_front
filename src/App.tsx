@@ -6,6 +6,7 @@ import MenuTemplate from "./components/menu/MenuTemplate";
 import { Route, Routes } from "react-router-dom";
 import BookPageTemplate from "./components/book/BookPageTemplate";
 import BookChapterListTemplate from "./components/book/BookChapterListTemplate";
+import BookContentTemplate from "./components/book/BookContentTemplate";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Routes>
         <Route path="/" element={<BookPageTemplate />} />
         <Route path="/chapter" element={<BookChapterListTemplate />} />
+        <Route path="/book/content" element={<BookContentTemplate />} />
       </Routes>
     </>
   );
