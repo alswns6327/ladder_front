@@ -27,17 +27,82 @@ const Banner = styled.div`
 const UserInfo = styled.div`
   position: absolute;
   top: 50px;
-  padding: 10px 20px;
-`;
+  display: flex;
+  flex-direction: column;
 
-const Header = () => {
+  input {
+    width: 100px;
+    padding: 0;
+    border: none;
+  }
+`;
+type registFormType = {
+  ladderAccountId: string;
+  ladderAccountPassword: string;
+  ladderAccountName: string;
+  ladderAccountEmail: string;
+  ladderAccountAuth: string;
+};
+type authType = {
+  ladderAccountId: string;
+  ladderAccountName: string;
+  ladderAccountEmail: string;
+  ladderAccountAuth: string;
+};
+interface HeaderProps {
+  handleRegist: () => void;
+  handleInputRegistForm: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  auth: authType;
+}
+
+const Header = ({ handleRegist, handleInputRegistForm, auth }: HeaderProps) => {
   return (
     <HeaderBlock>
       <TopHeader>
-        <UserButtonBox>
-          <Button>유저 정보</Button>
-          <UserInfo>유저 정보</UserInfo>
-        </UserButtonBox>
+        {auth.ladderAccountId ? (
+          <UserButtonBox>
+            <Button>유저 정보</Button>
+            <UserInfo>유저 정보</UserInfo>
+          </UserButtonBox>
+        ) : (
+          <>
+            <UserButtonBox>
+              <Button>로그인</Button>
+              <UserInfo>
+                <input placeholder="id" />
+                <input placeholder="pw" />
+                <Button>submit</Button>
+              </UserInfo>
+            </UserButtonBox>
+            <UserButtonBox>
+              <Button>회원가입</Button>
+              <UserInfo>
+                <input
+                  name="ladderAccountId"
+                  onChange={handleInputRegistForm}
+                  placeholder="id"
+                />
+                <input
+                  name="ladderAccountPassword"
+                  onChange={handleInputRegistForm}
+                  placeholder="pw"
+                />
+                <input
+                  name="ladderAccountName"
+                  onChange={handleInputRegistForm}
+                  placeholder="name"
+                />
+                <input
+                  name="ladderAccountEmail"
+                  onChange={handleInputRegistForm}
+                  placeholder="email"
+                  type="email"
+                />
+                <Button onClick={handleRegist}>submit</Button>
+              </UserInfo>
+            </UserButtonBox>
+          </>
+        )}
       </TopHeader>
       <SubHeader>
         <Banner>오름 기록</Banner>

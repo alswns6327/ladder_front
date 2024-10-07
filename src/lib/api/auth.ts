@@ -14,7 +14,7 @@ export const regist = ({
   ladderAccountName,
   ladderAccountEmail,
 }: registParam) =>
-  apiClient.post("/regist", {
+  apiClient.post("/account", {
     ladderAccountId,
     ladderAccountPassword,
     ladderAccountName,

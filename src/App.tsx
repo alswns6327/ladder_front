@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import Header from "./components/common/Header";
+
 import MenuTemplate from "./components/menu/MenuTemplate";
 
 import { Route, Routes } from "react-router-dom";
@@ -10,11 +10,12 @@ import BookContentTemplate from "./components/book/BookContentTemplate";
 import ArticleListTemplate from "./components/article/ArticleListTemplate";
 import ArticleGroupManageTemplate from "./components/article/ArticleGroupManageTemplate";
 import ArticleContentTemplate from "./components/article/ArticleContentTemplate";
+import HeaderContainer from "./containers/common/HeaderContainer";
 
 function App() {
   return (
     <>
-      <Header />
+      <HeaderContainer />
       <MenuTemplate />
       <Routes>
         <Route path="/" element={<BookPageTemplate />} />
