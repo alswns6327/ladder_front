@@ -35,70 +35,77 @@ const UserInfo = styled.div`
     padding: 0;
     border: none;
   }
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
 `;
-type registFormType = {
+
+type ladderFormType = {
   ladderAccountId: string;
   ladderAccountPassword: string;
-  ladderAccountName: string;
-  ladderAccountEmail: string;
-  ladderAccountAuth: string;
+  ladderAccountName?: string;
+  ladderAccountEmail?: string;
+  ladderAccountAuth?: string;
 };
-type authType = {
-  ladderAccountId: string;
-  ladderAccountName: string;
-  ladderAccountEmail: string;
-  ladderAccountAuth: string;
-};
+
 interface HeaderProps {
-  handleRegist: () => void;
-  handleInputRegistForm: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  auth: authType;
+  handleRegistSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  handleLogout: () => void;
+  handleLoginSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  auth: ladderFormType;
 }
 
-const Header = ({ handleRegist, handleInputRegistForm, auth }: HeaderProps) => {
+const Header = ({
+  handleRegistSubmit,
+  handleLogout,
+  handleLoginSubmit,
+  auth,
+}: HeaderProps) => {
   return (
     <HeaderBlock>
       <TopHeader>
         {auth.ladderAccountId ? (
-          <UserButtonBox>
-            <Button>유저 정보</Button>
-            <UserInfo>유저 정보</UserInfo>
-          </UserButtonBox>
+          <>
+            <UserButtonBox>
+              <Button>유저 정보</Button>
+              <UserInfo>{auth.ladderAccountId}</UserInfo>
+            </UserButtonBox>
+            <UserButtonBox>
+              <Button onClick={handleLogout}>로그아웃</Button>
+            </UserButtonBox>
+          </>
         ) : (
           <>
             <UserButtonBox>
               <Button>로그인</Button>
               <UserInfo>
-                <input placeholder="id" />
-                <input placeholder="pw" />
-                <Button>submit</Button>
+                <form onSubmit={handleLoginSubmit}>
+                  <input placeholder="id" name="ladderAccountId" />
+                  <input
+                    placeholder="pw"
+                    type="password"
+                    name="ladderAccountPassword"
+                  />
+                  <Button type="submit">submit</Button>
+                </form>
               </UserInfo>
             </UserButtonBox>
             <UserButtonBox>
               <Button>회원가입</Button>
               <UserInfo>
-                <input
-                  name="ladderAccountId"
-                  onChange={handleInputRegistForm}
-                  placeholder="id"
-                />
-                <input
-                  name="ladderAccountPassword"
-                  onChange={handleInputRegistForm}
-                  placeholder="pw"
-                />
-                <input
-                  name="ladderAccountName"
-                  onChange={handleInputRegistForm}
-                  placeholder="name"
-                />
-                <input
-                  name="ladderAccountEmail"
-                  onChange={handleInputRegistForm}
-                  placeholder="email"
-                  type="email"
-                />
-                <Button onClick={handleRegist}>submit</Button>
+                <form onSubmit={handleRegistSubmit}>
+                  <input name="ladderAccountId" placeholder="id" />
+                  <input name="ladderAccountPassword" placeholder="pw" />
+                  <input name="ladderAccountName" placeholder="name" />
+                  <input
+                    name="ladderAccountEmail"
+                    placeholder="email"
+                    type="email"
+                  />
+                  <Button type="submit">submit</Button>
+                </form>
               </UserInfo>
             </UserButtonBox>
           </>

@@ -2,52 +2,54 @@ import React, { useState } from "react";
 import Header from "../../components/common/Header";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { asyncRegist } from "../../modules/auth";
+import { asyncLogin, asyncLogout, asyncRegist } from "../../modules/auth";
 import { AppDispatch } from "../../modules";
 
+type ladderAccountFormType = {
+  ladderAccountId: string;
+  ladderAccountPassword: string;
+  ladderAccountName?: string;
+  ladderAccountEmail?: string;
+  ladderAccountAuth?: string;
+};
+
 const HeaderContainer = () => {
-  type authType = {
-    ladderAccountId: string;
-    ladderAccountName: string;
-    ladderAccountEmail: string;
-    ladderAccountAuth: string;
-  };
-
-  const auth: authType = useSelector(({ auth }: { auth: authType }) => auth);
+  const auth: ladderAccountFormType = useSelector(
+    ({ auth }: { auth: ladderAccountFormType }) => auth
+  );
   const dispatch = useDispatch<AppDispatch>();
-  const navigator = useNavigate();
 
-  type registFormType = {
-    ladderAccountId: string;
-    ladderAccountPassword: string;
-    ladderAccountName: string;
-    ladderAccountEmail: string;
-    ladderAccountAuth: string;
+  const handleRegistSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    const data: ladderAccountFormType = Object.fromEntries(
+      formData
+    ) as ladderAccountFormType;
+
+    dispatch(asyncRegist(data));
   };
 
-  const [registForm, setRegistForm] = useState<registFormType>({
-    ladderAccountId: "",
-    ladderAccountPassword: "",
-    ladderAccountName: "",
-    ladderAccountEmail: "",
-    ladderAccountAuth: "USER",
-  });
+  const handleLoginSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
 
-  const handleRegist = (): void => {
-    dispatch(asyncRegist(registForm));
+    const formData = new FormData(e.currentTarget);
+    const data: ladderAccountFormType = Object.fromEntries(
+      formData
+    ) as ladderAccountFormType;
+
+    dispatch(asyncLogin(data));
   };
 
-  const handleInputRegistForm = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    const { value, name }: { value: string; name: string } = e.target;
-    setRegistForm({ ...registForm, [name]: value });
+  const handleLogout = (): void => {
+    dispatch(asyncLogout());
   };
 
   return (
     <Header
-      handleRegist={handleRegist}
-      handleInputRegistForm={handleInputRegistForm}
+      handleRegistSubmit={handleRegistSubmit}
+      handleLogout={handleLogout}
+      handleLoginSubmit={handleLoginSubmit}
       auth={auth}
     />
   );
