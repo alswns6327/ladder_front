@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import * as api from "../lib/api/auth";
+import apiClient from "../lib/api/apiClient";
 
 const REGIST: string = "auth/REGIST";
 const LOGIN: string = "auth/LOGIN";
@@ -54,13 +55,18 @@ export const asyncLogin = createAsyncThunk(
       ladderAccountId,
       ladderAccountPassword,
     });
-    console.log(response.data);
+    localStorage.setItem("accessToken", response.data.data.accessToken);
+    apiClient.defaults.headers.Authorization = "Bearer ".concat(
+      localStorage.getItem("accessToken") as string
+    );
     return response.data;
   }
 );
 
 export const asyncLogout = createAsyncThunk(LOGOUT, async () => {
   const response = await api.logout();
+  localStorage.setItem("accessToken", "");
+  apiClient.defaults.headers.Authorization = "";
   return response.data;
 });
 
@@ -75,12 +81,10 @@ const authSlice = createSlice({
     builder.addCase(asyncLogin.pending, (state, action) => {});
     builder.addCase(asyncLogin.fulfilled, (state, { payload }) => {
       const { data: ladderUser }: { data: ladderUserType } = payload;
-
       state.ladderAccountId = ladderUser.ladderAccountId;
       state.ladderAccountName = ladderUser.ladderAccountName as string;
       state.ladderAccountEmail = ladderUser.ladderAccountEmail as string;
       state.ladderAccountAuth = ladderUser.ladderAccountAuth as string;
-      localStorage.setItem("accessToken", ladderUser.accessToken as string);
     });
     builder.addCase(asyncLogin.rejected, (state, action) => {});
     builder.addCase(asyncLogout.pending, (state, action) => {});
