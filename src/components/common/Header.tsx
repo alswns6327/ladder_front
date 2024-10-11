@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Button from "./Button";
+import { useState } from "react";
 
 const HeaderBlock = styled.div``;
 
@@ -63,14 +64,20 @@ const Header = ({
   handleLoginSubmit,
   auth,
 }: HeaderProps) => {
+  const [showAccountInfo, setShowAccountInfo] = useState<boolean>(false);
+  const [showLoginBox, setShowLoginBox] = useState<boolean>(false);
+  const [showRegistBox, setShowRegistBox] = useState<boolean>(false);
+
   return (
     <HeaderBlock>
       <TopHeader>
         {auth.ladderAccountId ? (
           <>
             <UserButtonBox>
-              <Button>유저 정보</Button>
-              <UserInfo>{auth.ladderAccountId}</UserInfo>
+              <Button onClick={() => setShowAccountInfo(!showAccountInfo)}>
+                유저 정보
+              </Button>
+              {showAccountInfo && <UserInfo>{auth.ladderAccountId}</UserInfo>}
             </UserButtonBox>
             <UserButtonBox>
               <Button onClick={handleLogout}>로그아웃</Button>
@@ -79,34 +86,42 @@ const Header = ({
         ) : (
           <>
             <UserButtonBox>
-              <Button>로그인</Button>
-              <UserInfo>
-                <form onSubmit={handleLoginSubmit}>
-                  <input placeholder="id" name="ladderAccountId" />
-                  <input
-                    placeholder="pw"
-                    type="password"
-                    name="ladderAccountPassword"
-                  />
-                  <Button type="submit">submit</Button>
-                </form>
-              </UserInfo>
+              <Button onClick={() => setShowLoginBox(!showLoginBox)}>
+                로그인
+              </Button>
+              {showLoginBox && (
+                <UserInfo>
+                  <form onSubmit={handleLoginSubmit}>
+                    <input placeholder="id" name="ladderAccountId" />
+                    <input
+                      placeholder="pw"
+                      type="password"
+                      name="ladderAccountPassword"
+                    />
+                    <Button type="submit">submit</Button>
+                  </form>
+                </UserInfo>
+              )}
             </UserButtonBox>
             <UserButtonBox>
-              <Button>회원가입</Button>
-              <UserInfo>
-                <form onSubmit={handleRegistSubmit}>
-                  <input name="ladderAccountId" placeholder="id" />
-                  <input name="ladderAccountPassword" placeholder="pw" />
-                  <input name="ladderAccountName" placeholder="name" />
-                  <input
-                    name="ladderAccountEmail"
-                    placeholder="email"
-                    type="email"
-                  />
-                  <Button type="submit">submit</Button>
-                </form>
-              </UserInfo>
+              <Button onClick={() => setShowRegistBox(!showRegistBox)}>
+                회원가입
+              </Button>
+              {showRegistBox && (
+                <UserInfo>
+                  <form onSubmit={handleRegistSubmit}>
+                    <input name="ladderAccountId" placeholder="id" />
+                    <input name="ladderAccountPassword" placeholder="pw" />
+                    <input name="ladderAccountName" placeholder="name" />
+                    <input
+                      name="ladderAccountEmail"
+                      placeholder="email"
+                      type="email"
+                    />
+                    <Button type="submit">submit</Button>
+                  </form>
+                </UserInfo>
+              )}
             </UserButtonBox>
           </>
         )}
