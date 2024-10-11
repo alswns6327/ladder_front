@@ -4,7 +4,7 @@ import "./App.css";
 import MenuTemplate from "./components/menu/MenuTemplate";
 
 import { Route, Routes } from "react-router-dom";
-import BookPageTemplate from "./components/book/BookPageTemplate";
+import BookItemTemplate from "./components/book/BookItemTemplate";
 import BookChapterListTemplate from "./components/book/BookChapterListTemplate";
 import BookContentTemplate from "./components/book/BookContentTemplate";
 import ArticleListTemplate from "./components/article/ArticleListTemplate";
@@ -18,7 +18,7 @@ function App() {
       <HeaderContainer />
       <MenuTemplate />
       <Routes>
-        <Route path="/" element={<BookPageTemplate />} />
+        <Route path="/" element={<BookItemTemplate />} />
         <Route path="/chapter" element={<BookChapterListTemplate />} />
         <Route path="/book/content" element={<BookContentTemplate />} />
         <Route path="/text" element={<ArticleListTemplate />} />
