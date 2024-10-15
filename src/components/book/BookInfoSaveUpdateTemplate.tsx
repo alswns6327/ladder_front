@@ -43,6 +43,7 @@ const BookInfoImgPreview = styled.div`
   img {
     width: 200px;
     height: 150px;
+    object-fit: contain;
   }
   span {
     width: 100%;
@@ -88,7 +89,13 @@ const FileComponent = styled.div`
   }
 `;
 
-const BookInfoSaveUpdateTemplate = () => {
+type BookInfoSaveUpdateTemplateProps = {
+  handleBookInfoSave?: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
+};
+
+const BookInfoSaveUpdateTemplate = ({
+  handleBookInfoSave,
+}: BookInfoSaveUpdateTemplateProps) => {
   const [file, setFile] = useState<File | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -100,17 +107,23 @@ const BookInfoSaveUpdateTemplate = () => {
   return (
     <BookInfoSaveUpdateTemplateBlock>
       <BookInfoBox>
-        <BookInfoForm>
-          <Input placeholder="책 이름" />
-          <Input placeholder="저자명" />
-          <Input placeholder="옮긴이명" />
+        <BookInfoForm onSubmit={handleBookInfoSave}>
+          <Input name="bookName" placeholder="책 이름" />
+          <Input name="bookAuthorName" placeholder="저자명" />
+          <Input name="bookTranslatorName" placeholder="옮긴이명" />
           <FileComponent>
             <label>
-              <Input type="file" accept="image/*" onChange={handleFileChange} />
+              <Input
+                name="bookImgFile"
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+              />
               책 이미지
             </label>
             <span>{file ? file.name : "선택된 파일이 없습니다."}</span>
           </FileComponent>
+          <Button type="submit">submit</Button>
         </BookInfoForm>
         <BookInfoImgPreview>
           <img

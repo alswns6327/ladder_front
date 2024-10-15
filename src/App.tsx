@@ -11,7 +11,7 @@ import ArticleListTemplate from "./components/article/ArticleListTemplate";
 import ArticleGroupManageTemplate from "./components/article/ArticleGroupManageTemplate";
 import ArticleContentTemplate from "./components/article/ArticleContentTemplate";
 import HeaderContainer from "./containers/common/HeaderContainer";
-import BookInfoSaveUpdateTemplate from "./components/book/BookInfoSaveUpdateTemplate";
+import BookInfoSaveContainer from "./containers/book/BookInfoSaveContainer";
 
 function App() {
   return (
@@ -22,7 +22,7 @@ function App() {
         <Route path="/" element={<BookItemTemplate />} />
         <Route path="/chapter" element={<BookChapterListTemplate />} />
         <Route path="/book/content" element={<BookContentTemplate />} />
-        <Route path="/book/info" element={<BookInfoSaveUpdateTemplate />} />
+        <Route path="/book/info" element={<BookInfoSaveContainer />} />
         <Route
           path="/book/info/:bookId"
           element={<ArticleGroupManageTemplate />}
