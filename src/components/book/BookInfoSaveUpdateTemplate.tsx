@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Button from "../common/Button";
-import DefaultBookImg from "./book.svg";
+import { useState } from "react";
+import Input from "../common/Input";
 
 const BookInfoSaveUpdateTemplateBlock = styled.div`
   width: 1150;
@@ -49,18 +50,77 @@ const BookInfoImgPreview = styled.div`
   }
 `;
 
+const FileComponent = styled.div`
+  display: flex;
+  input[type="file"] {
+    display: none;
+    /* width: 0;
+    height: 0;
+    overflow: hidden; */
+  }
+  label {
+    width: 80px;
+    height: 30px;
+    line-height: 30px;
+    background: #999;
+    border-radius: 3px;
+    color: #fff;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  span {
+    padding: 0 5px 0 10px;
+    margin-left: 5px;
+    display: block;
+    width: 120px;
+    min-height: 30px;
+    border: 1px solid #e7e7e7;
+    border-radius: 3px;
+    line-height: 30px;
+    color: #999;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    box-sizing: border-box;
+  }
+`;
+
 const BookInfoSaveUpdateTemplate = () => {
+  const [file, setFile] = useState<File | null>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const target = e.currentTarget;
+    const file: File = (target.files as FileList)[0];
+    if (file === undefined) return;
+    setFile(file);
+  };
   return (
     <BookInfoSaveUpdateTemplateBlock>
       <BookInfoBox>
         <BookInfoForm>
-          <input placeholder="책 이름" />
-          <input placeholder="저자명" />
-          <input placeholder="옮긴이명" />
-          <input placeholder="책 이미지" type="file" accept="image/*" />
+          <Input placeholder="책 이름" />
+          <Input placeholder="저자명" />
+          <Input placeholder="옮긴이명" />
+          <FileComponent>
+            <label>
+              <Input type="file" accept="image/*" onChange={handleFileChange} />
+              책 이미지
+            </label>
+            <span>{file ? file.name : "선택된 파일이 없습니다."}</span>
+          </FileComponent>
         </BookInfoForm>
         <BookInfoImgPreview>
-          <img src={DefaultBookImg} alt="book img" />
+          <img
+            src={
+              file
+                ? URL.createObjectURL(file)
+                : `${process.env.PUBLIC_URL}/book.svg`
+            }
+            alt="book img"
+          />
           <span>책 이미지</span>
         </BookInfoImgPreview>
       </BookInfoBox>
