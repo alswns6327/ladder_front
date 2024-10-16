@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Button from "../common/Button";
 import { Link } from "react-router-dom";
 
-const BookPageTemplateBlock = styled.div`
+const BookListTemplateBlock = styled.div`
   width: 1150;
   margin-left: 150px;
   background-color: red;
@@ -45,9 +45,9 @@ const BookDeleteButton = styled(Button)`
   right: 0;
 `;
 
-const BookPageTemplate = () => {
+const BookListTemplate = () => {
   return (
-    <BookPageTemplateBlock>
+    <BookListTemplateBlock>
       <BookTopHeader>
         <Button>1</Button>
         <Button>2</Button>
@@ -70,8 +70,8 @@ const BookPageTemplate = () => {
         <BookItem></BookItem>
       </BookGridList>
       {" <   > "}
-    </BookPageTemplateBlock>
+    </BookListTemplateBlock>
   );
 };
 
-export default BookPageTemplate;
+export default BookListTemplate;

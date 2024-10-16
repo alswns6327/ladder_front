@@ -13,3 +13,5 @@ export const bookInfoSave = (bookInfo: bookInfo) =>
       "Content-Type": "multipart/form-data",
     },
   });
+
+export const bookInfoList = () => apiClient.get("/book/info/list");
