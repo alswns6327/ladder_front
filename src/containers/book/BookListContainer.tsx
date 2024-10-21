@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import BookItemTemplate from "../../components/book/BookListTemplate";
+import BookListTemplate from "../../components/book/BookListTemplate";
 import * as api from "../../lib/api/book";
 
 type bookInfoType = {
+  id: number;
   bookName: string;
-  bookImgFile?: File;
+  bookImgFile?: string;
   bookImgUrl?: string;
+  bookImgFileExtension?: string;
 };
 
 const BookListContainer = () => {
@@ -18,10 +20,9 @@ const BookListContainer = () => {
     };
 
     getBookInfoList();
-    console.log(bookInfoList);
   }, []);
 
-  return <BookItemTemplate />;
+  return <BookListTemplate bookInfoList={bookInfoList} />;
 };
 
 export default BookListContainer;
