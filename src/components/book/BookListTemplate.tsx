@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Button from "../common/Button";
 import { Link } from "react-router-dom";
+import LinkButton from "../common/LinkButton";
 
 const BookListTemplateBlock = styled.div`
   width: 1150;
@@ -111,7 +112,7 @@ const BookListTemplate = ({ bookInfoList }: BookListTemplateProps) => {
   return (
     <BookListTemplateBlock>
       <BookTopHeader>
-        <Button>1</Button>
+        <LinkButton text={"추가"} link={"/book/info"} />
         <Button>2</Button>
       </BookTopHeader>
       <BookGridList>
@@ -127,7 +128,7 @@ const BookListTemplate = ({ bookInfoList }: BookListTemplateProps) => {
               />
             </BookItemFirstPage>
             <BookItemFirstPageBack className="firstPageBack" />
-            <Link to={"/chapter"}>
+            <Link to={`/chapter/${bookInfo.id}`}>
               <BookItemSecondPage>
                 <span>chapter1</span>
                 <span>chapter2</span>
@@ -138,17 +139,11 @@ const BookListTemplate = ({ bookInfoList }: BookListTemplateProps) => {
             <BookDeleteButton>삭제</BookDeleteButton>
           </BookItem>
         ))}
-        <BookItem>
-          <Link to={"/chapter"}>chapter</Link>
-        </BookItem>
-        <BookItem></BookItem>
-        <BookItem></BookItem>
-        <BookItem></BookItem>
-        <BookItem></BookItem>
-        <BookItem></BookItem>
-        <BookItem></BookItem>
-        <BookItem></BookItem>
-        <BookItem></BookItem>
+        {[...new Array(10 - bookInfoList.length)].map((_, i) => (
+          <BookItem key={`empty_${i}`}>
+            <BookItemImg src={`${process.env.PUBLIC_URL}/book.svg`} />
+          </BookItem>
+        ))}
       </BookGridList>
       {" <   > "}
     </BookListTemplateBlock>

@@ -7,6 +7,12 @@ type bookInfo = {
   bookImgFile?: File;
 };
 
+type bookContentType = {
+  bookInfoId: string | undefined;
+  bookChapterInfoTitle: string;
+  bookChapterInfoContent: string | undefined;
+};
+
 export const bookInfoSave = (bookInfo: bookInfo) =>
   apiClient.post("/book/info", bookInfo, {
     headers: {
@@ -15,3 +21,14 @@ export const bookInfoSave = (bookInfo: bookInfo) =>
   });
 
 export const bookInfoList = () => apiClient.get("/book/info/list");
+
+export const saveBookContent = ({
+  bookInfoId,
+  bookChapterInfoTitle,
+  bookChapterInfoContent,
+}: bookContentType) =>
+  apiClient.post("/book/chapter/content", {
+    bookInfoId,
+    bookChapterInfoTitle,
+    bookChapterInfoContent,
+  });

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Button from "../common/Button";
 
-const BookContentTemplateBlock = styled.div`
+const BookContentViewTemplateBlock = styled.div`
   width: 1150;
   margin-left: 150px;
   background-color: red;
@@ -28,9 +28,9 @@ const BookRightMenu = styled.div`
   flex-direction: column;
 `;
 
-const BookContentTemplate = () => {
+const BookContentViewTemplate = () => {
   return (
-    <BookContentTemplateBlock>
+    <BookContentViewTemplateBlock>
       <BookTitleBox>title chapter 1</BookTitleBox>
       <BookContentBox>content 블라블라</BookContentBox>
       <BookRightMenu>
@@ -38,8 +38,8 @@ const BookContentTemplate = () => {
         <Button>수정</Button>
         <Button>삭제</Button>
       </BookRightMenu>
-    </BookContentTemplateBlock>
+    </BookContentViewTemplateBlock>
   );
 };
 
-export default BookContentTemplate;
+export default BookContentViewTemplate;

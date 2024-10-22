@@ -19,10 +19,7 @@ const BookInfoSaveContainer = () => {
     const formData = new FormData(e.currentTarget);
     const data: bookInfoType = Object.fromEntries(formData) as bookInfoType;
     const response = await api.bookInfoSave(data);
-    console.log(response.data);
-    console.log(response);
-    return;
-    if (response.data.masseg === "success") navigator("/");
+    if (response.data.msg === "success") navigator("/");
     else alert("저장 실패");
   };
 

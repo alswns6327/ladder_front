@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Button from "../common/Button";
 import { Link } from "react-router-dom";
+import LinkButton from "../common/LinkButton";
 
 const BookChapterListTemplateBlock = styled.div`
   width: 1150;
@@ -30,11 +31,17 @@ const BookRightMenu = styled.div`
   background-color: aqua;
 `;
 
-const BookChapterListTemplate = () => {
+type BookChanterListTemplateProps = {
+  bookInfoId: string | undefined;
+};
+
+const BookChapterListTemplate = ({
+  bookInfoId,
+}: BookChanterListTemplateProps) => {
   return (
     <BookChapterListTemplateBlock>
       <BookTopHeader>
-        <Button>1</Button>
+        <LinkButton text={"추가"} link={`/book/chapter/write/${bookInfoId}`} />
       </BookTopHeader>
       <BookChapterList>
         <Link to={"/book/content"}>chapter 1</Link>
