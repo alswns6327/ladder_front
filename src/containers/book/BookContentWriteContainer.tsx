@@ -23,7 +23,6 @@ const BookContentWriteContainer = () => {
 
   const handleSaveContent = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(e);
     const formData = new FormData(e.currentTarget);
     const data: bookContentType = Object.fromEntries(
       formData
@@ -32,9 +31,6 @@ const BookContentWriteContainer = () => {
     data.bookInfoId = bookInfoId;
 
     const response = await api.saveBookContent(data);
-    console.log(response);
-    console.log(response.data);
-    console.log(response.data);
     if (response.data.msg === "success") navigator(`/chapter/${bookInfoId}`);
     else alert("저장 실패");
   };

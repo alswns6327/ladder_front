@@ -13,6 +13,7 @@ import BookInfoSavePage from "./pages/book/BookInfoSavePage";
 import BookListPage from "./pages/book/BookListPage";
 import BookContentWritePage from "./pages/book/BookContentWritePage";
 import BookChapterListPage from "./pages/book/BookChapterListPage";
+import BookContentViewPage from "./pages/book/BookContentViewPage";
 
 function App() {
   return (
@@ -23,8 +24,8 @@ function App() {
         <Route path="/" element={<BookListPage />} />
         <Route path="/chapter/:bookInfoId" element={<BookChapterListPage />} />
         <Route
-          path="/book/chapter/view"
-          element={<BookContentViewTemplate />}
+          path="/book/content/:bookChapterInfoId"
+          element={<BookContentViewPage />}
         />
         <Route path="/book/info" element={<BookInfoSavePage />} />
         <Route

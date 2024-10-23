@@ -32,3 +32,9 @@ export const saveBookContent = ({
     bookChapterInfoTitle,
     bookChapterInfoContent,
   });
+
+export const searchBookContentList = (bookInfoId: number) =>
+  apiClient.get(`/book/chapter/list?bookInfoId=${bookInfoId}`);
+
+export const searchBookContent = (bookChapterInfoId: number) =>
+  apiClient.get(`/book/chapter/${bookChapterInfoId}`);

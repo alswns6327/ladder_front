@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Button from "../common/Button";
+import MDEditor from "@uiw/react-md-editor";
 
 const BookContentViewTemplateBlock = styled.div`
   width: 1150;
@@ -28,11 +29,29 @@ const BookRightMenu = styled.div`
   flex-direction: column;
 `;
 
-const BookContentViewTemplate = () => {
+type bookChapterInfoType = {
+  bookInfoId: number;
+  bookChapterInfoId: number;
+  bookChapterInfoTitle: string;
+  bookChapterInfoContent: string;
+};
+
+type BookContentViewTemplatePropsType = {
+  bookChapterInfo: bookChapterInfoType | undefined;
+};
+
+const BookContentViewTemplate = ({
+  bookChapterInfo,
+}: BookContentViewTemplatePropsType) => {
   return (
     <BookContentViewTemplateBlock>
-      <BookTitleBox>title chapter 1</BookTitleBox>
-      <BookContentBox>content 블라블라</BookContentBox>
+      <BookTitleBox>{bookChapterInfo?.bookChapterInfoTitle}</BookTitleBox>
+      <BookContentBox>
+        <MDEditor.Markdown
+          style={{ padding: 10 }}
+          source={bookChapterInfo?.bookChapterInfoContent}
+        />
+      </BookContentBox>
       <BookRightMenu>
         <Button>목록 보기</Button>
         <Button>수정</Button>

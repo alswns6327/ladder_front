@@ -17,6 +17,7 @@ const BookTopHeader = styled.div`
 `;
 
 const BookChapterList = styled.div`
+  margin-left: 7.5%;
   width: 85%;
   display: flex;
   row-gap: 20px;
@@ -31,12 +32,29 @@ const BookRightMenu = styled.div`
   background-color: aqua;
 `;
 
+const ChapterLink = styled(Link)`
+  width: 450px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+type chapterType = {
+  bookInfoId: number;
+  bookChapterInfoId: number;
+  bookChapterInfoTitle: string;
+  bookChapterInfoContent: string;
+};
+
 type BookChanterListTemplateProps = {
   bookInfoId: string | undefined;
+  chapterList: chapterType[];
 };
 
 const BookChapterListTemplate = ({
   bookInfoId,
+  chapterList,
 }: BookChanterListTemplateProps) => {
   return (
     <BookChapterListTemplateBlock>
@@ -44,11 +62,14 @@ const BookChapterListTemplate = ({
         <LinkButton text={"추가"} link={`/book/chapter/write/${bookInfoId}`} />
       </BookTopHeader>
       <BookChapterList>
-        <Link to={"/book/content"}>chapter 1</Link>
-        <Link to={"/book/content"}>chapter 2</Link>
-        <Link to={"/book/content"}>chapter 3</Link>
-        <Link to={"/book/content"}>chapter 4</Link>
-        <Link to={"/book/content"}>chapter 5</Link>
+        {chapterList?.map((chapter) => (
+          <ChapterLink
+            key={chapter.bookChapterInfoId}
+            to={`/book/content/${chapter.bookChapterInfoId}`}
+          >
+            {chapter.bookChapterInfoTitle}
+          </ChapterLink>
+        ))}
       </BookChapterList>
       <BookRightMenu>
         <Button>이전으로</Button>
