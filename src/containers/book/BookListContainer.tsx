@@ -3,7 +3,7 @@ import BookListTemplate from "../../components/book/BookListTemplate";
 import * as api from "../../lib/api/book";
 
 type bookInfoType = {
-  id: number;
+  bookInfoId: number;
   bookName: string;
   bookImgFile?: string;
   bookImgUrl?: string;
@@ -15,7 +15,7 @@ const BookListContainer = () => {
 
   useEffect(() => {
     const getBookInfoList = async () => {
-      const response = await api.bookInfoList();
+      const response = await api.searchBookInfoList();
       if (response.data.msg === "success") setBookInfoList(response.data.data);
     };
 

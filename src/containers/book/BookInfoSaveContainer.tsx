@@ -13,12 +13,9 @@ type bookInfoType = {
 const BookInfoSaveContainer = () => {
   const navigator = useNavigate();
   const handleBookInfoSave = async (
-    e: React.FormEvent<HTMLFormElement>
+    bookInfoForm: bookInfoType
   ): Promise<void> => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const data: bookInfoType = Object.fromEntries(formData) as bookInfoType;
-    const response = await api.bookInfoSave(data);
+    const response = await api.bookInfoSave(bookInfoForm);
     if (response.data.msg === "success") navigator("/");
     else alert("저장 실패");
   };

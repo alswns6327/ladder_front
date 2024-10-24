@@ -20,7 +20,17 @@ export const bookInfoSave = (bookInfo: bookInfo) =>
     },
   });
 
-export const bookInfoList = () => apiClient.get("/book/info/list");
+export const updateBookInfo = (bookInfo: bookInfo & { bookInfoId: string }) =>
+  apiClient.put("/book/info", bookInfo, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
+export const searchBookInfoList = () => apiClient.get("/book/info/list");
+
+export const searchBookInfo = (bookInfoId: string) =>
+  apiClient.get(`/book/info/${bookInfoId}`);
 
 export const saveBookContent = ({
   bookInfoId,

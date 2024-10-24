@@ -80,12 +80,15 @@ const BookItemImg = styled.img`
   object-fit: contain;
 `;
 
-const BookUpdateButton = styled(Button)`
+const BookUpdateLink = styled(Link)`
   position: absolute;
   background-color: red;
+  border: 2px solid black;
   width: 50px;
   left: 0;
   bottom: 0;
+  border-radius: 8px;
+  text-align: center;
 `;
 
 const BookDeleteButton = styled(Button)`
@@ -97,7 +100,7 @@ const BookDeleteButton = styled(Button)`
 `;
 
 type bookInfoType = {
-  id: number;
+  bookInfoId: number;
   bookName: string;
   bookImgFile?: string;
   bookImgUrl?: string;
@@ -117,7 +120,7 @@ const BookListTemplate = ({ bookInfoList }: BookListTemplateProps) => {
       </BookTopHeader>
       <BookGridList>
         {bookInfoList?.map((bookInfo) => (
-          <BookItem key={bookInfo.id}>
+          <BookItem key={bookInfo.bookInfoId}>
             <BookItemFirstPage className="firstPage">
               <BookItemImg
                 src={
@@ -128,14 +131,16 @@ const BookListTemplate = ({ bookInfoList }: BookListTemplateProps) => {
               />
             </BookItemFirstPage>
             <BookItemFirstPageBack className="firstPageBack" />
-            <Link to={`/chapter/${bookInfo.id}`}>
+            <Link to={`/chapter/${bookInfo.bookInfoId}`}>
               <BookItemSecondPage>
                 <span>chapter1</span>
                 <span>chapter2</span>
                 <span>chapter3</span>
               </BookItemSecondPage>
             </Link>
-            <BookUpdateButton>수정</BookUpdateButton>
+            <BookUpdateLink to={`/book/info/${bookInfo.bookInfoId}`}>
+              수정
+            </BookUpdateLink>
             <BookDeleteButton>삭제</BookDeleteButton>
           </BookItem>
         ))}

@@ -3,7 +3,6 @@ import "./App.css";
 import MenuTemplate from "./components/menu/MenuTemplate";
 
 import { Route, Routes } from "react-router-dom";
-import BookContentViewTemplate from "./components/book/BookContentViewTemplate";
 import ArticleListTemplate from "./components/article/ArticleListTemplate";
 import ArticleGroupManageTemplate from "./components/article/ArticleGroupManageTemplate";
 import ArticleContentTemplate from "./components/article/ArticleContentTemplate";
@@ -14,6 +13,7 @@ import BookListPage from "./pages/book/BookListPage";
 import BookContentWritePage from "./pages/book/BookContentWritePage";
 import BookChapterListPage from "./pages/book/BookChapterListPage";
 import BookContentViewPage from "./pages/book/BookContentViewPage";
+import BookInfoUpdatePage from "./pages/book/BookInfoUpdatePage";
 
 function App() {
   return (
@@ -28,6 +28,7 @@ function App() {
           element={<BookContentViewPage />}
         />
         <Route path="/book/info" element={<BookInfoSavePage />} />
+        <Route path="/book/info/:bookInfoId" element={<BookInfoUpdatePage />} />
         <Route
           path="/book/chapter/write/:bookInfoId"
           element={<BookContentWritePage />}

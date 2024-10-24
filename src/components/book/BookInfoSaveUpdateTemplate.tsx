@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Button from "../common/Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Input from "../common/Input";
 
 const BookInfoSaveUpdateTemplateBlock = styled.div`
@@ -24,7 +24,7 @@ const BookInfoBox = styled.div`
   display: flex;
 `;
 
-const BookInfoForm = styled.form`
+const BookInfoInputBox = styled.div`
   width: 50%;
   display: flex;
   flex-direction: column;
@@ -89,28 +89,84 @@ const FileComponent = styled.div`
   }
 `;
 
-type BookInfoSaveUpdateTemplateProps = {
-  handleBookInfoSave?: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
+type bookInfoType = {
+  bookInfoId?: number;
+  bookName: string;
+  bookAuthorName: string;
+  bookTranslatorName: string;
+  bookImgFile?: string;
+  bookImgUrl?: string;
+  bookImgFileExtension?: string;
+};
+
+type bookInfoFormType = {
+  bookName: string;
+  bookAuthorName: string;
+  bookTranslatorName?: string;
+  bookImgFile?: File;
+};
+
+type BookInfoSaveUpdateTemplatePropsType = {
+  handleBookInfoSave?: (bookInfoForm: bookInfoFormType) => Promise<void>;
+  handleBookInfoUpdate?: (bookInfoForm: bookInfoFormType) => Promise<void>;
+  bookInfo?: bookInfoType;
 };
 
 const BookInfoSaveUpdateTemplate = ({
   handleBookInfoSave,
-}: BookInfoSaveUpdateTemplateProps) => {
-  const [file, setFile] = useState<File | null>(null);
+  handleBookInfoUpdate,
+  bookInfo,
+}: BookInfoSaveUpdateTemplatePropsType) => {
+  const [bookInfoForm, setBookInfoForm] = useState<bookInfoFormType>({
+    bookName: "",
+    bookAuthorName: "",
+    bookTranslatorName: "",
+    bookImgFile: undefined,
+  });
 
+  useEffect(() => {
+    if (bookInfo) {
+      setBookInfoForm({
+        ...bookInfoForm,
+        bookName: bookInfo?.bookName,
+        bookAuthorName: bookInfo?.bookAuthorName,
+        bookTranslatorName: bookInfo?.bookTranslatorName,
+      });
+    }
+  }, [bookInfo]);
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.currentTarget;
     const file: File = (target.files as FileList)[0];
     if (file === undefined) return;
-    setFile(file);
+    setBookInfoForm({ ...bookInfoForm, bookImgFile: file });
+  };
+
+  const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value }: { name: string; value: string } = e.target;
+    setBookInfoForm({ ...bookInfoForm, [name]: value });
   };
   return (
     <BookInfoSaveUpdateTemplateBlock>
       <BookInfoBox>
-        <BookInfoForm onSubmit={handleBookInfoSave}>
-          <Input name="bookName" placeholder="책 이름" />
-          <Input name="bookAuthorName" placeholder="저자명" />
-          <Input name="bookTranslatorName" placeholder="옮긴이명" />
+        <BookInfoInputBox>
+          <Input
+            onChange={onChangeInput}
+            value={bookInfoForm?.bookName}
+            name="bookName"
+            placeholder="책 이름"
+          />
+          <Input
+            onChange={onChangeInput}
+            value={bookInfoForm?.bookAuthorName}
+            name="bookAuthorName"
+            placeholder="저자명"
+          />
+          <Input
+            onChange={onChangeInput}
+            value={bookInfoForm?.bookTranslatorName}
+            name="bookTranslatorName"
+            placeholder="옮긴이명"
+          />
           <FileComponent>
             <label>
               <Input
@@ -121,15 +177,28 @@ const BookInfoSaveUpdateTemplate = ({
               />
               책 이미지
             </label>
-            <span>{file ? file.name : "선택된 파일이 없습니다."}</span>
+            <span>
+              {bookInfoForm?.bookImgFile
+                ? bookInfoForm.bookImgFile.name
+                : "선택된 파일이 없습니다."}
+            </span>
           </FileComponent>
-          <Button type="submit">submit</Button>
-        </BookInfoForm>
+          <Button
+            onClick={() => {
+              if (handleBookInfoSave) handleBookInfoSave(bookInfoForm);
+              if (handleBookInfoUpdate) handleBookInfoUpdate(bookInfoForm);
+            }}
+          >
+            submit
+          </Button>
+        </BookInfoInputBox>
         <BookInfoImgPreview>
           <img
             src={
-              file
-                ? URL.createObjectURL(file)
+              bookInfoForm.bookImgFile
+                ? URL.createObjectURL(bookInfoForm.bookImgFile)
+                : bookInfo?.bookImgFile
+                ? `data:image/${bookInfo.bookImgFileExtension};base64,${bookInfo.bookImgFile}`
                 : `${process.env.PUBLIC_URL}/book.svg`
             }
             alt="book img"
