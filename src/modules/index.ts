@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth", "menu"],
+  whitelist: ["auth"],
 };
 
 const persistedReducer = persistReducer(

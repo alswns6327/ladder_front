@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 const LinkButtonBlock = styled(Link)`
   border-radius: 8px;
+  display: inline-block;
   width: 100px;
   background-color: white;
   text-align: center;

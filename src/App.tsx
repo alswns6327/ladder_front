@@ -22,7 +22,10 @@ function App() {
       <MenuTemplate />
       <Routes>
         <Route path="/" element={<BookListPage />} />
-        <Route path="/chapter/:bookInfoId" element={<BookChapterListPage />} />
+        <Route
+          path="/book/chapter/:bookInfoId"
+          element={<BookChapterListPage />}
+        />
         <Route
           path="/book/content/:bookChapterInfoId"
           element={<BookContentViewPage />}

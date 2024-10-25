@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Button from "../common/Button";
 import MDEditor from "@uiw/react-md-editor";
+import LinkButton from "../common/LinkButton";
 
 const BookContentViewTemplateBlock = styled.div`
   width: 1150;
@@ -34,14 +35,19 @@ type bookChapterInfoType = {
   bookChapterInfoId: number;
   bookChapterInfoTitle: string;
   bookChapterInfoContent: string;
+  firstSaveUser: string;
 };
 
 type BookContentViewTemplatePropsType = {
   bookChapterInfo: bookChapterInfoType | undefined;
+  ladderAccountId: string;
+  handleDeleteChapter: (bookChapterInfoId: number) => void;
 };
 
 const BookContentViewTemplate = ({
   bookChapterInfo,
+  ladderAccountId,
+  handleDeleteChapter,
 }: BookContentViewTemplatePropsType) => {
   return (
     <BookContentViewTemplateBlock>
@@ -53,9 +59,22 @@ const BookContentViewTemplate = ({
         />
       </BookContentBox>
       <BookRightMenu>
-        <Button>목록 보기</Button>
-        <Button>수정</Button>
-        <Button>삭제</Button>
+        <LinkButton
+          text={"이전으로"}
+          link={`/book/chapter/${bookChapterInfo?.bookInfoId}`}
+        />
+        {bookChapterInfo?.firstSaveUser === ladderAccountId && (
+          <>
+            <Button>수정</Button>
+            <Button
+              onClick={() =>
+                handleDeleteChapter(bookChapterInfo.bookChapterInfoId)
+              }
+            >
+              삭제
+            </Button>
+          </>
+        )}
       </BookRightMenu>
     </BookContentViewTemplateBlock>
   );

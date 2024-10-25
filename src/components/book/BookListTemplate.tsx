@@ -105,17 +105,24 @@ type bookInfoType = {
   bookImgFile?: string;
   bookImgUrl?: string;
   bookImgFileExtension?: string;
+  firstSaveUser: string;
 };
 
 type BookListTemplateProps = {
   bookInfoList: bookInfoType[];
+  ladderAccountId: string;
+  handleDeleteBookItem: (bookInfoId: number) => void;
 };
 
-const BookListTemplate = ({ bookInfoList }: BookListTemplateProps) => {
+const BookListTemplate = ({
+  bookInfoList,
+  ladderAccountId,
+  handleDeleteBookItem,
+}: BookListTemplateProps) => {
   return (
     <BookListTemplateBlock>
       <BookTopHeader>
-        <LinkButton text={"추가"} link={"/book/info"} />
+        {ladderAccountId && <LinkButton text={"추가"} link={"/book/info"} />}
         <Button>2</Button>
       </BookTopHeader>
       <BookGridList>
@@ -131,17 +138,25 @@ const BookListTemplate = ({ bookInfoList }: BookListTemplateProps) => {
               />
             </BookItemFirstPage>
             <BookItemFirstPageBack className="firstPageBack" />
-            <Link to={`/chapter/${bookInfo.bookInfoId}`}>
+            <Link to={`/book/chapter/${bookInfo.bookInfoId}`}>
               <BookItemSecondPage>
                 <span>chapter1</span>
                 <span>chapter2</span>
                 <span>chapter3</span>
               </BookItemSecondPage>
             </Link>
-            <BookUpdateLink to={`/book/info/${bookInfo.bookInfoId}`}>
-              수정
-            </BookUpdateLink>
-            <BookDeleteButton>삭제</BookDeleteButton>
+            {ladderAccountId === bookInfo.firstSaveUser && (
+              <>
+                <BookUpdateLink to={`/book/info/${bookInfo.bookInfoId}`}>
+                  수정
+                </BookUpdateLink>
+                <BookDeleteButton
+                  onClick={() => handleDeleteBookItem(bookInfo.bookInfoId)}
+                >
+                  삭제
+                </BookDeleteButton>
+              </>
+            )}
           </BookItem>
         ))}
         {[...new Array(10 - bookInfoList.length)].map((_, i) => (

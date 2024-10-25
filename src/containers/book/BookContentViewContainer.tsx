@@ -1,18 +1,25 @@
 import React, { useEffect, useState } from "react";
 import BookContentViewTemplate from "../../components/book/BookContentViewTemplate";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import * as api from "../../lib/api/book";
+import { useSelector } from "react-redux";
+import { initialStateType } from "../../modules/auth";
 
 type bookChapterInfoType = {
   bookInfoId: number;
   bookChapterInfoId: number;
   bookChapterInfoTitle: string;
   bookChapterInfoContent: string;
+  firstSaveUser: string;
 };
 
 const BookContentViewContainer = () => {
   const { bookChapterInfoId } = useParams();
+  const navigator = useNavigate();
   const [bookChapterInfo, setBookChapterInfo] = useState<bookChapterInfoType>();
+  const auth: initialStateType = useSelector(
+    ({ auth }: { auth: initialStateType }) => auth
+  );
   useEffect(() => {
     const searchBookChapterInfo = async () => {
       const response = await api.searchBookContent(
@@ -25,7 +32,19 @@ const BookContentViewContainer = () => {
     searchBookChapterInfo();
   }, []);
 
-  return <BookContentViewTemplate bookChapterInfo={bookChapterInfo} />;
+  const handleDeleteChapter = async (bookChapterInfoId: number) => {
+    const response = await api.deleteBookChapter(bookChapterInfoId);
+    if (response.data.msg === "success")
+      navigator(`/book/chapter/${bookChapterInfo?.bookInfoId}`);
+    else alert("삭제 실패");
+  };
+  return (
+    <BookContentViewTemplate
+      bookChapterInfo={bookChapterInfo}
+      ladderAccountId={auth.ladderAccountId}
+      handleDeleteChapter={handleDeleteChapter}
+    />
+  );
 };
 
 export default BookContentViewContainer;

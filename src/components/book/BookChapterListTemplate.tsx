@@ -50,16 +50,23 @@ type chapterType = {
 type BookChanterListTemplateProps = {
   bookInfoId: string | undefined;
   chapterList: chapterType[];
+  ladderAccountId: string;
 };
 
 const BookChapterListTemplate = ({
   bookInfoId,
   chapterList,
+  ladderAccountId,
 }: BookChanterListTemplateProps) => {
   return (
     <BookChapterListTemplateBlock>
       <BookTopHeader>
-        <LinkButton text={"추가"} link={`/book/chapter/write/${bookInfoId}`} />
+        {ladderAccountId && (
+          <LinkButton
+            text={"추가"}
+            link={`/book/chapter/write/${bookInfoId}`}
+          />
+        )}
       </BookTopHeader>
       <BookChapterList>
         {chapterList?.map((chapter) => (
@@ -72,7 +79,7 @@ const BookChapterListTemplate = ({
         ))}
       </BookChapterList>
       <BookRightMenu>
-        <Button>이전으로</Button>
+        <LinkButton text={"이전으로"} link={"/"} />
       </BookRightMenu>
     </BookChapterListTemplateBlock>
   );

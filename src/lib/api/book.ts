@@ -27,6 +27,9 @@ export const updateBookInfo = (bookInfo: bookInfo & { bookInfoId: string }) =>
     },
   });
 
+export const deleteBookInfo = (bookInfoId: number) =>
+  apiClient.delete(`/book/info/${bookInfoId}`);
+
 export const searchBookInfoList = () => apiClient.get("/book/info/list");
 
 export const searchBookInfo = (bookInfoId: string) =>
@@ -48,3 +51,6 @@ export const searchBookContentList = (bookInfoId: number) =>
 
 export const searchBookContent = (bookChapterInfoId: number) =>
   apiClient.get(`/book/chapter/${bookChapterInfoId}`);
+
+export const deleteBookChapter = (bookChapterInfoId: number) =>
+  apiClient.delete(`/book/chapter/${bookChapterInfoId}`);

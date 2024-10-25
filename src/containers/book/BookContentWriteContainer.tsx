@@ -31,7 +31,8 @@ const BookContentWriteContainer = () => {
     data.bookInfoId = bookInfoId;
 
     const response = await api.saveBookContent(data);
-    if (response.data.msg === "success") navigator(`/chapter/${bookInfoId}`);
+    if (response.data.msg === "success")
+      navigator(`/book/chapter/${bookInfoId}`);
     else alert("저장 실패");
   };
 

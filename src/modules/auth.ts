@@ -6,7 +6,7 @@ const REGIST: string = "auth/REGIST";
 const LOGIN: string = "auth/LOGIN";
 const LOGOUT: string = "auth/LOGOUT";
 
-type initialStateType = {
+export type initialStateType = {
   ladderAccountId: string;
   ladderAccountName: string;
   ladderAccountEmail: string;
