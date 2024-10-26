@@ -32,7 +32,7 @@ export const deleteBookInfo = (bookInfoId: number) =>
 
 export const searchBookInfoList = () => apiClient.get("/book/info/list");
 
-export const searchBookInfo = (bookInfoId: string) =>
+export const searchBookInfo = (bookInfoId: number) =>
   apiClient.get(`/book/info/${bookInfoId}`);
 
 export const saveBookContent = ({

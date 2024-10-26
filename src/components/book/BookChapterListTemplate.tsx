@@ -47,21 +47,32 @@ type chapterType = {
   bookChapterInfoContent: string;
 };
 
+type bookInfoType = {
+  bookInfoId: number;
+  bookName: string;
+  bookImgFile?: string;
+  bookImgUrl?: string;
+  bookImgFileExtension?: string;
+  firstSaveUser: string;
+};
+
 type BookChanterListTemplateProps = {
   bookInfoId: string | undefined;
   chapterList: chapterType[];
   ladderAccountId: string;
+  bookInfo: bookInfoType;
 };
 
 const BookChapterListTemplate = ({
   bookInfoId,
   chapterList,
   ladderAccountId,
+  bookInfo,
 }: BookChanterListTemplateProps) => {
   return (
     <BookChapterListTemplateBlock>
       <BookTopHeader>
-        {ladderAccountId && (
+        {ladderAccountId === bookInfo.firstSaveUser && (
           <LinkButton
             text={"추가"}
             link={`/book/chapter/write/${bookInfoId}`}

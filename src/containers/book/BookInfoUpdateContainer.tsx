@@ -36,7 +36,7 @@ const BookInfoUpdateContainer = () => {
 
   useEffect(() => {
     const searchBookInfo = async () => {
-      const response = await api.searchBookInfo(bookInfoId as string);
+      const response = await api.searchBookInfo(Number(bookInfoId));
       if (response.data.msg === "success") setBookInfo(response.data.data);
       else alert("저장 실패");
     };
