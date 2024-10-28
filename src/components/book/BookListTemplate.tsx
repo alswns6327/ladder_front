@@ -53,6 +53,7 @@ const BookItemFirstPage = styled(BookItemPage)`
   z-index: 1;
   transform-origin: left center;
   transition-duration: 1s;
+  background-color: white;
 `;
 
 const BookItemFirstPageBack = styled(BookItemFirstPage)`

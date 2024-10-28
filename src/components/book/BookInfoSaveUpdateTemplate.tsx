@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Button from "../common/Button";
 import { useEffect, useState } from "react";
 import Input from "../common/Input";
+import BackHistoryButton from "../common/BackHistoryButton";
 
 const BookInfoSaveUpdateTemplateBlock = styled.div`
   width: 1150;
@@ -117,6 +118,7 @@ const BookInfoSaveUpdateTemplate = ({
   handleBookInfoUpdate,
   bookInfo,
 }: BookInfoSaveUpdateTemplatePropsType) => {
+  console.log(bookInfo);
   const [bookInfoForm, setBookInfoForm] = useState<bookInfoFormType>({
     bookName: "",
     bookAuthorName: "",
@@ -124,6 +126,7 @@ const BookInfoSaveUpdateTemplate = ({
     bookImgFile: undefined,
   });
 
+  const [bookImgSrc, setBookImgSrc] = useState<string>(`${process.env.PUBLIC_URL}/book.svg`);
   useEffect(() => {
     if (bookInfo) {
       setBookInfoForm({
@@ -133,36 +136,45 @@ const BookInfoSaveUpdateTemplate = ({
         bookTranslatorName: bookInfo?.bookTranslatorName,
       });
     }
+    if(bookInfo?.bookImgFile) {
+      setBookImgSrc(`data:image/${bookInfo.bookImgFileExtension};base64,${bookInfo.bookImgFile}`)
+    };
   }, [bookInfo]);
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.currentTarget;
     const file: File = (target.files as FileList)[0];
     if (file === undefined) return;
     setBookInfoForm({ ...bookInfoForm, bookImgFile: file });
+    setBookImgSrc(URL.createObjectURL(file));
   };
 
-  const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value }: { name: string; value: string } = e.target;
     setBookInfoForm({ ...bookInfoForm, [name]: value });
   };
+
+  const handleReset = () => {
+    setBookInfoForm({ bookName: "", bookAuthorName: "", bookTranslatorName: "", bookImgFile: undefined,});
+    setBookImgSrc(`${process.env.PUBLIC_URL}/book.svg`);
+  }
   return (
     <BookInfoSaveUpdateTemplateBlock>
       <BookInfoBox>
         <BookInfoInputBox>
           <Input
-            onChange={onChangeInput}
+            onChange={handleChangeInput}
             value={bookInfoForm?.bookName}
             name="bookName"
             placeholder="책 이름"
           />
           <Input
-            onChange={onChangeInput}
+            onChange={handleChangeInput}
             value={bookInfoForm?.bookAuthorName}
             name="bookAuthorName"
             placeholder="저자명"
           />
           <Input
-            onChange={onChangeInput}
+            onChange={handleChangeInput}
             value={bookInfoForm?.bookTranslatorName}
             name="bookTranslatorName"
             placeholder="옮긴이명"
@@ -183,33 +195,27 @@ const BookInfoSaveUpdateTemplate = ({
                 : "선택된 파일이 없습니다."}
             </span>
           </FileComponent>
-          <Button
-            onClick={() => {
-              if (handleBookInfoSave) handleBookInfoSave(bookInfoForm);
-              if (handleBookInfoUpdate) handleBookInfoUpdate(bookInfoForm);
-            }}
-          >
-            submit
-          </Button>
         </BookInfoInputBox>
         <BookInfoImgPreview>
           <img
-            src={
-              bookInfoForm.bookImgFile
-                ? URL.createObjectURL(bookInfoForm.bookImgFile)
-                : bookInfo?.bookImgFile
-                ? `data:image/${bookInfo.bookImgFileExtension};base64,${bookInfo.bookImgFile}`
-                : `${process.env.PUBLIC_URL}/book.svg`
-            }
+            src={bookImgSrc}
             alt="book img"
           />
           <span>책 이미지</span>
         </BookInfoImgPreview>
       </BookInfoBox>
       <BookRightMenu>
-        <Button>저장</Button>
-        <Button>초기화</Button>
-        <Button>목록으로</Button>
+        <Button 
+          onClick={
+            () => {
+              if (handleBookInfoSave) handleBookInfoSave(bookInfoForm);
+              if (handleBookInfoUpdate) handleBookInfoUpdate(bookInfoForm);
+            }
+          }>
+          저장
+        </Button>
+        <Button onClick={handleReset}>초기화</Button>
+        <BackHistoryButton>이전으로</BackHistoryButton>
       </BookRightMenu>
     </BookInfoSaveUpdateTemplateBlock>
   );

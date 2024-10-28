@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Button from "../common/Button";
 import { Link } from "react-router-dom";
 import LinkButton from "../common/LinkButton";
+import BackHistoryButton from "../common/BackHistoryButton";
 
 const BookChapterListTemplateBlock = styled.div`
   width: 1150;
@@ -90,7 +91,7 @@ const BookChapterListTemplate = ({
         ))}
       </BookChapterList>
       <BookRightMenu>
-        <LinkButton text={"이전으로"} link={"/"} />
+        <BackHistoryButton>이전으로</BackHistoryButton>
       </BookRightMenu>
     </BookChapterListTemplateBlock>
   );

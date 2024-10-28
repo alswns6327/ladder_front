@@ -4,19 +4,18 @@ import { useNavigate, useParams } from "react-router-dom";
 import * as api from "../../lib/api/book";
 import { useSelector } from "react-redux";
 import { initialStateType } from "../../modules/auth";
-
-type bookChapterInfoType = {
-  bookInfoId: number;
-  bookChapterInfoId: number;
-  bookChapterInfoTitle: string;
-  bookChapterInfoContent: string;
-  firstSaveUser: string;
-};
+import * as bookTypes from "../../types/bookTypes";
 
 const BookContentViewContainer = () => {
   const { bookChapterInfoId } = useParams();
   const navigator = useNavigate();
-  const [bookChapterInfo, setBookChapterInfo] = useState<bookChapterInfoType>();
+  const [bookChapterInfo, setBookChapterInfo] = useState<bookTypes.bookContentType>({
+    bookInfoId: "",
+    bookChapterInfoId: "",
+    bookChapterInfoTitle: "",
+    bookChapterInfoContent: "",
+    firstSaveUser: "",
+  });
   const auth: initialStateType = useSelector(
     ({ auth }: { auth: initialStateType }) => auth
   );
