@@ -14,6 +14,7 @@ import BookContentWritePage from "./pages/book/BookContentWritePage";
 import BookChapterListPage from "./pages/book/BookChapterListPage";
 import BookContentViewPage from "./pages/book/BookContentViewPage";
 import BookInfoUpdatePage from "./pages/book/BookInfoUpdatePage";
+import BookContentUpdatePage from "./pages/book/BookContentUpdatePage";
 
 function App() {
   return (
@@ -35,6 +36,10 @@ function App() {
         <Route
           path="/book/chapter/write/:bookInfoId"
           element={<BookContentWritePage />}
+        />
+        <Route
+          path="/book/chapter/update/:bookChapterInfoId"
+          element={<BookContentUpdatePage/>}
         />
         <Route
           path="/book/info/:bookId"
