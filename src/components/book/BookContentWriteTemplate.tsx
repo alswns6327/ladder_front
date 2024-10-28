@@ -2,7 +2,9 @@ import styled from "styled-components";
 import Button from "../common/Button";
 import Input from "../common/Input";
 import MDEditor from "@uiw/react-md-editor";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent } from "react";
+import * as bookTypes from "../../types/bookTypes";
+import BackHistoryButton from "../common/BackHistoryButton";
 
 const BookContentWriteTemplateBlock = styled.div`
   width: 1150;
@@ -37,32 +39,43 @@ const TitleInput = styled(Input)`
 `;
 
 type BookContentWriteTemplateProps = {
-  mdText: string | undefined;
+  bookChapterInfo: bookTypes.bookContentType;
+  handleChangeTitle : (e: ChangeEvent<HTMLInputElement>) => void;
   handleChangeMdText: (
     value: string | undefined,
     e: ChangeEvent<HTMLTextAreaElement> | undefined
   ) => void;
-  handleSaveContent: (e: React.FormEvent<HTMLFormElement>) => void;
+  handleSaveContent?: () => void;
+  handleUpdateContent? : () => void;
 };
 
 const BookContentWriteTemplate = ({
-  mdText,
+  bookChapterInfo,
+  handleChangeTitle,
   handleChangeMdText,
   handleSaveContent,
+  handleUpdateContent,
 }: BookContentWriteTemplateProps) => {
+  const onSubmit = handleSaveContent ? handleSaveContent : handleUpdateContent;
   return (
     <BookContentWriteTemplateBlock>
-      <form id="bookContentForm" onSubmit={handleSaveContent}>
-        <BookTitleBox>
-          <TitleInput name="bookChapterInfoTitle" placeholder="챕터 제목" />
-        </BookTitleBox>
-        <BookContentBox /*data-color-mode="light"*/ data-color-mode="dark">
-          <MDEditor height={400} value={mdText} onChange={handleChangeMdText} />
-        </BookContentBox>
-      </form>
+      <BookTitleBox>
+        <TitleInput 
+          name="bookChapterInfoTitle" 
+          onChange={handleChangeTitle} 
+          value={bookChapterInfo.bookChapterInfoTitle} 
+          placeholder="챕터 제목" />
+      </BookTitleBox>
+      <BookContentBox /*data-color-mode="light"*/ data-color-mode="dark">
+        <MDEditor 
+          height={400} 
+          value={bookChapterInfo.bookChapterInfoContent}
+          onChange={handleChangeMdText} />
+      </BookContentBox>
       <BookRightMenu>
-        <Button>목록 보기</Button>
-        <Button type="submit" form="bookContentForm">
+        <BackHistoryButton>이전으로</BackHistoryButton>
+        <Button
+          onClick={onSubmit}>
           저장
         </Button>
         <Button>삭제</Button>

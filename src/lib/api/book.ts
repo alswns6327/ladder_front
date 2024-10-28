@@ -1,26 +1,14 @@
 import apiClient from "./apiClient";
+import * as bookTypes from "../../types/bookTypes";
 
-type bookInfo = {
-  bookName: string;
-  bookAuthorName: string;
-  bookTranslatorName?: string;
-  bookImgFile?: File;
-};
-
-type bookContentType = {
-  bookInfoId: string | undefined;
-  bookChapterInfoTitle: string;
-  bookChapterInfoContent: string | undefined;
-};
-
-export const bookInfoSave = (bookInfo: bookInfo) =>
+export const bookInfoSave = (bookInfo: bookTypes.bookInfo) =>
   apiClient.post("/book/info", bookInfo, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
   });
 
-export const updateBookInfo = (bookInfo: bookInfo & { bookInfoId: string }) =>
+export const updateBookInfo = (bookInfo: bookTypes.bookInfo & { bookInfoId: string }) =>
   apiClient.put("/book/info", bookInfo, {
     headers: {
       "Content-Type": "multipart/form-data",
@@ -39,12 +27,22 @@ export const saveBookContent = ({
   bookInfoId,
   bookChapterInfoTitle,
   bookChapterInfoContent,
-}: bookContentType) =>
+}: bookTypes.bookContentType) =>
   apiClient.post("/book/chapter/content", {
     bookInfoId,
     bookChapterInfoTitle,
     bookChapterInfoContent,
   });
+
+export const updateBookContent = ({
+  bookChapterInfoId,
+  bookChapterInfoTitle,
+  bookChapterInfoContent,
+}: bookTypes.bookContentType) => apiClient.put("/book/chapter/content", {
+  bookChapterInfoId,
+  bookChapterInfoTitle,
+  bookChapterInfoContent,
+})
 
 export const searchBookContentList = (bookInfoId: number) =>
   apiClient.get(`/book/chapter/list?bookInfoId=${bookInfoId}`);

@@ -2,6 +2,8 @@ import styled from "styled-components";
 import Button from "../common/Button";
 import MDEditor from "@uiw/react-md-editor";
 import LinkButton from "../common/LinkButton";
+import * as bookTypes from "../../types/bookTypes";
+import BackHistoryButton from "../common/BackHistoryButton";
 
 const BookContentViewTemplateBlock = styled.div`
   width: 1150;
@@ -30,16 +32,8 @@ const BookRightMenu = styled.div`
   flex-direction: column;
 `;
 
-type bookChapterInfoType = {
-  bookInfoId: number;
-  bookChapterInfoId: number;
-  bookChapterInfoTitle: string;
-  bookChapterInfoContent: string;
-  firstSaveUser: string;
-};
-
 type BookContentViewTemplatePropsType = {
-  bookChapterInfo: bookChapterInfoType | undefined;
+  bookChapterInfo: bookTypes.bookContentType;
   ladderAccountId: string;
   handleDeleteChapter: (bookChapterInfoId: number) => void;
 };
@@ -59,22 +53,19 @@ const BookContentViewTemplate = ({
         />
       </BookContentBox>
       <BookRightMenu>
-        <LinkButton
-          text={"이전으로"}
-          link={`/book/chapter/${bookChapterInfo?.bookInfoId}`}
-        />
-        {bookChapterInfo?.firstSaveUser === ladderAccountId && (
-          <>
-            <Button>수정</Button>
-            <Button
-              onClick={() =>
-                handleDeleteChapter(bookChapterInfo.bookChapterInfoId)
-              }
-            >
-              삭제
-            </Button>
-          </>
-        )}
+      <BackHistoryButton>이전으로</BackHistoryButton>  
+      {bookChapterInfo?.firstSaveUser === ladderAccountId && (
+        <>
+          <LinkButton text="수정" link={`/book/chapter/update/${bookChapterInfo.bookChapterInfoId}`}/>
+          <Button
+            onClick={() =>
+              handleDeleteChapter(Number(bookChapterInfo.bookChapterInfoId))
+            }
+          >
+            삭제
+          </Button>
+        </>
+      )}
       </BookRightMenu>
     </BookContentViewTemplateBlock>
   );
