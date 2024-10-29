@@ -1,10 +1,9 @@
-import React from 'react';
-import ArticleEduWriteTemplate from '../../components/article_edu/ArticleEduContentWriteTemplate';
+import ArticleEduContentWriteTemplate from '../../components/article_edu/ArticleEduContentWriteTemplate';
 
-const ArticleUpdateContainer = () => {
+const ArticleContentUpdateContainer = () => {
     return (
-        <ArticleEduWriteTemplate/>
+        <ArticleEduContentWriteTemplate/>
     );
 };
 
-export default ArticleUpdateContainer;
+export default ArticleContentUpdateContainer;

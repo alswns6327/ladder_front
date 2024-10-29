@@ -15,6 +15,16 @@ import BookChapterListPage from "./pages/book/BookChapterListPage";
 import BookContentViewPage from "./pages/book/BookContentViewPage";
 import BookInfoUpdatePage from "./pages/book/BookInfoUpdatePage";
 import BookContentUpdatePage from "./pages/book/BookContentUpdatePage";
+import ArticleListPage from "./pages/article/ArticleListPage";
+import ArticleContentViewPage from "./pages/article/ArticleContentViewPage";
+import ArticleContentWritePage from "./pages/article/ArticleContentWritePage";
+import ArticleContentUpdatePage from "./pages/article/ArticleContentUpdatePage";
+import ArticleGroupManagePage from "./pages/article/ArticleGroupManagePage";
+import EduListPage from "./pages/edu/EduListPage";
+import EduContentViewPage from "./pages/edu/EduContentViewPage";
+import EduContentWritePage from "./pages/edu/EduContentWritePage";
+import EduContentUpdatePage from "./pages/edu/EduContentUpdatePage";
+import EduGroupManagePage from "./pages/edu/EduGroupManagePage";
 
 function App() {
   return (
@@ -41,9 +51,16 @@ function App() {
           path="/book/chapter/update/:bookChapterInfoId"
           element={<BookContentUpdatePage/>}
         />
-        <Route path="/text" element={<ArticleEduListTemplate />} />
-        <Route path="/text/content" element={<ArticleEduContentTemplate />} />
-        <Route path="/group/manage" element={<ArticleEduGroupManageTemplate />} />
+        <Route path="/article" element={<ArticleListPage />} />
+        <Route path="/article/:articleId" element={<ArticleContentViewPage/>} />
+        <Route path="/article/write" element={<ArticleContentWritePage/>} />
+        <Route path="/article/write/:articleId" element={<ArticleContentUpdatePage />} />
+        <Route path="/article/group" element={<ArticleGroupManagePage />} />
+        <Route path="/edu" element={<EduListPage />} />
+        <Route path="/edu/:eduId" element={<EduContentViewPage/>} />
+        <Route path="/edu/write" element={<EduContentWritePage/>} />
+        <Route path="/edu/write/:eduId" element={<EduContentUpdatePage />} />
+        <Route path="/edu/group" element={<EduGroupManagePage />} />
       </Routes>
     </>
   );

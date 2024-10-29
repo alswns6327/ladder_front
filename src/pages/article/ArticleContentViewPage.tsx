@@ -1,4 +1,3 @@
-import React from 'react';
 import ArticleContentViewContainer from '../../containers/article/ArticleContentViewContainer';
 
 const ArticleContentViewPage = () => {
