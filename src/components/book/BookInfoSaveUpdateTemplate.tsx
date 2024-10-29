@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Input from "../common/Input";
 import BackHistoryButton from "../common/BackHistoryButton";
 import { RightMenu } from "../common/RightMenu";
+import * as bookTypes from "../../types/bookTypes";
 
 const BookInfoSaveUpdateTemplateBlock = styled.div`
   width: 1150;

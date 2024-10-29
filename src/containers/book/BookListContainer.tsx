@@ -3,18 +3,10 @@ import BookListTemplate from "../../components/book/BookListTemplate";
 import * as api from "../../lib/api/book";
 import { useSelector } from "react-redux";
 import { initialStateType } from "../../modules/auth";
-
-type bookInfoType = {
-  bookInfoId: number;
-  bookName: string;
-  bookImgFile?: string;
-  bookImgUrl?: string;
-  bookImgFileExtension?: string;
-  firstSaveUser: string;
-};
+import * as bookTypes from "../../types/bookTypes";
 
 const BookListContainer = () => {
-  const [bookInfoList, setBookInfoList] = useState<bookInfoType[]>([]);
+  const [bookInfoList, setBookInfoList] = useState<bookTypes.bookInfoFileStringType[]>([]);
   const auth: initialStateType = useSelector(
     ({ auth }: { auth: initialStateType }) => auth
   );

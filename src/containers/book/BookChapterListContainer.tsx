@@ -4,26 +4,12 @@ import { useParams } from "react-router-dom";
 import * as api from "../../lib/api/book";
 import { useSelector } from "react-redux";
 import { initialStateType } from "../../modules/auth";
+import * as bookTypes from "../../types/bookTypes";
 
-type chapterType = {
-  bookInfoId: number;
-  bookChapterInfoId: number;
-  bookChapterInfoTitle: string;
-  bookChapterInfoContent: string;
-};
-
-type bookInfoType = {
-  bookInfoId: number;
-  bookName: string;
-  bookImgFile?: string;
-  bookImgUrl?: string;
-  bookImgFileExtension?: string;
-  firstSaveUser: string;
-};
 const BookChapterListContainer = () => {
   const { bookInfoId } = useParams();
-  const [chapterList, setChapterList] = useState<chapterType[]>([]);
-  const [bookInfo, setBookInfo] = useState<bookInfoType>({
+  const [chapterList, setChapterList] = useState<bookTypes.bookContentType[]>([]);
+  const [bookInfo, setBookInfo] = useState<bookTypes.bookInfoFileStringType>({
     bookInfoId: Number(bookInfoId),
     bookName: "",
     bookImgFile: "",

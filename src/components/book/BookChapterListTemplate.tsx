@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import LinkButton from "../common/LinkButton";
 import BackHistoryButton from "../common/BackHistoryButton";
 import { RightMenu } from "../common/RightMenu";
-
+import * as bookTypes from "../../types/bookTypes";
 const BookChapterListTemplateBlock = styled.div`
   width: 1150;
   margin-left: 150px;
@@ -35,27 +35,11 @@ const ChapterLink = styled(Link)`
   text-overflow: ellipsis;
 `;
 
-type chapterType = {
-  bookInfoId: number;
-  bookChapterInfoId: number;
-  bookChapterInfoTitle: string;
-  bookChapterInfoContent: string;
-};
-
-type bookInfoType = {
-  bookInfoId: number;
-  bookName: string;
-  bookImgFile?: string;
-  bookImgUrl?: string;
-  bookImgFileExtension?: string;
-  firstSaveUser: string;
-};
-
 type BookChanterListTemplateProps = {
   bookInfoId: string | undefined;
-  chapterList: chapterType[];
+  chapterList: bookTypes.bookContentType[];
   ladderAccountId: string;
-  bookInfo: bookInfoType;
+  bookInfo: bookTypes.bookInfoFileStringType;
 };
 
 const BookChapterListTemplate = ({

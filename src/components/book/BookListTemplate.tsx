@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Button from "../common/Button";
 import { Link } from "react-router-dom";
 import LinkButton from "../common/LinkButton";
-
+import * as bookTypes from "../../types/bookTypes";
 const BookListTemplateBlock = styled.div`
   width: 1150;
   margin-left: 150px;
@@ -100,17 +100,8 @@ const BookDeleteButton = styled(Button)`
   right: 0;
 `;
 
-type bookInfoType = {
-  bookInfoId: number;
-  bookName: string;
-  bookImgFile?: string;
-  bookImgUrl?: string;
-  bookImgFileExtension?: string;
-  firstSaveUser: string;
-};
-
 type BookListTemplateProps = {
-  bookInfoList: bookInfoType[];
+  bookInfoList: bookTypes.bookInfoFileStringType[];
   ladderAccountId: string;
   handleDeleteBookItem: (bookInfoId: number) => void;
 };

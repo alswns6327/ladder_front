@@ -2,18 +2,12 @@ import React from "react";
 import BookInfoSaveUpdateTemplate from "../../components/book/BookInfoSaveUpdateTemplate";
 import * as api from "../../lib/api/book";
 import { useNavigate } from "react-router-dom";
-
-type bookInfoType = {
-  bookName: string;
-  bookAuthorName: string;
-  bookTranslatorName?: string;
-  bookImgFile?: File;
-};
+import * as bookTypes from "../../types/bookTypes";
 
 const BookInfoSaveContainer = () => {
   const navigator = useNavigate();
   const handleBookInfoSave = async (
-    bookInfoForm: bookInfoType
+    bookInfoForm: bookTypes.bookInfoType
   ): Promise<void> => {
     const response = await api.bookInfoSave(bookInfoForm);
     if (response.data.msg === "success") navigator("/");

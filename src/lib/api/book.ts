@@ -1,14 +1,14 @@
 import apiClient from "./apiClient";
 import * as bookTypes from "../../types/bookTypes";
 
-export const bookInfoSave = (bookInfo: bookTypes.bookInfo) =>
+export const bookInfoSave = (bookInfo: bookTypes.bookInfoType) =>
   apiClient.post("/book/info", bookInfo, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
   });
 
-export const updateBookInfo = (bookInfo: bookTypes.bookInfo & { bookInfoId: string }) =>
+export const updateBookInfo = (bookInfo: bookTypes.bookInfoType) =>
   apiClient.put("/book/info", bookInfo, {
     headers: {
       "Content-Type": "multipart/form-data",

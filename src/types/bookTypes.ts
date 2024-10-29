@@ -6,9 +6,21 @@ export type bookContentType = {
     firstSaveUser?: string | undefined;
   };
 
-export type bookInfo = {
+export type bookInfoType = {
+    bookInfoId?: string | number;
     bookName: string;
-    bookAuthorName: string;
+    bookAuthorName?: string;
     bookTranslatorName?: string;
     bookImgFile?: File;
   };
+
+export type bookInfoFileStringType = {
+  bookInfoId: number;
+  bookName: string;
+  bookAuthorName?: string;
+  bookTranslatorName?: string;
+  bookImgFile?: string;
+  bookImgUrl?: string;
+  bookImgFileExtension?: string;
+  firstSaveUser: string;
+}
