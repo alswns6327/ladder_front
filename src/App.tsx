@@ -3,9 +3,9 @@ import "./App.css";
 import MenuTemplate from "./components/menu/MenuTemplate";
 
 import { Route, Routes } from "react-router-dom";
-import ArticleListTemplate from "./components/article/ArticleListTemplate";
-import ArticleGroupManageTemplate from "./components/article/ArticleGroupManageTemplate";
-import ArticleContentTemplate from "./components/article/ArticleContentTemplate";
+import ArticleEduListTemplate from "./components/article_edu/ArticleEduListTemplate";
+import ArticleEduGroupManageTemplate from "./components/article_edu/ArticleEduGroupManageTemplate";
+import ArticleEduContentTemplate from "./components/article_edu/ArticleEduContentViewTemplate";
 import HeaderContainer from "./containers/common/HeaderContainer";
 
 import BookInfoSavePage from "./pages/book/BookInfoSavePage";
@@ -41,13 +41,9 @@ function App() {
           path="/book/chapter/update/:bookChapterInfoId"
           element={<BookContentUpdatePage/>}
         />
-        <Route
-          path="/book/info/:bookId"
-          element={<ArticleGroupManageTemplate />}
-        />
-        <Route path="/text" element={<ArticleListTemplate />} />
-        <Route path="/text/content" element={<ArticleContentTemplate />} />
-        <Route path="/group/manage" element={<ArticleGroupManageTemplate />} />
+        <Route path="/text" element={<ArticleEduListTemplate />} />
+        <Route path="/text/content" element={<ArticleEduContentTemplate />} />
+        <Route path="/group/manage" element={<ArticleEduGroupManageTemplate />} />
       </Routes>
     </>
   );

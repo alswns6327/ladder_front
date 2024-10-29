@@ -20,8 +20,8 @@ const StyledLink = styled(Link)`
 const MenuTemplate = () => {
   return (
     <MenuTemplateBlock>
-      <StyledLink to={"/"}>발걸음</StyledLink>
-      <StyledLink to={"/text"}>책 리뷰/정리</StyledLink>
+      <StyledLink to={"/"}>책 리뷰/정리</StyledLink>
+      <StyledLink to={"/text"}>사유/아이디어</StyledLink>
       <StyledLink to={"/text"}>교육 자료</StyledLink>
     </MenuTemplateBlock>
   );

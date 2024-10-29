@@ -5,6 +5,8 @@ import MDEditor from "@uiw/react-md-editor";
 import { ChangeEvent } from "react";
 import * as bookTypes from "../../types/bookTypes";
 import BackHistoryButton from "../common/BackHistoryButton";
+import { TitleInput } from "../common/TitleInput";
+import { RightMenu } from "../common/RightMenu";
 
 const BookContentWriteTemplateBlock = styled.div`
   width: 1150;
@@ -21,21 +23,6 @@ const BookTitleBox = styled.div`
 
 const BookContentBox = styled.div`
   width: 85%;
-`;
-
-const BookRightMenu = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  background-color: aqua;
-  display: flex;
-  row-gap: 10px;
-  flex-direction: column;
-`;
-
-const TitleInput = styled(Input)`
-  width: 85%;
-  text-align: center;
 `;
 
 type BookContentWriteTemplateProps = {
@@ -72,14 +59,14 @@ const BookContentWriteTemplate = ({
           value={bookChapterInfo.bookChapterInfoContent}
           onChange={handleChangeMdText} />
       </BookContentBox>
-      <BookRightMenu>
+      <RightMenu>
         <BackHistoryButton>이전으로</BackHistoryButton>
         <Button
           onClick={onSubmit}>
           저장
         </Button>
         <Button>삭제</Button>
-      </BookRightMenu>
+      </RightMenu>
     </BookContentWriteTemplateBlock>
   );
 };

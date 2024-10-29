@@ -4,6 +4,7 @@ import MDEditor from "@uiw/react-md-editor";
 import LinkButton from "../common/LinkButton";
 import * as bookTypes from "../../types/bookTypes";
 import BackHistoryButton from "../common/BackHistoryButton";
+import { RightMenu } from "../common/RightMenu";
 
 const BookContentViewTemplateBlock = styled.div`
   width: 1150;
@@ -20,16 +21,6 @@ const BookTitleBox = styled.div`
 const BookContentBox = styled.div`
   width: 85%;
   text-align: center;
-`;
-
-const BookRightMenu = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  background-color: aqua;
-  display: flex;
-  row-gap: 10px;
-  flex-direction: column;
 `;
 
 type BookContentViewTemplatePropsType = {
@@ -52,7 +43,7 @@ const BookContentViewTemplate = ({
           source={bookChapterInfo?.bookChapterInfoContent}
         />
       </BookContentBox>
-      <BookRightMenu>
+      <RightMenu>
       <BackHistoryButton>이전으로</BackHistoryButton>  
       {bookChapterInfo?.firstSaveUser === ladderAccountId && (
         <>
@@ -66,7 +57,7 @@ const BookContentViewTemplate = ({
           </Button>
         </>
       )}
-      </BookRightMenu>
+      </RightMenu>
     </BookContentViewTemplateBlock>
   );
 };

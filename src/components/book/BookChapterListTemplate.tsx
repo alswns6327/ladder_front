@@ -3,6 +3,7 @@ import Button from "../common/Button";
 import { Link } from "react-router-dom";
 import LinkButton from "../common/LinkButton";
 import BackHistoryButton from "../common/BackHistoryButton";
+import { RightMenu } from "../common/RightMenu";
 
 const BookChapterListTemplateBlock = styled.div`
   width: 1150;
@@ -24,13 +25,6 @@ const BookChapterList = styled.div`
   row-gap: 20px;
   align-items: center;
   flex-direction: column;
-`;
-
-const BookRightMenu = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  background-color: aqua;
 `;
 
 const ChapterLink = styled(Link)`
@@ -90,9 +84,9 @@ const BookChapterListTemplate = ({
           </ChapterLink>
         ))}
       </BookChapterList>
-      <BookRightMenu>
+      <RightMenu>
         <BackHistoryButton>이전으로</BackHistoryButton>
-      </BookRightMenu>
+      </RightMenu>
     </BookChapterListTemplateBlock>
   );
 };

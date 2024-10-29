@@ -3,22 +3,13 @@ import Button from "../common/Button";
 import { useEffect, useState } from "react";
 import Input from "../common/Input";
 import BackHistoryButton from "../common/BackHistoryButton";
+import { RightMenu } from "../common/RightMenu";
 
 const BookInfoSaveUpdateTemplateBlock = styled.div`
   width: 1150;
   margin-left: 150px;
   background-color: red;
   position: relative;
-`;
-
-const BookRightMenu = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  background-color: aqua;
-  display: flex;
-  row-gap: 10px;
-  flex-direction: column;
 `;
 
 const BookInfoBox = styled.div`
@@ -204,7 +195,7 @@ const BookInfoSaveUpdateTemplate = ({
           <span>책 이미지</span>
         </BookInfoImgPreview>
       </BookInfoBox>
-      <BookRightMenu>
+      <RightMenu>
         <Button 
           onClick={
             () => {
@@ -216,7 +207,7 @@ const BookInfoSaveUpdateTemplate = ({
         </Button>
         <Button onClick={handleReset}>초기화</Button>
         <BackHistoryButton>이전으로</BackHistoryButton>
-      </BookRightMenu>
+      </RightMenu>
     </BookInfoSaveUpdateTemplateBlock>
   );
 };

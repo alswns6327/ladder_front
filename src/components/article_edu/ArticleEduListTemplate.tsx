@@ -2,14 +2,14 @@ import styled from "styled-components";
 import Button from "../common/Button";
 import { Link } from "react-router-dom";
 
-const ArticleListTemplateBlock = styled.div`
+const ArticleEduListTemplateBlock = styled.div`
   width: 1150;
   margin-left: 150px;
   background-color: red;
   position: relative;
 `;
 
-const ArticleListHeader = styled.div`
+const ArticleEduListHeader = styled.div`
   width: 85%;
   display: flex;
   justify-content: flex-end;
@@ -27,7 +27,7 @@ const GroupList = styled.div`
   }
 `;
 
-const ArticleList = styled.div`
+const ArticleEduList = styled.div`
   width: 85%;
   display: flex;
   row-gap: 20px;
@@ -35,19 +35,19 @@ const ArticleList = styled.div`
   flex-direction: column;
 `;
 
-const ArticleListTemplate = () => {
+const ArticleEduListTemplate = () => {
   return (
-    <ArticleListTemplateBlock>
-      <ArticleListHeader>
+    <ArticleEduListTemplateBlock>
+      <ArticleEduListHeader>
         <Button>1</Button>
-      </ArticleListHeader>
-      <ArticleList>
+      </ArticleEduListHeader>
+      <ArticleEduList>
         <Link to={"/text/content"}>글 1</Link>
         <Link to={"/text/content"}>글 2</Link>
         <Link to={"/text/content"}>글 3</Link>
         <Link to={"/text/content"}>글 4</Link>
         <Link to={"/text/content"}>글 5</Link>
-      </ArticleList>
+      </ArticleEduList>
       <GroupList>
         <ul>
           <li>
@@ -71,8 +71,8 @@ const ArticleListTemplate = () => {
         </ul>
         <Link to={"/group/manage"}>관리</Link>
       </GroupList>
-    </ArticleListTemplateBlock>
+    </ArticleEduListTemplateBlock>
   );
 };
 
-export default ArticleListTemplate;
+export default ArticleEduListTemplate;

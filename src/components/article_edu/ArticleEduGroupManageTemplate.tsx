@@ -1,20 +1,20 @@
 import styled from "styled-components";
 import Button from "../common/Button";
 
-const ArticleGroupManageTemplateBlock = styled.div`
+const ArticleEduGroupManageTemplateBlock = styled.div`
   width: 1150;
   margin-left: 150px;
   background-color: red;
   position: relative;
 `;
 
-const ArticleGroupManageTopLine = styled.div`
+const ArticleEduGroupManageTopLine = styled.div`
   position: absolute;
   right: 10px;
   top: 10px;
 `;
 
-const ArticleGroupList = styled.div`
+const ArticleEduGroupList = styled.div`
   display: flex;
   flex-direction: column;
   ul > li {
@@ -22,16 +22,16 @@ const ArticleGroupList = styled.div`
   }
 `;
 
-const ArticleGroupManageTemplate = () => {
+const ArticleEduGroupManageTemplate = () => {
   return (
-    <ArticleGroupManageTemplateBlock>
-      <ArticleGroupManageTopLine>
+    <ArticleEduGroupManageTemplateBlock>
+      <ArticleEduGroupManageTopLine>
         <Button>추가</Button>
-      </ArticleGroupManageTopLine>
-      <ArticleGroupList>
+      </ArticleEduGroupManageTopLine>
+      <ArticleEduGroupList>
         <ul>
           <li>
-            group 1
+            group 1 <Button>추가</Button>
             <ul>
               <li>group 1-1</li>
               <li>group 1-2</li>
@@ -41,7 +41,7 @@ const ArticleGroupManageTemplate = () => {
         </ul>
         <ul>
           <li>
-            group 2
+            group 2 <Button>추가</Button>
             <ul>
               <li>group 2-1</li>
               <li>group 2-2</li>
@@ -49,9 +49,9 @@ const ArticleGroupManageTemplate = () => {
             </ul>
           </li>
         </ul>
-      </ArticleGroupList>
-    </ArticleGroupManageTemplateBlock>
+      </ArticleEduGroupList>
+    </ArticleEduGroupManageTemplateBlock>
   );
 };
 
-export default ArticleGroupManageTemplate;
+export default ArticleEduGroupManageTemplate;
