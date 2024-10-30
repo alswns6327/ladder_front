@@ -82,27 +82,10 @@ const FileComponent = styled.div`
   }
 `;
 
-type bookInfoType = {
-  bookInfoId?: number;
-  bookName: string;
-  bookAuthorName: string;
-  bookTranslatorName: string;
-  bookImgFile?: string;
-  bookImgUrl?: string;
-  bookImgFileExtension?: string;
-};
-
-type bookInfoFormType = {
-  bookName: string;
-  bookAuthorName: string;
-  bookTranslatorName?: string;
-  bookImgFile?: File;
-};
-
 type BookInfoSaveUpdateTemplatePropsType = {
-  handleBookInfoSave?: (bookInfoForm: bookInfoFormType) => Promise<void>;
-  handleBookInfoUpdate?: (bookInfoForm: bookInfoFormType) => Promise<void>;
-  bookInfo?: bookInfoType;
+  handleBookInfoSave?: (bookInfoForm: bookTypes.bookInfoType) => Promise<void>;
+  handleBookInfoUpdate?: (bookInfoForm: bookTypes.bookInfoType) => Promise<void>;
+  bookInfo?: bookTypes.bookInfoFileStringType;
 };
 
 const BookInfoSaveUpdateTemplate = ({
@@ -110,8 +93,7 @@ const BookInfoSaveUpdateTemplate = ({
   handleBookInfoUpdate,
   bookInfo,
 }: BookInfoSaveUpdateTemplatePropsType) => {
-  console.log(bookInfo);
-  const [bookInfoForm, setBookInfoForm] = useState<bookInfoFormType>({
+  const [bookInfoForm, setBookInfoForm] = useState<bookTypes.bookInfoType>({
     bookName: "",
     bookAuthorName: "",
     bookTranslatorName: "",

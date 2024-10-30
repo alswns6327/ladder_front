@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import BookListTemplate from "../../components/book/BookListTemplate";
 import * as api from "../../lib/api/book";
 import { useSelector } from "react-redux";
-import { initialStateType } from "../../modules/auth";
+import * as authTypes from "../../types/authTypes";
 import * as bookTypes from "../../types/bookTypes";
 
 const BookListContainer = () => {
   const [bookInfoList, setBookInfoList] = useState<bookTypes.bookInfoFileStringType[]>([]);
-  const auth: initialStateType = useSelector(
-    ({ auth }: { auth: initialStateType }) => auth
+  const auth: authTypes.authInitialStateType = useSelector(
+    ({ auth }: { auth: authTypes.authInitialStateType }) => auth
   );
   useEffect(() => {
     const getBookInfoList = async () => {

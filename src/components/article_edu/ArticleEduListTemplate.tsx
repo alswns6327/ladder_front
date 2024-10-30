@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import Button from "../common/Button";
 import { Link } from "react-router-dom";
+import LinkButton from "../common/LinkButton";
+import * as articleTypes from "../../types/articleTypes";
+import * as eduTypes from "../../types/eduTypes";
 
 const ArticleEduListTemplateBlock = styled.div`
   width: 1150;
@@ -39,11 +42,12 @@ const ArticleEduListTemplate = () => {
   return (
     <ArticleEduListTemplateBlock>
       <ArticleEduListHeader>
-        <Button>1</Button>
+        <LinkButton text="추가" link="/article/write"/>
+        <LinkButton text="추가" link="/edu/write"/>
       </ArticleEduListHeader>
       <ArticleEduList>
-        <Link to={"/text/content"}>글 1</Link>
-        <Link to={"/text/content"}>글 2</Link>
+        <Link to={"/article/1"}>글 1</Link>
+        <Link to={"/edu/1"}>글 2</Link>
         <Link to={"/text/content"}>글 3</Link>
         <Link to={"/text/content"}>글 4</Link>
         <Link to={"/text/content"}>글 5</Link>
@@ -69,7 +73,8 @@ const ArticleEduListTemplate = () => {
             </ul>
           </li>
         </ul>
-        <Link to={"/group/manage"}>관리</Link>
+        <Link to={"/article/group"}>관리</Link>
+        <Link to={"/edu/group"}>관리</Link>
       </GroupList>
     </ArticleEduListTemplateBlock>
   );

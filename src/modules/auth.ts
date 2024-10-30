@@ -1,28 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import * as api from "../lib/api/auth";
 import apiClient from "../lib/api/apiClient";
+import * as authTypes from "../types/authTypes";
 
 const REGIST: string = "auth/REGIST";
 const LOGIN: string = "auth/LOGIN";
 const LOGOUT: string = "auth/LOGOUT";
 
-export type initialStateType = {
-  ladderAccountId: string;
-  ladderAccountName: string;
-  ladderAccountEmail: string;
-  ladderAccountAuth: string;
-};
-
-type ladderUserType = {
-  ladderAccountId: string;
-  ladderAccountPassword: string;
-  ladderAccountName?: string;
-  ladderAccountEmail?: string;
-  ladderAccountAuth?: string;
-  accessToken?: string;
-};
-
-const initialState: initialStateType = {
+const initialState: authTypes.authInitialStateType = {
   ladderAccountId: "",
   ladderAccountName: "",
   ladderAccountEmail: "",
@@ -36,7 +21,7 @@ export const asyncRegist = createAsyncThunk(
     ladderAccountPassword,
     ladderAccountName,
     ladderAccountEmail,
-  }: ladderUserType) => {
+  }: authTypes.ladderUserType) => {
     const response = await api.regist({
       ladderAccountId,
       ladderAccountPassword,
@@ -50,7 +35,7 @@ export const asyncRegist = createAsyncThunk(
 
 export const asyncLogin = createAsyncThunk(
   LOGIN,
-  async ({ ladderAccountId, ladderAccountPassword }: ladderUserType) => {
+  async ({ ladderAccountId, ladderAccountPassword }: authTypes.ladderUserType) => {
     const response = await api.login({
       ladderAccountId,
       ladderAccountPassword,
@@ -80,7 +65,7 @@ const authSlice = createSlice({
     builder.addCase(asyncRegist.rejected, (state, action) => {});
     builder.addCase(asyncLogin.pending, (state, action) => {});
     builder.addCase(asyncLogin.fulfilled, (state, { payload }) => {
-      const { data: ladderUser }: { data: ladderUserType } = payload;
+      const { data: ladderUser }: { data: authTypes.ladderUserType } = payload;
       state.ladderAccountId = ladderUser.ladderAccountId;
       state.ladderAccountName = ladderUser.ladderAccountName as string;
       state.ladderAccountEmail = ladderUser.ladderAccountEmail as string;

@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import Button from "../common/Button";
+import * as articleTypes from "../../types/articleTypes";
+import * as eduTypes from "../../types/eduTypes";
 
 const ArticleEduGroupManageTemplateBlock = styled.div`
   width: 1150;
@@ -22,7 +24,15 @@ const ArticleEduGroupList = styled.div`
   }
 `;
 
-const ArticleEduGroupManageTemplate = () => {
+type ArticleEduGroupManageTemplatePropsType = {
+  menuType : string;
+  categoryList : articleTypes.articleCategoryType[] | undefined;
+}
+
+const ArticleEduGroupManageTemplate = ({
+  menuType,
+  categoryList,
+} : ArticleEduGroupManageTemplatePropsType) => {
   return (
     <ArticleEduGroupManageTemplateBlock>
       <ArticleEduGroupManageTopLine>

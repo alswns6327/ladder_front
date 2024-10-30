@@ -3,7 +3,7 @@ import BookChapterListTemplate from "../../components/book/BookChapterListTempla
 import { useParams } from "react-router-dom";
 import * as api from "../../lib/api/book";
 import { useSelector } from "react-redux";
-import { initialStateType } from "../../modules/auth";
+import * as authTypes from "../../types/authTypes";
 import * as bookTypes from "../../types/bookTypes";
 
 const BookChapterListContainer = () => {
@@ -17,8 +17,8 @@ const BookChapterListContainer = () => {
     bookImgFileExtension: "",
     firstSaveUser: "",
   });
-  const auth: initialStateType = useSelector(
-    ({ auth }: { auth: initialStateType }) => auth
+  const auth: authTypes.authInitialStateType = useSelector(
+    ({ auth }: { auth: authTypes.authInitialStateType }) => auth
   );
   useEffect(() => {
     const searchChapterList = async () => {

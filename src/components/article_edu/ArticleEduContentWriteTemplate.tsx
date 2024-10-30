@@ -3,6 +3,8 @@ import Button from "../common/Button";
 import { RightMenu } from "../common/RightMenu";
 import MDEditor from "@uiw/react-md-editor";
 import { TitleInput } from "../common/TitleInput";
+import * as articleTypes from "../../types/articleTypes";
+import * as eduTypes from "../../types/eduTypes";
 
 const ArticleEduContentWriteTemplateBlock = styled.div`
   width: 1150;

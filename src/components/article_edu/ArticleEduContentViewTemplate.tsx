@@ -1,6 +1,10 @@
 import styled from "styled-components";
 import Button from "../common/Button";
 import { RightMenu } from "../common/RightMenu";
+import LinkButton from "../common/LinkButton";
+import MDEditor from "@uiw/react-md-editor";
+import * as articleTypes from "../../types/articleTypes";
+import * as eduTypes from "../../types/eduTypes";
 
 const ArticleEduContentViewTemplateBlock = styled.div`
   width: 1150;
@@ -23,10 +27,15 @@ const ArticleEduContentViewTemplate = () => {
   return (
     <ArticleEduContentViewTemplateBlock>
       <ArticleTitleBox>글 1</ArticleTitleBox>
-      <ArticleContentBox>content 블라블라</ArticleContentBox>
+      <ArticleContentBox>
+        <MDEditor.Markdown
+          style={{ padding: 10 }}
+          source="# hi"/>
+      </ArticleContentBox>
       <RightMenu>
         <Button>목록 보기</Button>
-        <Button>수정</Button>
+        <LinkButton text="수정" link="/article/write/1"/>
+        <LinkButton text="수정" link="/edu/write/1"/>
         <Button>삭제</Button>
       </RightMenu>
     </ArticleEduContentViewTemplateBlock>

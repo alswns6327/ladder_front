@@ -21,8 +21,8 @@ const MenuTemplate = () => {
   return (
     <MenuTemplateBlock>
       <StyledLink to={"/"}>책 리뷰/정리</StyledLink>
-      <StyledLink to={"/text"}>사유/아이디어</StyledLink>
-      <StyledLink to={"/text"}>교육 자료</StyledLink>
+      <StyledLink to={"/article"}>사유/아이디어</StyledLink>
+      <StyledLink to={"/edu"}>교육 자료</StyledLink>
     </MenuTemplateBlock>
   );
 };
