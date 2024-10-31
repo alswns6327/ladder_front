@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-const InputBlock = styled.input`
-  width: 200px;
+const InputBlock = styled.input<{width : string}>`
+  width: ${props => props.width || '200px'};
   height: 30px;
   padding: 0 5px 0 10px;
   margin-left: 5px;

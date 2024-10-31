@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-const ButtonBlock = styled.button`
+const ButtonBlock = styled.button<{width : string}>`
   border-radius: 8px;
-  width: 100px;
+  width: ${props => props.width || '100px'};
   background-color: white;
 `;
 
