@@ -1,10 +1,10 @@
-export type articleCategoryType = {
+export type categoryType = {
     categorySeq : number | string;
     categoryName : string;
-    subCategories: articleSubCategoryType[];
+    subCategories: subCategoryType[];
 }
 
-export type articleSubCategoryType = {
+export type subCategoryType = {
     subCategorySeq : number | string;
     categorySeq : number | string;
     subCategoryName : string;
