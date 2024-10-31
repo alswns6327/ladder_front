@@ -1,9 +1,9 @@
-import ArticleEduGroupManageTemplate from '../../components/article_edu/ArticleEduGroupManageTemplate';
+import ArticleEduCategoryManageTemplate from '../../components/article_edu/ArticleEduCategoryManageTemplate';
 import * as articleTypes from "../../types/articleTypes";
 import * as api from "../../lib/api/article";
 import { useEffect, useState } from 'react';
 
-const ArticleGroupManageContainer = () => {
+const ArticleCategoryManageContainer = () => {
     const [articleCategoryList, setArticleCategoryList] = useState<articleTypes.articleCategoryType[]>([]);
     useEffect(() => {
         const searchArticleCategoryList = async () => {
@@ -15,10 +15,10 @@ const ArticleGroupManageContainer = () => {
         searchArticleCategoryList();
     }, []);
     return (
-        <ArticleEduGroupManageTemplate 
+        <ArticleEduCategoryManageTemplate 
             menuType={"article"} 
             categoryList={articleCategoryList}/>
     );
 };
 
-export default ArticleGroupManageContainer;
+export default ArticleCategoryManageContainer;

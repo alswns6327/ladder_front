@@ -3,9 +3,6 @@ import "./App.css";
 import MenuTemplate from "./components/menu/MenuTemplate";
 
 import { Route, Routes } from "react-router-dom";
-import ArticleEduListTemplate from "./components/article_edu/ArticleEduListTemplate";
-import ArticleEduGroupManageTemplate from "./components/article_edu/ArticleEduGroupManageTemplate";
-import ArticleEduContentTemplate from "./components/article_edu/ArticleEduContentViewTemplate";
 import HeaderContainer from "./containers/common/HeaderContainer";
 
 import BookInfoSavePage from "./pages/book/BookInfoSavePage";
@@ -19,12 +16,12 @@ import ArticleListPage from "./pages/article/ArticleListPage";
 import ArticleContentViewPage from "./pages/article/ArticleContentViewPage";
 import ArticleContentWritePage from "./pages/article/ArticleContentWritePage";
 import ArticleContentUpdatePage from "./pages/article/ArticleContentUpdatePage";
-import ArticleGroupManagePage from "./pages/article/ArticleGroupManagePage";
+import ArticleCategoryManagePage from "./pages/article/ArticleCategoryManagePage";
 import EduListPage from "./pages/edu/EduListPage";
 import EduContentViewPage from "./pages/edu/EduContentViewPage";
 import EduContentWritePage from "./pages/edu/EduContentWritePage";
 import EduContentUpdatePage from "./pages/edu/EduContentUpdatePage";
-import EduGroupManagePage from "./pages/edu/EduGroupManagePage";
+import EduCategoryManagePage from "./pages/edu/EduCategoryManagePage";
 
 function App() {
   return (
@@ -55,12 +52,12 @@ function App() {
         <Route path="/article/:articleId" element={<ArticleContentViewPage/>} />
         <Route path="/article/write" element={<ArticleContentWritePage/>} />
         <Route path="/article/write/:articleId" element={<ArticleContentUpdatePage />} />
-        <Route path="/article/group" element={<ArticleGroupManagePage />} />
+        <Route path="/article/group" element={<ArticleCategoryManagePage />} />
         <Route path="/edu" element={<EduListPage />} />
         <Route path="/edu/:eduId" element={<EduContentViewPage/>} />
         <Route path="/edu/write" element={<EduContentWritePage/>} />
         <Route path="/edu/write/:eduId" element={<EduContentUpdatePage />} />
-        <Route path="/edu/group" element={<EduGroupManagePage />} />
+        <Route path="/edu/group" element={<EduCategoryManagePage />} />
       </Routes>
     </>
   );
