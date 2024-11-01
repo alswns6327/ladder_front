@@ -1,9 +1,6 @@
-import React, { ChangeEvent, useEffect, useRef, useState } from "react";
-import ReactDOM from 'react-dom';
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import Button from "../common/Button";
-import * as articleTypes from "../../types/articleTypes";
-import * as eduTypes from "../../types/eduTypes";
 import * as commonTypes from "../../types/commonTypes";
 import Input from "../common/Input";
 
@@ -29,12 +26,15 @@ const ArticleEduSubCategoryItemBox = styled(ArticleEduCategoryItemBox)`
 `
 
 type ArticleEduCategoryManageTemplatePropsType = {
-  menuType : string;
   categoryList : commonTypes.categoryType[];
+  handleSaveCategory : (category : commonTypes.categoryType) => Promise<number>;
+  handleSaveSubCategory : (subCategory : commonTypes.subCategoryType) => Promise<number>;
 }
 
 const ArticleEduCategoryManageTemplate = ({
   categoryList,
+  handleSaveCategory,
+  handleSaveSubCategory,
 } : ArticleEduCategoryManageTemplatePropsType) => {
 
   const [categoryListImitate, setCategoryListImitate] = useState<commonTypes.categoryType[]>([]);
@@ -105,23 +105,45 @@ const ArticleEduCategoryManageTemplate = ({
 
   }
 
-  const handleSubCategoryChange = (categorySeq: number | string, e : ChangeEvent<HTMLInputElement>) => {
+  const handleSubCategoryChange = (categorySeq: number | string, subCategorySeq: number | string, e : ChangeEvent<HTMLInputElement>) => {
     const {name, value} : {name : string, value: string} = e.target;
     setCategoryListImitate(
       categoryListImitate.map(
         category => category.categorySeq === categorySeq ? 
-          {...category, subCategories : category.subCategories.map(subCategory => ({...subCategory, [name] : value}))} 
+          {...category, subCategories : category.subCategories.map(subCategory => subCategory.subCategorySeq === subCategorySeq ? ({...subCategory, [name] : value}) : subCategory)} 
           : category
       )
     );
   }
 
-  const handleSaveCategory = async (category : commonTypes.categoryType) => {
-
+  const handleSaveCategoryWrapper = async (category : commonTypes.categoryType) => {
+      const responseCategorySeq = await handleSaveCategory(category);
+      if(responseCategorySeq === -1) return alert("저장 실패");
+      
+      if(typeof category.categorySeq === 'string')
+        setCategoryListImitate(
+          categoryListImitate.map(
+            c => c.categorySeq === category.categorySeq ? {...c, categorySeq : category.categorySeq} : category
+          )
+        )
+      
+      alert("저장 성공");
   }
 
-  const handleSaveSubCategory = async (subCategory : commonTypes.subCategoryType) => {
-
+  const handleSaveSubCategoryWrapper = async (subCategory : commonTypes.subCategoryType) => {
+    const responseSubCategorySeq = await handleSaveSubCategory(subCategory);
+      if(responseSubCategorySeq === -1) return alert("저장 실패");
+      
+      if(typeof subCategory.subCategorySeq === 'string')
+        setCategoryListImitate(
+          categoryListImitate.map(
+            c => c.categorySeq === subCategory.categorySeq ? 
+              {...c, subCategories : c.subCategories.map(sc => sc.subCategorySeq === subCategory.subCategorySeq ? ({...sc, subCategorySeq : responseSubCategorySeq}) : sc)}
+              : c
+          )
+        )
+      
+      alert("저장 성공");
   }
 
   return (
@@ -142,7 +164,7 @@ const ArticleEduCategoryManageTemplate = ({
               onClick={() => handleAddSubCategory(category.categorySeq)}>추가</Button>
             <Button 
               width={buttonWidth} 
-              onClick={() => handleSaveCategory(category)}>저장</Button>
+              onClick={() => handleSaveCategoryWrapper(category)}>저장</Button>
             <Button 
               width={buttonWidth} 
               onClick={() => handleRemoveCategory(category.categorySeq)}>삭제</Button>
@@ -152,7 +174,7 @@ const ArticleEduCategoryManageTemplate = ({
                   width={inputWidth} 
                   name="subCategoryName"
                   value={subCategory.subCategoryName}
-                  onChange={(e : ChangeEvent<HTMLInputElement>) => handleSubCategoryChange(category.categorySeq, e)}/>
+                  onChange={(e : ChangeEvent<HTMLInputElement>) => handleSubCategoryChange(category.categorySeq, subCategory.subCategorySeq, e)}/>
                 <Button 
                   width={buttonWidth} 
                   onClick={() => handleRemoveSubCategory(category.categorySeq, subCategory.subCategorySeq)}>
@@ -160,7 +182,7 @@ const ArticleEduCategoryManageTemplate = ({
                 </Button>
                 <Button 
                   width={buttonWidth} 
-                  onClick={() => handleSaveSubCategory(subCategory)}>저장</Button>
+                  onClick={() => handleSaveSubCategoryWrapper(subCategory)}>저장</Button>
               </ArticleEduSubCategoryItemBox>
             ))}
           </ArticleEduCategoryItemBox>
