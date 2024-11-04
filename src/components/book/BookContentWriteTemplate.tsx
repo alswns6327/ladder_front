@@ -65,7 +65,6 @@ const BookContentWriteTemplate = ({
           onClick={onSubmit}>
           저장
         </Button>
-        <Button>삭제</Button>
       </RightMenu>
     </BookContentWriteTemplateBlock>
   );
