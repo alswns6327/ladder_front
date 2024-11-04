@@ -1,15 +1,17 @@
 import ArticleEduCategoryManageTemplate from '../../components/article_edu/ArticleEduCategoryManageTemplate';
+import * as authTypes from "../../types/authTypes";
 import * as articleTypes from "../../types/articleTypes";
 import * as commonTypes from "../../types/commonTypes";
 import * as api from "../../lib/api/article";
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 const ArticleCategoryManageContainer = () => {
     const [articleCategoryList, setArticleCategoryList] = useState<commonTypes.categoryType[]>([]);
+    const auth : authTypes.authInitialStateType = useSelector(({auth} : {auth : authTypes.authInitialStateType}) => auth);
     useEffect(() => {
         const searchArticleCategoryList = async () => {
-            const response = await api.searchArticleGroupList();
-
+            const response = await api.searchArticleGroupList(auth.ladderAccountId);
             if(response.data.msg === "success") setArticleCategoryList(response.data.data);
             else alert("목록 조회 실패");
         }

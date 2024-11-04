@@ -2,8 +2,8 @@ import apiClient from "./apiClient";
 import * as articleTypes from "../../types/articleTypes";
 import * as commonTypes from "../../types/commonTypes";
 
-export const searchArticleGroupList = () => 
-    apiClient.get("/article/category/list");
+export const searchArticleGroupList = (userId : string) => 
+    apiClient.get(`/article/category/list?userId=${userId}`);
 
 export const saveCategory = (category : commonTypes.categoryType) => 
     apiClient.post("/article/category", category);
