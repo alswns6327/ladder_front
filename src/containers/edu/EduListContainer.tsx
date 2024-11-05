@@ -3,7 +3,8 @@ import * as eduTypes from "../../types/eduTypes";
 
 const EduListContainer = () => {
     return (
-        <ArticleEduListTemplate/>
+        // <ArticleEduListTemplate/>
+        <div></div>
     );
 };
 

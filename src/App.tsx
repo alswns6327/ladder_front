@@ -30,33 +30,23 @@ function App() {
       <MenuTemplate />
       <Routes>
         <Route path="/" element={<BookListPage />} />
-        <Route
-          path="/book/chapter/:bookInfoId"
-          element={<BookChapterListPage />}
-        />
-        <Route
-          path="/book/content/:bookChapterInfoId"
-          element={<BookContentViewPage />}
-        />
+        <Route path="/book/chapter/:bookInfoId" element={<BookChapterListPage />}/>
+        <Route path="/book/content/:bookChapterInfoId" element={<BookContentViewPage />}/>
         <Route path="/book/info" element={<BookInfoSavePage />} />
         <Route path="/book/info/:bookInfoId" element={<BookInfoUpdatePage />} />
-        <Route
-          path="/book/chapter/write/:bookInfoId"
-          element={<BookContentWritePage />}
-        />
-        <Route
-          path="/book/chapter/update/:bookChapterInfoId"
-          element={<BookContentUpdatePage/>}
-        />
+        <Route path="/book/chapter/write/:bookInfoId" element={<BookContentWritePage />}/>
+        <Route path="/book/chapter/update/:bookChapterInfoId" element={<BookContentUpdatePage/>}/>
+
         <Route path="/article" element={<ArticleListPage />} />
-        <Route path="/article/:articleId" element={<ArticleContentViewPage/>} />
+        <Route path="/article/:articleSeq" element={<ArticleContentViewPage/>} />
         <Route path="/article/write" element={<ArticleContentWritePage/>} />
-        <Route path="/article/write/:articleId" element={<ArticleContentUpdatePage />} />
+        <Route path="/article/write/:articleSeq" element={<ArticleContentUpdatePage />} />
         <Route path="/article/group" element={<ArticleCategoryManagePage />} />
+
         <Route path="/edu" element={<EduListPage />} />
-        <Route path="/edu/:eduId" element={<EduContentViewPage/>} />
+        <Route path="/edu/:eduSeq" element={<EduContentViewPage/>} />
         <Route path="/edu/write" element={<EduContentWritePage/>} />
-        <Route path="/edu/write/:eduId" element={<EduContentUpdatePage />} />
+        <Route path="/edu/write/:eduSeq" element={<EduContentUpdatePage />} />
         <Route path="/edu/group" element={<EduCategoryManagePage />} />
       </Routes>
     </>

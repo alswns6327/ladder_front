@@ -3,7 +3,8 @@ import * as eduTypes from "../../types/eduTypes";
 
 const EduContentViewContainer = () => {
     return (
-        <ArticleEduContentViewTemplate/>
+        // <ArticleEduContentViewTemplate/>
+        <div></div>
     );
 };
 

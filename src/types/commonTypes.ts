@@ -9,3 +9,14 @@ export type subCategoryType = {
     categorySeq : number | string;
     subCategoryName : string;
 }
+
+
+export type article = {
+    articleSeq? : number | string;
+    categorySeq : number | string;
+    subCategorySeq : number | string;
+    title : string;
+    article : string;
+    categoryName? : string;
+    subCategoryName? : string;
+}

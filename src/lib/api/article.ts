@@ -16,3 +16,12 @@ export const saveSubCategory = (subCategory : commonTypes.subCategoryType) =>
 
 export const updateSubCategory = (subCategory : commonTypes.subCategoryType) => 
     apiClient.put("/article/sub-category", subCategory);
+
+export const saveArticle = (article : commonTypes.article) =>
+    apiClient.post("/article", article);
+
+export const searchArticleList = (userId : string) =>
+    apiClient.get(`/article?userId=${userId}`);
+
+export const searchArticle = (articleSeq : number) =>
+    apiClient.get(`/article/${articleSeq}`);

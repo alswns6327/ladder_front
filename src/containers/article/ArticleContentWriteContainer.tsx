@@ -5,11 +5,13 @@ import * as authTypes from "../../types/authTypes";
 import * as commonTypes from "../../types/commonTypes";
 import { useSelector } from 'react-redux';
 import * as api from "../../lib/api/article";
+import { useNavigate } from 'react-router-dom';
 
 const ArticleContentWriteContainer = () => {
 
     const [articleCategoryList, setArticleCategoryList] = useState<commonTypes.categoryType[]>([]);
     const auth : authTypes.authInitialStateType = useSelector(({auth} : {auth : authTypes.authInitialStateType}) => auth);
+    const navigator = useNavigate();
     const [articleForm, setArticleForm] = useState<commonTypes.article>({
         categorySeq : "",
         subCategorySeq : "",
@@ -53,8 +55,10 @@ const ArticleContentWriteContainer = () => {
         setArticleForm({...articleForm, [name] : value});
     }
 
-    const handleSave = () => {
-        console.log(articleForm);
+    const handleSave = async () => {
+        const response = await api.saveArticle(articleForm);
+        if(response.data.msg === "success") navigator("/article");
+        else alert("저장 실패");
     }
 
     return (

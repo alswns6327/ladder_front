@@ -17,11 +17,11 @@ const ArticleEduCategoryManageTopLine = styled.div`
   top: -30px;
 `;
 
-const ArticleEduCategoryItemBox = styled.div`
+export const ArticleEduCategoryItemBox = styled.div`
   
 `
 
-const ArticleEduSubCategoryItemBox = styled(ArticleEduCategoryItemBox)`
+export const ArticleEduSubCategoryItemBox = styled(ArticleEduCategoryItemBox)`
   margin-left: 20px;
 `
 

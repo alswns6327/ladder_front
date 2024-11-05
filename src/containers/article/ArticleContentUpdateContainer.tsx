@@ -3,7 +3,8 @@ import * as articleTypes from "../../types/articleTypes";
 
 const ArticleContentUpdateContainer = () => {
     return (
-        <ArticleEduContentWriteTemplate/>
+        //<ArticleEduContentWriteTemplate/>
+        <div></div>
     );
 };
 
