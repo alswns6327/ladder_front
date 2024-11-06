@@ -20,8 +20,7 @@ const ArticleCategoryManageContainer = () => {
 
     const handleSaveArticleCategory = async (category : commonTypes.categoryType) : Promise<number> => {
         if(typeof category.categorySeq === "string"){
-            category.categorySeq = -1;
-            const response = await api.saveCategory(category);
+            const response = await api.saveCategory({...category, categorySeq : -1});
             if(response.data.msg === "success") return response.data.data.categorySeq;
             else return -1;
         }else{
@@ -34,7 +33,7 @@ const ArticleCategoryManageContainer = () => {
     const handleSaveArticleSubCategory = async (subCategory : commonTypes.subCategoryType) : Promise<number> => {
         if(typeof subCategory.subCategorySeq === "string"){
             subCategory.subCategorySeq = -1;
-            const response = await api.saveSubCategory(subCategory);
+            const response = await api.saveSubCategory({...subCategory, subCategorySeq : -1});
             if(response.data.msg === "success") return response.data.data.subCategorySeq;
             else return -1;
         }else{
@@ -44,11 +43,23 @@ const ArticleCategoryManageContainer = () => {
         }
     }
 
+    const handleRemoveArticleCategory = async (categorySeq : number) : Promise<string> => {
+        const response = await api.deleteCategory(categorySeq);
+        return response.data.msg;
+    }
+
+    const handleRemoveArticleSubCategory = async (subCategorySeq : number) : Promise<string> => {
+        const response = await api.deleteSubCategory(subCategorySeq);
+        return response.data.msg;
+    }
+
     return (
         <ArticleEduCategoryManageTemplate 
             categoryList={articleCategoryList}
             handleSaveCategory={handleSaveArticleCategory}
-            handleSaveSubCategory={handleSaveArticleSubCategory}/>
+            handleSaveSubCategory={handleSaveArticleSubCategory}
+            handleRemoveCategory={handleRemoveArticleCategory}
+            handleRemoveSubCategory={handleRemoveArticleSubCategory}/>
     );
 };
 

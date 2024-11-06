@@ -29,12 +29,16 @@ type ArticleEduCategoryManageTemplatePropsType = {
   categoryList : commonTypes.categoryType[];
   handleSaveCategory : (category : commonTypes.categoryType) => Promise<number>;
   handleSaveSubCategory : (subCategory : commonTypes.subCategoryType) => Promise<number>;
+  handleRemoveCategory : (categorySeq : number) => Promise<string>;
+  handleRemoveSubCategory : (subCategorySeq : number) => Promise<string>;
 }
 
 const ArticleEduCategoryManageTemplate = ({
   categoryList,
   handleSaveCategory,
   handleSaveSubCategory,
+  handleRemoveCategory,
+  handleRemoveSubCategory
 } : ArticleEduCategoryManageTemplatePropsType) => {
 
   const [categoryListImitate, setCategoryListImitate] = useState<commonTypes.categoryType[]>([]);
@@ -64,6 +68,7 @@ const ArticleEduCategoryManageTemplate = ({
       categorySeq : categorySeq,
       subCategoryName: 'new 관점-1',
     }
+
     setCategoryListImitate(
       categoryListImitate.map(
         category => category.categorySeq === categorySeq ? 
@@ -73,24 +78,32 @@ const ArticleEduCategoryManageTemplate = ({
     );
   }
 
-  const handleRemoveCategory = (categorySeq : number | string) => {
-    if(typeof categorySeq === 'string')
-    setCategoryListImitate(
-      categoryListImitate.filter(
-        category => category.categorySeq !== categorySeq
+  const handleRemoveCategoryWrapper = async (categorySeq : number | string) => {
+    let checkDelete = false;
+    if(typeof categorySeq === 'string') checkDelete = !checkDelete;
+    else checkDelete = (await handleRemoveCategory(categorySeq)) === "success" ? true : false;
+
+    if(checkDelete)
+      setCategoryListImitate(
+        categoryListImitate.filter(
+          category => category.categorySeq !== categorySeq
+        )
       )
-    );
   }
 
-  const handleRemoveSubCategory = (categorySeq: number | string, subCategorySeq : number | string) => {
-    if(typeof subCategorySeq === 'string')
-    setCategoryListImitate(
-      categoryListImitate.map(
-        category => category.categorySeq === categorySeq ? 
-          {...category, subCategories : category.subCategories.filter(subCategory => subCategory.subCategorySeq !== subCategorySeq)} 
-          : category
+  const handleRemoveSubCategoryWrapper = async (categorySeq: number | string, subCategorySeq : number | string) => {
+    let checkDelete = false
+    if(typeof subCategorySeq === 'string') checkDelete = !checkDelete;
+    else checkDelete = (await handleRemoveSubCategory(subCategorySeq)) === "success" ? true : false;
+
+    if(checkDelete)
+      setCategoryListImitate(
+        categoryListImitate.map(
+          category => category.categorySeq === categorySeq ? 
+            {...category, subCategories : category.subCategories.filter(subCategory => subCategory.subCategorySeq !== subCategorySeq)} 
+            : category
+        )
       )
-    );
   }
 
   const handleCategoryChange = (categorySeq: number | string, e : ChangeEvent<HTMLInputElement>) => {
@@ -119,14 +132,13 @@ const ArticleEduCategoryManageTemplate = ({
   const handleSaveCategoryWrapper = async (category : commonTypes.categoryType) => {
       const responseCategorySeq = await handleSaveCategory(category);
       if(responseCategorySeq === -1) return alert("저장 실패");
-      
+
       if(typeof category.categorySeq === 'string')
         setCategoryListImitate(
           categoryListImitate.map(
-            c => c.categorySeq === category.categorySeq ? {...c, categorySeq : category.categorySeq} : category
+            c => c.categorySeq === category.categorySeq ? {...c, categorySeq : responseCategorySeq} : c
           )
         )
-      
       alert("저장 성공");
   }
 
@@ -167,7 +179,7 @@ const ArticleEduCategoryManageTemplate = ({
               onClick={() => handleSaveCategoryWrapper(category)}>저장</Button>
             <Button 
               width={buttonWidth} 
-              onClick={() => handleRemoveCategory(category.categorySeq)}>삭제</Button>
+              onClick={() => handleRemoveCategoryWrapper(category.categorySeq)}>삭제</Button>
             {category.subCategories?.map(subCategory => (
               <ArticleEduSubCategoryItemBox key={subCategory.subCategorySeq}>
                 <Input 
@@ -177,7 +189,7 @@ const ArticleEduCategoryManageTemplate = ({
                   onChange={(e : ChangeEvent<HTMLInputElement>) => handleSubCategoryChange(category.categorySeq, subCategory.subCategorySeq, e)}/>
                 <Button 
                   width={buttonWidth} 
-                  onClick={() => handleRemoveSubCategory(category.categorySeq, subCategory.subCategorySeq)}>
+                  onClick={() => handleRemoveSubCategoryWrapper(category.categorySeq, subCategory.subCategorySeq)}>
                   삭제
                 </Button>
                 <Button 
