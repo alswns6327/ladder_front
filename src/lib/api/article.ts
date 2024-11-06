@@ -11,11 +11,17 @@ export const saveCategory = (category : commonTypes.categoryType) =>
 export const updateCategory = (category : commonTypes.categoryType) => 
     apiClient.put("/article/category", category);
 
+export const deleteCategory = (categorySeq : number) =>
+    apiClient.delete(`/article/category/${categorySeq}`);
+
 export const saveSubCategory = (subCategory : commonTypes.subCategoryType) => 
     apiClient.post("/article/sub-category", subCategory);
 
 export const updateSubCategory = (subCategory : commonTypes.subCategoryType) => 
     apiClient.put("/article/sub-category", subCategory);
+
+export const deleteSubCategory = (subCategorySeq : number) =>
+    apiClient.delete(`/article/sub-category/${subCategorySeq}`);
 
 export const saveArticle = (article : commonTypes.article) =>
     apiClient.post("/article", article);
@@ -25,3 +31,6 @@ export const searchArticleList = (userId : string) =>
 
 export const searchArticle = (articleSeq : number) =>
     apiClient.get(`/article/${articleSeq}`);
+
+export const updateArticle = (article : commonTypes.article) =>
+    apiClient.put("/article", article);

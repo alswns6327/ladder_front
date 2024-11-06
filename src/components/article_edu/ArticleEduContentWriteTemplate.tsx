@@ -64,12 +64,12 @@ const ArticleEduContentWriteTemplate = ({
   subCategorySelectBoxRef,
 } : ArticleEduContentWriteTemplateProps) => {
 
-  const [categorySubList, setCategorySubList] = useState<commonTypes.subCategoryType[]>([]);
+  const [subCategoryList, setCategorySubList] = useState<commonTypes.subCategoryType[]>([]);
 
   useEffect(() => {
-    if(categoryList.length > 0){
-      setCategorySubList([...categoryList[0].subCategories]);
-    }
+    const category = categoryList.find(category => Number(category.categorySeq) === Number(articleForm.categorySeq));
+    if(articleForm.categorySeq && category !== undefined) setCategorySubList([...category.subCategories])
+    else if(categoryList.length > 0) setCategorySubList([...categoryList[0].subCategories]);
   }, [categoryList]);
 
   const handleChangeCategory = (e : ChangeEvent<HTMLSelectElement>) => {
@@ -84,9 +84,10 @@ const ArticleEduContentWriteTemplate = ({
       <ArticleCategoryBox>
       <select 
         name="categorySeq"
+        value={articleForm.categorySeq || categoryList[0]?.categorySeq}
         onChange={handleChangeCategory}>
         {categoryList.map(category => (
-          <option 
+          <option
             key={category.categorySeq} 
             value={category.categorySeq}>
             {category.categoryName}
@@ -95,10 +96,11 @@ const ArticleEduContentWriteTemplate = ({
       </select>
       <select 
         name="subCategorySeq"
+        value={articleForm.subCategorySeq || subCategoryList[0]?.subCategorySeq}
         onChange={handleChangeSelectBox}
         ref={subCategorySelectBoxRef}>
-        {categorySubList.map(subCategory => (
-          <option 
+        {subCategoryList.map(subCategory => (
+          <option
             key={subCategory.subCategorySeq} 
             value={subCategory.subCategorySeq}>
             {subCategory.subCategoryName}
