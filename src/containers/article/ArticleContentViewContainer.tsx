@@ -4,6 +4,7 @@ import * as articleTypes from "../../types/articleTypes";
 import * as commonTypes from "../../types/commonTypes";
 import * as authTypes from "../../types/authTypes";
 import * as api from "../../lib/api/article";
+import * as authApi from "../../lib/api/auth";
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 

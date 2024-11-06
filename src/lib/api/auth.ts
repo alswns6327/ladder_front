@@ -31,4 +31,7 @@ export const login = ({
     ladderAccountPassword,
   });
 
+export const searchUsers = () => 
+  apiClient.get("/account/list")
+
 export const logout = () => apiClient.post("/logout");

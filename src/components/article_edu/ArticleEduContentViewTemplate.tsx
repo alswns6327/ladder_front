@@ -5,6 +5,7 @@ import LinkButton from "../common/LinkButton";
 import MDEditor from "@uiw/react-md-editor";
 import * as articleTypes from "../../types/articleTypes";
 import * as eduTypes from "../../types/eduTypes";
+import * as authTypes from "../../types/authTypes";
 import * as commonTypes from "../../types/commonTypes";
 
 const ArticleEduContentViewTemplateBlock = styled.div`

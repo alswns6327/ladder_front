@@ -26,8 +26,8 @@ export const deleteSubCategory = (subCategorySeq : number) =>
 export const saveArticle = (article : commonTypes.article) =>
     apiClient.post("/article", article);
 
-export const searchArticleList = (userId : string) =>
-    apiClient.get(`/article?userId=${userId}`);
+export const searchArticleList = (searchParam : string) =>
+    apiClient.get(`/article?searchParam=${searchParam}`);
 
 export const searchArticle = (articleSeq : number) =>
     apiClient.get(`/article/${articleSeq}`);

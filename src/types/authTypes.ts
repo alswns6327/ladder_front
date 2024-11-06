@@ -13,3 +13,8 @@ export type ladderUserType = {
     ladderAccountAuth?: string;
     accessToken?: string;
   };
+
+export type ladderUserSelectType = {
+  ladderAccountSeq : number;
+  ladderAccountId : string;
+}

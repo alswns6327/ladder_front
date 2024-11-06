@@ -15,10 +15,11 @@ const EduCategoryManageContainer = () => {
     }
 
     return (
-        <ArticleEduCategoryManageTemplate 
-            categoryList={eduCategoryList}
-            handleSaveCategory={handleSaveEduCategory}
-            handleSaveSubCategory={handleSaveEduSubCategory}/>
+        // <ArticleEduCategoryManageTemplate 
+        //     categoryList={eduCategoryList}
+        //     handleSaveCategory={handleSaveEduCategory}
+        //     handleSaveSubCategory={handleSaveEduSubCategory}/>
+        <div></div>
     );
 };
 

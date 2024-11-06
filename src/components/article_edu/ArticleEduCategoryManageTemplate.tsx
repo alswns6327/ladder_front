@@ -25,6 +25,10 @@ export const ArticleEduSubCategoryItemBox = styled(ArticleEduCategoryItemBox)`
   margin-left: 20px;
 `
 
+export const ArticleEduCategoryButton = styled.button`
+  
+`
+
 type ArticleEduCategoryManageTemplatePropsType = {
   categoryList : commonTypes.categoryType[];
   handleSaveCategory : (category : commonTypes.categoryType) => Promise<number>;
