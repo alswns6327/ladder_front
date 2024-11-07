@@ -53,7 +53,7 @@ const ArticleEduList = styled.div`
 
 type ArticleEduListTemplateProps = {
   menuType : string;
-  list : commonTypes.article[];
+  list : commonTypes.article[] | commonTypes.edu[];
   categoryList : commonTypes.categoryType[];
   userList : authTypes.ladderUserSelectType[];
   ladderAccountId : string;
@@ -90,9 +90,11 @@ const ArticleEduListTemplate = ({
         </select>
       </ArticleEduListHeader>
       <ArticleEduList>
-        {list.map(item => (
-          <Link key={item.articleSeq} to={`/${menuType}/${item.articleSeq}`}>{item.title}</Link>
-        ))}
+        {list.map(item => {
+          if("articleSeq" in item) return <Link key={item.articleSeq} to={`/${menuType}/${item.articleSeq}`}>{item.title}</Link>
+          else if("eduSeq" in item) return <Link key={item.eduSeq} to={`/${menuType}/${item.eduSeq}`}>{item.title}</Link>
+          }
+        )}
       </ArticleEduList>
       <GroupList>
         <ArticleEduCategoryButton

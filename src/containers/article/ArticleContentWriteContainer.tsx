@@ -16,7 +16,7 @@ const ArticleContentWriteContainer = () => {
         categorySeq : "",
         subCategorySeq : "",
         title : "",
-        article : "",
+        content : "",
     });
     const subCategorySelectBoxRef = useRef<HTMLSelectElement>(null);
 
@@ -42,7 +42,7 @@ const ArticleContentWriteContainer = () => {
     }, [articleForm]);
 
     const handleChangeMdText = (value: string | undefined, e: ChangeEvent<HTMLTextAreaElement> | undefined) => {
-        setArticleForm({...articleForm, article: value as string});
+        setArticleForm({...articleForm, content: value as string});
     };
 
     const handleChangeInput = (e : ChangeEvent<HTMLInputElement>) => {
@@ -64,7 +64,7 @@ const ArticleContentWriteContainer = () => {
     return (
         <ArticleEduContentWriteTemplate
             categoryList={articleCategoryList}
-            articleForm={articleForm}
+            contentForm={articleForm}
             handleChangeSelectBox={handleChangeSelectBox}
             handleChangeInput={handleChangeInput}
             handleChangeMdText={handleChangeMdText}

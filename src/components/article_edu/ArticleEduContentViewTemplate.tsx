@@ -32,25 +32,30 @@ const ArticleContentBox = styled.div`
 
 type ArticleEduContentViewTemplateProps = {
   menuType : string;
-  article : commonTypes.article;
+  content : commonTypes.article | commonTypes.edu;
 }
 
 const ArticleEduContentViewTemplate = ({
   menuType,
-  article,
+  content,
 } : ArticleEduContentViewTemplateProps) => {
+
+  let updateLink = null;
+  if("articleSeq" in content) updateLink = <LinkButton text="수정" link={`/${menuType}/write/${content.articleSeq}`}/>;
+  else if("eduSeq" in content) updateLink = <LinkButton text="수정" link={`/${menuType}/write/${content.eduSeq}`}/>;
+
   return (
     <ArticleEduContentViewTemplateBlock>
-      <ArticleCategoryBox>{article.categoryName?.concat(" > ")}{article.subCategoryName}</ArticleCategoryBox>
-      <ArticleTitleBox>{article.title}</ArticleTitleBox>
+      <ArticleCategoryBox>{content.categoryName?.concat(" > ")}{content.subCategoryName}</ArticleCategoryBox>
+      <ArticleTitleBox>{content.title}</ArticleTitleBox>
       <ArticleContentBox>
         <MDEditor.Markdown
           style={{ padding: 10 }}
-          source={article.article}/>
+          source={content.content}/>
       </ArticleContentBox>
       <RightMenu>
         <Button>목록 보기</Button>
-        <LinkButton text="수정" link={`/${menuType}/write/${article.articleSeq}`}/>
+        {updateLink}
         <Button>삭제</Button>
       </RightMenu>
     </ArticleEduContentViewTemplateBlock>

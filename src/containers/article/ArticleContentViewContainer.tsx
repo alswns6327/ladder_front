@@ -15,7 +15,7 @@ const ArticleContentViewContainer = () => {
         categorySeq : "",
         subCategorySeq : "",
         title : "",
-        article : "",
+        content : "",
         categoryName : "",
         subCategoryName : "",
     });
@@ -32,7 +32,7 @@ const ArticleContentViewContainer = () => {
     return (
         <ArticleEduContentViewTemplate
             menuType='article'
-            article={article}/>
+            content={article}/>
     );
 };
 

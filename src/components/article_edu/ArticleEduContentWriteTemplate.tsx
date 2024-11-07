@@ -46,7 +46,7 @@ const ArticleContentBox = styled.div`
 
 type ArticleEduContentWriteTemplateProps = {
   categoryList : commonTypes.categoryType[];
-  articleForm : commonTypes.article;
+  contentForm : commonTypes.article | commonTypes.edu;
   handleChangeMdText : (value : string | undefined, e: ChangeEvent<HTMLTextAreaElement> | undefined) => void;
   handleChangeInput : (e: ChangeEvent<HTMLInputElement>) => void;
   handleChangeSelectBox : (e : ChangeEvent<HTMLSelectElement>) => void;
@@ -56,7 +56,7 @@ type ArticleEduContentWriteTemplateProps = {
 
 const ArticleEduContentWriteTemplate = ({
   categoryList,
-  articleForm,
+  contentForm,
   handleChangeMdText,
   handleChangeInput,
   handleChangeSelectBox,
@@ -67,8 +67,8 @@ const ArticleEduContentWriteTemplate = ({
   const [subCategoryList, setCategorySubList] = useState<commonTypes.subCategoryType[]>([]);
 
   useEffect(() => {
-    const category = categoryList.find(category => Number(category.categorySeq) === Number(articleForm.categorySeq));
-    if(articleForm.categorySeq && category !== undefined) setCategorySubList([...category.subCategories])
+    const category = categoryList.find(category => Number(category.categorySeq) === Number(contentForm.categorySeq));
+    if(contentForm.categorySeq && category !== undefined) setCategorySubList([...category.subCategories])
     else if(categoryList.length > 0) setCategorySubList([...categoryList[0].subCategories]);
   }, [categoryList]);
 
@@ -84,7 +84,7 @@ const ArticleEduContentWriteTemplate = ({
       <ArticleCategoryBox>
       <select 
         name="categorySeq"
-        value={articleForm.categorySeq || categoryList[0]?.categorySeq}
+        value={contentForm.categorySeq || categoryList[0]?.categorySeq}
         onChange={handleChangeCategory}>
         {categoryList.map(category => (
           <option
@@ -96,7 +96,7 @@ const ArticleEduContentWriteTemplate = ({
       </select>
       <select 
         name="subCategorySeq"
-        value={articleForm.subCategorySeq || subCategoryList[0]?.subCategorySeq}
+        value={contentForm.subCategorySeq || subCategoryList[0]?.subCategorySeq}
         onChange={handleChangeSelectBox}
         ref={subCategorySelectBoxRef}>
         {subCategoryList.map(subCategory => (
@@ -112,13 +112,13 @@ const ArticleEduContentWriteTemplate = ({
         <TitleInput
           name="title" 
           onChange={handleChangeInput} 
-          value={articleForm.title} 
+          value={contentForm.title} 
           placeholder="챕터 제목" />
       </ArticleTitleBox>
       <ArticleContentBox>
         <MDEditor
           height={400} 
-          value={articleForm.article}
+          value={contentForm.content}
           onChange={handleChangeMdText} 
         />
       </ArticleContentBox>

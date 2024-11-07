@@ -16,7 +16,17 @@ export type article = {
     categorySeq : number | string;
     subCategorySeq : number | string;
     title : string;
-    article : string;
+    content : string;
+    categoryName? : string;
+    subCategoryName? : string;
+}
+
+export type edu = {
+    eduSeq? : number | string;
+    categorySeq : number | string;
+    subCategorySeq : number | string;
+    title : string;
+    content : string;
     categoryName? : string;
     subCategoryName? : string;
 }
