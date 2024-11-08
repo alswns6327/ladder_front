@@ -6,10 +6,11 @@ import * as authTypes from "../../types/authTypes";
 import * as api from "../../lib/api/article";
 import * as authApi from "../../lib/api/auth";
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const ArticleContentViewContainer = () => {
     const { articleSeq } = useParams();
+    const navigator = useNavigate();
     const [article, setArticle] = useState<commonTypes.article>({
         articleSeq : "",
         categorySeq : "",
@@ -29,8 +30,15 @@ const ArticleContentViewContainer = () => {
         searchArticle();
     }, []);
 
+    const handleRemoveArticle = async () => {
+        const response = await api.deleteArticle(Number(articleSeq));
+        if(response.data.msg === "success") {alert("삭제 완료"); navigator("/article");}
+        else alert("삭제 실패");
+    }
+
     return (
         <ArticleEduContentViewTemplate
+            handleRemove={handleRemoveArticle}
             menuType='article'
             content={article}/>
     );

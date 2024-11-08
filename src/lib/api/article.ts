@@ -34,3 +34,6 @@ export const searchArticle = (articleSeq : number) =>
 
 export const updateArticle = (article : commonTypes.article) =>
     apiClient.put("/article", article);
+
+export const deleteArticle = (articleSeq : number) =>
+    apiClient.delete(`/article/${articleSeq}`);

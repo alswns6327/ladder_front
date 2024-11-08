@@ -3,6 +3,8 @@ import styled from "styled-components";
 import Button from "../common/Button";
 import * as commonTypes from "../../types/commonTypes";
 import Input from "../common/Input";
+import { RightMenu } from "../common/RightMenu";
+import BackHistoryButton from "../common/BackHistoryButton";
 
 const ArticleEduCategoryManageTemplateBlock = styled.div`
   width: 1150;
@@ -203,6 +205,9 @@ const ArticleEduCategoryManageTemplate = ({
             ))}
           </ArticleEduCategoryItemBox>
       ))}
+      <RightMenu>
+        <BackHistoryButton>이전으로</BackHistoryButton>
+      </RightMenu>
     </ArticleEduCategoryManageTemplateBlock>
   );
 };

@@ -7,6 +7,7 @@ import * as articleTypes from "../../types/articleTypes";
 import * as eduTypes from "../../types/eduTypes";
 import * as authTypes from "../../types/authTypes";
 import * as commonTypes from "../../types/commonTypes";
+import BackHistoryButton from "../common/BackHistoryButton";
 
 const ArticleEduContentViewTemplateBlock = styled.div`
   width: 1150;
@@ -33,11 +34,13 @@ const ArticleContentBox = styled.div`
 type ArticleEduContentViewTemplateProps = {
   menuType : string;
   content : commonTypes.article | commonTypes.edu;
+  handleRemove : () => Promise<void>;
 }
 
 const ArticleEduContentViewTemplate = ({
   menuType,
   content,
+  handleRemove,
 } : ArticleEduContentViewTemplateProps) => {
 
   let updateLink = null;
@@ -54,9 +57,9 @@ const ArticleEduContentViewTemplate = ({
           source={content.content}/>
       </ArticleContentBox>
       <RightMenu>
-        <Button>목록 보기</Button>
+        <BackHistoryButton>이전으로</BackHistoryButton>
         {updateLink}
-        <Button>삭제</Button>
+        <Button onClick={handleRemove}>삭제</Button>
       </RightMenu>
     </ArticleEduContentViewTemplateBlock>
   );

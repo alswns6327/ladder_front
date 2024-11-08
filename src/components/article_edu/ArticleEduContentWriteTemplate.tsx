@@ -7,6 +7,7 @@ import * as articleTypes from "../../types/articleTypes";
 import * as eduTypes from "../../types/eduTypes";
 import * as commonTypes from "../../types/commonTypes";
 import { ChangeEvent, useEffect, useState } from "react";
+import BackHistoryButton from "../common/BackHistoryButton";
 
 const ArticleEduContentWriteTemplateBlock = styled.div`
   width: 1150;
@@ -123,7 +124,7 @@ const ArticleEduContentWriteTemplate = ({
         />
       </ArticleContentBox>
       <RightMenu>
-        <Button>목록 보기</Button>
+        <BackHistoryButton>이전으로</BackHistoryButton>
         <Button onClick={handleSave}>저장</Button>
       </RightMenu>
     </ArticleEduContentWriteTemplateBlock>

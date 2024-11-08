@@ -34,3 +34,6 @@ export const searchEdu = (eduSeq : number) =>
 
 export const updateEdu = (edu : commonTypes.edu) =>
     apiClient.put("/edu", edu);
+
+export const deleteEdu = (eduSeq : number) =>
+    apiClient.delete(`/edu/${eduSeq}`);
