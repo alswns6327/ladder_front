@@ -32,7 +32,6 @@ const ArticleCategoryManageContainer = () => {
 
     const handleSaveArticleSubCategory = async (subCategory : commonTypes.subCategoryType) : Promise<number> => {
         if(typeof subCategory.subCategorySeq === "string"){
-            subCategory.subCategorySeq = -1;
             const response = await api.saveSubCategory({...subCategory, subCategorySeq : -1});
             if(response.data.msg === "success") return response.data.data.subCategorySeq;
             else return -1;

@@ -11,14 +11,13 @@ import * as api from "../../lib/api/edu";
 const EduContentUpdateContainer = () => {
     
     const { eduSeq } = useParams();
-    const [checkFirstRender, setCheckFirstRender] = useState<boolean>(true);
     const [eduCategoryList, setEduCategoryList] = useState<commonTypes.categoryType[]>([]);
     const auth : authTypes.authInitialStateType = useSelector(({auth} : {auth : authTypes.authInitialStateType}) => auth);
     const navigator = useNavigate();
     const [eduForm, setEduForm] = useState<commonTypes.edu>({
         eduSeq : eduSeq,
-        categorySeq : "",
-        subCategorySeq : "",
+        categorySeq : "전체",
+        subCategorySeq : "전체",
         title : "",
         content : "",
     });
@@ -38,18 +37,20 @@ const EduContentUpdateContainer = () => {
     useEffect(() => {
         const searchEdu = async () => {
             const response = await api.searchEdu(Number(eduSeq));
-            if(response.data.msg === "success") setEduForm(response.data.data);
+            if(response.data.msg === "success") {
+                const edu : commonTypes.edu = response.data.data as commonTypes.edu;
+                setEduForm(
+                    {
+                        ...edu,
+                        categorySeq : edu.categorySeq ? edu.categorySeq : "전체",
+                        subCategorySeq : edu.subCategorySeq ? edu.subCategorySeq : "전체"
+                    }
+                );
+            }
             else alert("조회 실패");
         }
         searchEdu();
     }, []);
-
-    useEffect(() => {
-        if(Number(eduForm.subCategorySeq) !== Number(subCategorySelectBoxRef.current?.value) && !checkFirstRender){
-            const subCategorySeq = Number(subCategorySelectBoxRef.current?.value) as number
-            setEduForm({...eduForm, subCategorySeq : subCategorySeq})
-        }
-    }, [eduForm]);
     
     const handleChangeMdText = (value: string | undefined, e: ChangeEvent<HTMLTextAreaElement> | undefined) => {
         setEduForm({...eduForm, content: value as string});
@@ -62,12 +63,16 @@ const EduContentUpdateContainer = () => {
 
     const handleChangeSelectBox = (e : ChangeEvent<HTMLSelectElement>) => {
         const {name, value} : {name : string, value : string} = e.target;
-        setEduForm({...eduForm, [name] : value});
-        setCheckFirstRender(!checkFirstRender);
+        setEduForm({...eduForm, [name] : value, subCategorySeq : name === "categorySeq" ? "전체" : value});
     }
 
     const handleSave = async () => {
-        const response = await api.updateEdu(eduForm);
+        const response = await api.updateEdu(
+            {
+                ...eduForm, 
+                categorySeq : eduForm.categorySeq === "전체" ? null : eduForm.categorySeq, 
+                subCategorySeq : eduForm.subCategorySeq === "전체" ? null : eduForm.subCategorySeq}
+        );
         if(response.data.msg === "success") navigator("/edu");
         else alert("저장 실패");
     }

@@ -13,8 +13,8 @@ const ArticleContentWriteContainer = () => {
     const auth : authTypes.authInitialStateType = useSelector(({auth} : {auth : authTypes.authInitialStateType}) => auth);
     const navigator = useNavigate();
     const [articleForm, setArticleForm] = useState<commonTypes.article>({
-        categorySeq : "",
-        subCategorySeq : "",
+        categorySeq : "전체",
+        subCategorySeq : "전체",
         title : "",
         content : "",
     });
@@ -30,15 +30,8 @@ const ArticleContentWriteContainer = () => {
     }, []);
 
     useEffect(() => {
-        if(articleCategoryList.length > 0 && articleCategoryList[0].subCategories.length > 0) 
-            setArticleForm({...articleForm, categorySeq : articleCategoryList[0].categorySeq, subCategorySeq : articleCategoryList[0].subCategories[0].subCategorySeq});
-    }, [articleCategoryList]);
-
-    useEffect(() => {
-        if(Number(articleForm.subCategorySeq) !== Number(subCategorySelectBoxRef.current?.value)){
-            const subCategorySeq = Number(subCategorySelectBoxRef.current?.value) as number
-            setArticleForm({...articleForm, subCategorySeq : subCategorySeq})
-        }
+        if(subCategorySelectBoxRef.current?.value === "전체" && articleForm.subCategorySeq !== subCategorySelectBoxRef.current?.value) 
+            setArticleForm({...articleForm, subCategorySeq : "전체"});
     }, [articleForm]);
 
     const handleChangeMdText = (value: string | undefined, e: ChangeEvent<HTMLTextAreaElement> | undefined) => {
@@ -51,12 +44,17 @@ const ArticleContentWriteContainer = () => {
     }
 
     const handleChangeSelectBox = (e : ChangeEvent<HTMLSelectElement>) => {
-        const {name, value} : {name : string, value : string} = e.target;
+        const {name, value} : {name : string, value : string} = e.target;        
         setArticleForm({...articleForm, [name] : value});
     }
 
     const handleSave = async () => {
-        const response = await api.saveArticle(articleForm);
+        const response = await api.saveArticle(
+            {
+                ...articleForm, 
+                categorySeq : articleForm.categorySeq === "전체" ? null : articleForm.categorySeq, 
+                subCategorySeq : articleForm.subCategorySeq === "전체" ? null : articleForm.subCategorySeq}
+        );
         if(response.data.msg === "success") navigator("/article");
         else alert("저장 실패");
     }

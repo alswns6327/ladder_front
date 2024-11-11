@@ -13,8 +13,8 @@ export type subCategoryType = {
 
 export type article = {
     articleSeq? : number | string;
-    categorySeq : number | string;
-    subCategorySeq : number | string;
+    categorySeq : number | string | null;
+    subCategorySeq : number | string | null;
     title : string;
     content : string;
     categoryName? : string;
@@ -23,8 +23,8 @@ export type article = {
 
 export type edu = {
     eduSeq? : number | string;
-    categorySeq : number | string;
-    subCategorySeq : number | string;
+    categorySeq : number | string | null;
+    subCategorySeq : number | string | null;
     title : string;
     content : string;
     categoryName? : string;

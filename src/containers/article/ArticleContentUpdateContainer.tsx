@@ -10,14 +10,13 @@ import * as api from "../../lib/api/article";
 const ArticleContentUpdateContainer = () => {
 
     const { articleSeq } = useParams();
-    const [checkFirstRender, setCheckFirstRender] = useState<boolean>(true);
     const [articleCategoryList, setArticleCategoryList] = useState<commonTypes.categoryType[]>([]);
     const auth : authTypes.authInitialStateType = useSelector(({auth} : {auth : authTypes.authInitialStateType}) => auth);
     const navigator = useNavigate();
     const [articleForm, setArticleForm] = useState<commonTypes.article>({
         articleSeq : articleSeq,
-        categorySeq : "",
-        subCategorySeq : "",
+        categorySeq : "전체",
+        subCategorySeq : "전체",
         title : "",
         content : "",
     });
@@ -37,18 +36,20 @@ const ArticleContentUpdateContainer = () => {
     useEffect(() => {
         const searchArticle = async () => {
             const response = await api.searchArticle(Number(articleSeq));
-            if(response.data.msg === "success") setArticleForm(response.data.data);
+            if(response.data.msg === "success") {
+                const article : commonTypes.article = response.data.data as commonTypes.article;
+                setArticleForm(
+                    {
+                        ...article,
+                        categorySeq : article.categorySeq ? article.categorySeq : "전체",
+                        subCategorySeq : article.subCategorySeq ? article.subCategorySeq : "전체"
+                    }
+                );
+            }
             else alert("조회 실패");
         }
         searchArticle();
     }, []);
-
-    useEffect(() => {
-        if(Number(articleForm.subCategorySeq) !== Number(subCategorySelectBoxRef.current?.value) && !checkFirstRender){
-            const subCategorySeq = Number(subCategorySelectBoxRef.current?.value) as number
-            setArticleForm({...articleForm, subCategorySeq : subCategorySeq})
-        }
-    }, [articleForm]);
     
     const handleChangeMdText = (value: string | undefined, e: ChangeEvent<HTMLTextAreaElement> | undefined) => {
         setArticleForm({...articleForm, content: value as string});
@@ -61,12 +62,16 @@ const ArticleContentUpdateContainer = () => {
 
     const handleChangeSelectBox = (e : ChangeEvent<HTMLSelectElement>) => {
         const {name, value} : {name : string, value : string} = e.target;
-        setArticleForm({...articleForm, [name] : value});
-        setCheckFirstRender(!checkFirstRender);
+        setArticleForm({...articleForm, [name] : value, subCategorySeq : name === "categorySeq" ? "전체" : value});
     }
 
     const handleSave = async () => {
-        const response = await api.updateArticle(articleForm);
+        const response = await api.updateArticle(
+            {
+                ...articleForm, 
+                categorySeq : articleForm.categorySeq === "전체" ? null : articleForm.categorySeq, 
+                subCategorySeq : articleForm.subCategorySeq === "전체" ? null : articleForm.subCategorySeq}
+        );
         if(response.data.msg === "success") navigator("/article");
         else alert("저장 실패");
     }

@@ -12,8 +12,8 @@ const EduContentWriteContainer = () => {
     const auth : authTypes.authInitialStateType = useSelector(({auth} : {auth : authTypes.authInitialStateType}) => auth);
     const navigator = useNavigate();
     const [eduForm, setEduForm] = useState<commonTypes.edu>({
-        categorySeq : "",
-        subCategorySeq : "",
+        categorySeq : "전체",
+        subCategorySeq : "전체",
         title : "",
         content : "",
     });
@@ -29,15 +29,8 @@ const EduContentWriteContainer = () => {
     }, []);
 
     useEffect(() => {
-        if(eduCategoryList.length > 0 && eduCategoryList[0].subCategories.length > 0) 
-            setEduForm({...eduForm, categorySeq : eduCategoryList[0].categorySeq, subCategorySeq : eduCategoryList[0].subCategories[0].subCategorySeq});
-    }, [eduCategoryList]);
-
-    useEffect(() => {
-        if(Number(eduForm.subCategorySeq) !== Number(subCategorySelectBoxRef.current?.value)){
-            const subCategorySeq = Number(subCategorySelectBoxRef.current?.value) as number
-            setEduForm({...eduForm, subCategorySeq : subCategorySeq})
-        }
+        if(subCategorySelectBoxRef.current?.value === "전체" && eduForm.subCategorySeq !== subCategorySelectBoxRef.current?.value) 
+            setEduForm({...eduForm, subCategorySeq : "전체"});
     }, [eduForm]);
 
     const handleChangeMdText = (value: string | undefined, e: ChangeEvent<HTMLTextAreaElement> | undefined) => {
@@ -55,7 +48,12 @@ const EduContentWriteContainer = () => {
     }
 
     const handleSave = async () => {
-        const response = await api.saveEdu(eduForm);
+        const response = await api.saveEdu(
+            {
+                ...eduForm, 
+                categorySeq : eduForm.categorySeq === "전체" ? null : eduForm.categorySeq, 
+                subCategorySeq : eduForm.subCategorySeq === "전체" ? null : eduForm.subCategorySeq}
+        );
         if(response.data.msg === "success") navigator("/edu");
         else alert("저장 실패");
     }

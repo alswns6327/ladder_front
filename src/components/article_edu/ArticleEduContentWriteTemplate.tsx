@@ -66,7 +66,7 @@ const ArticleEduContentWriteTemplate = ({
 } : ArticleEduContentWriteTemplateProps) => {
 
   const [subCategoryList, setCategorySubList] = useState<commonTypes.subCategoryType[]>([]);
-
+  console.log(contentForm);
   useEffect(() => {
     const category = categoryList.find(category => Number(category.categorySeq) === Number(contentForm.categorySeq));
     if(contentForm.categorySeq && category !== undefined) setCategorySubList([...category.subCategories])
@@ -76,7 +76,8 @@ const ArticleEduContentWriteTemplate = ({
   const handleChangeCategory = (e : ChangeEvent<HTMLSelectElement>) => {
     const {name, value} : {name : string, value : string} = e.target;
     const categoryIndex = categoryList.findIndex(category => category.categorySeq === Number(value));
-    setCategorySubList([...categoryList[categoryIndex].subCategories]);
+    const subCategories = categoryList[categoryIndex]?.subCategories;
+    setCategorySubList(subCategories ? [...subCategories] : []);
     handleChangeSelectBox(e);
   }
 
@@ -87,6 +88,9 @@ const ArticleEduContentWriteTemplate = ({
         name="categorySeq"
         value={contentForm.categorySeq || categoryList[0]?.categorySeq}
         onChange={handleChangeCategory}>
+        <option value={"전체"}>
+          전체
+        </option>
         {categoryList.map(category => (
           <option
             key={category.categorySeq} 
@@ -100,6 +104,9 @@ const ArticleEduContentWriteTemplate = ({
         value={contentForm.subCategorySeq || subCategoryList[0]?.subCategorySeq}
         onChange={handleChangeSelectBox}
         ref={subCategorySelectBoxRef}>
+        <option value={"전체"}>
+          전체
+        </option>
         {subCategoryList.map(subCategory => (
           <option
             key={subCategory.subCategorySeq} 
