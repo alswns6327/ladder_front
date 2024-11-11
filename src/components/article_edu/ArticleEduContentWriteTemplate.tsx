@@ -66,7 +66,6 @@ const ArticleEduContentWriteTemplate = ({
 } : ArticleEduContentWriteTemplateProps) => {
 
   const [subCategoryList, setCategorySubList] = useState<commonTypes.subCategoryType[]>([]);
-  console.log(contentForm);
   useEffect(() => {
     const category = categoryList.find(category => Number(category.categorySeq) === Number(contentForm.categorySeq));
     if(contentForm.categorySeq && category !== undefined) setCategorySubList([...category.subCategories])
