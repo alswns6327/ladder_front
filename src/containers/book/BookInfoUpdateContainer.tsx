@@ -19,10 +19,14 @@ const BookInfoUpdateContainer = () => {
     searchBookInfo();
   }, []);
   const handleBookInfoUpdate = async (bookInfoForm: bookTypes.bookInfoType) => {
+    if(!bookInfoForm.bookName.trim()) return alert("책 제목을 입력해주세요.");
+
     const data: bookTypes.bookInfoType = Object.assign(bookInfoForm, {
       bookInfoId: bookInfoId,
     }) as bookTypes.bookInfoType;
+    console.log(data);
     const response = await api.updateBookInfo(data);
+    console.log(response);
     if (response.data.msg === "success") navigator("/");
     else alert("저장 실패");
   };

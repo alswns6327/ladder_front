@@ -5,6 +5,7 @@ import * as commonTypes from "../../types/commonTypes";
 import Input from "../common/Input";
 import { RightMenu } from "../common/RightMenu";
 import BackHistoryButton from "../common/BackHistoryButton";
+import RequiredText from "../common/RequiredText";
 
 const ArticleEduCategoryManageTemplateBlock = styled.div`
   width: 1150;
@@ -136,6 +137,8 @@ const ArticleEduCategoryManageTemplate = ({
   }
 
   const handleSaveCategoryWrapper = async (category : commonTypes.categoryType) => {
+
+      if(!category.categoryName.trim()) return alert("카테고리 명을 입력해주세요.");
       const responseCategorySeq = await handleSaveCategory(category);
       if(responseCategorySeq === -1) return alert("저장 실패");
 
@@ -149,19 +152,21 @@ const ArticleEduCategoryManageTemplate = ({
   }
 
   const handleSaveSubCategoryWrapper = async (subCategory : commonTypes.subCategoryType) => {
+    if(!subCategory.subCategoryName.trim()) return alert("카테고리 명을 입력해주세요.");
+
     const responseSubCategorySeq = await handleSaveSubCategory(subCategory);
-      if(responseSubCategorySeq === -1) return alert("저장 실패");
-      
-      if(typeof subCategory.subCategorySeq === 'string')
-        setCategoryListImitate(
-          categoryListImitate.map(
-            c => c.categorySeq === subCategory.categorySeq ? 
-              {...c, subCategories : c.subCategories.map(sc => sc.subCategorySeq === subCategory.subCategorySeq ? ({...sc, subCategorySeq : responseSubCategorySeq}) : sc)}
-              : c
-          )
+    if(responseSubCategorySeq === -1) return alert("저장 실패");
+    
+    if(typeof subCategory.subCategorySeq === 'string')
+      setCategoryListImitate(
+        categoryListImitate.map(
+          c => c.categorySeq === subCategory.categorySeq ? 
+            {...c, subCategories : c.subCategories.map(sc => sc.subCategorySeq === subCategory.subCategorySeq ? ({...sc, subCategorySeq : responseSubCategorySeq}) : sc)}
+            : c
         )
-      
-      alert("저장 성공");
+      )
+    
+    alert("저장 성공");
   }
 
   return (

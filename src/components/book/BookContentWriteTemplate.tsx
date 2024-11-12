@@ -7,6 +7,7 @@ import * as bookTypes from "../../types/bookTypes";
 import BackHistoryButton from "../common/BackHistoryButton";
 import { TitleInput } from "../common/TitleInput";
 import { RightMenu } from "../common/RightMenu";
+import RequiredText from "../common/RequiredText";
 
 const BookContentWriteTemplateBlock = styled.div`
   width: 1150;
@@ -47,6 +48,7 @@ const BookContentWriteTemplate = ({
   return (
     <BookContentWriteTemplateBlock>
       <BookTitleBox>
+        <RequiredText/>
         <TitleInput 
           name="bookChapterInfoTitle" 
           onChange={handleChangeTitle} 
@@ -54,6 +56,7 @@ const BookContentWriteTemplate = ({
           placeholder="챕터 제목" />
       </BookTitleBox>
       <BookContentBox /*data-color-mode="light"*/ data-color-mode="dark">
+        <RequiredText/>
         <MDEditor 
           height={400} 
           value={bookChapterInfo.bookChapterInfoContent}

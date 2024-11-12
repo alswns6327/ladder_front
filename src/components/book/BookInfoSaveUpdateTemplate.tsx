@@ -5,6 +5,7 @@ import Input from "../common/Input";
 import BackHistoryButton from "../common/BackHistoryButton";
 import { RightMenu } from "../common/RightMenu";
 import * as bookTypes from "../../types/bookTypes";
+import RequiredText from "../common/RequiredText";
 
 const BookInfoSaveUpdateTemplateBlock = styled.div`
   width: 1150;
@@ -135,6 +136,7 @@ const BookInfoSaveUpdateTemplate = ({
     <BookInfoSaveUpdateTemplateBlock>
       <BookInfoBox>
         <BookInfoInputBox>
+          <RequiredText/>
           <Input
             onChange={handleChangeInput}
             value={bookInfoForm?.bookName}

@@ -6,14 +6,22 @@ import * as authTypes from "../../types/authTypes";
 import * as api from "../../lib/api/edu";
 import * as authApi from "../../lib/api/auth";
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const EduListContainer = () => {
+
+    const navigator = useNavigate();
+
     const [eduList, setEduList] = useState<commonTypes.edu[]>([]);
     const [eduCategoryList, setEduCategoryList] = useState<commonTypes.categoryType[]>([]);
     const [userList, setUserList] = useState<authTypes.ladderUserSelectType[]>([]);
     const auth = useSelector(({auth} : {auth : authTypes.authInitialStateType}) => auth);
     const [ladderAccountId, setLadderAccountId] = useState<string>(auth.ladderAccountId);
     useEffect(() => {
+        if(!["STUDENT", "ADMIN"].includes(auth.ladderAccountAuth)) {
+            alert("권한 없음");
+            return navigator("/");
+        }
         const searchEduCategoryList = async () => {
             const response = await api.searchEduGroupList(ladderAccountId);
             if(response.data.msg === "success") setEduCategoryList(response.data.data);
@@ -23,12 +31,14 @@ const EduListContainer = () => {
     }, [ladderAccountId]);
 
     useEffect(() => {
-        const searchEduList = async () => {
-            const response = await api.searchEduList(encodeURIComponent(`{"ladderAccountId":"${ladderAccountId}","categorySeq":${null},"subCategorySeq":${null}}`));
-            if(response.data.msg === "success") setEduList(response.data.data);
-            else alert("조회 실패");
+        if(["STUDENT", "ADMIN"].includes(auth.ladderAccountAuth)){
+            const searchEduList = async () => {
+                const response = await api.searchEduList(encodeURIComponent(`{"ladderAccountId":"${ladderAccountId}","categorySeq":${null},"subCategorySeq":${null}}`));
+                if(response.data.msg === "success") setEduList(response.data.data);
+                else alert("조회 실패");
+            }
+            searchEduList();
         }
-        searchEduList();
     }, [ladderAccountId]);
 
     useEffect(() => {

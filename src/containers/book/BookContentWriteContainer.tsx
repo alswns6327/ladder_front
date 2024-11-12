@@ -25,6 +25,8 @@ const BookContentWriteContainer = () => {
   }
 
   const handleSaveContent = async () => {
+    if(!bookChapterInfo.bookChapterInfoTitle.trim() || !bookChapterInfo.bookChapterInfoContent?.trim()) return alert("필수값을 입력해주세요.");
+    
     const response = await api.saveBookContent(bookChapterInfo);
     if (response.data.msg === "success") navigator(`/book/chapter/${bookInfoId}`);
     else alert("저장 실패");

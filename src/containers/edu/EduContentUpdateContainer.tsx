@@ -67,6 +67,9 @@ const EduContentUpdateContainer = () => {
     }
 
     const handleSave = async () => {
+        if(!eduForm.content.trim() || !eduForm.title.trim()) return alert("필수값을 입력해주세요.");
+        
+
         const response = await api.updateEdu(
             {
                 ...eduForm, 

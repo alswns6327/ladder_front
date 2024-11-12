@@ -37,6 +37,8 @@ const BookContentUpdateContainer = () => {
     };
   
     const handleUpdateContent = async () => {
+      if(!bookChapterInfo.bookChapterInfoTitle.trim() || !bookChapterInfo.bookChapterInfoContent?.trim()) return alert("필수값을 입력해주세요.");
+      
       const response = await api.updateBookContent(bookChapterInfo);
       if (response.data.msg === "success") navigator(`/book/chapter/${response.data.data.bookInfoId}`);
       else alert(response.data.msg);

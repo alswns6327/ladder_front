@@ -49,6 +49,9 @@ const ArticleContentWriteContainer = () => {
     }
 
     const handleSave = async () => {
+        if(!articleForm.content.trim() || !articleForm.title.trim()){
+            return alert("필수값을 입력해주세요.");
+        }
         const response = await api.saveArticle(
             {
                 ...articleForm, 

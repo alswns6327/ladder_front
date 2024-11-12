@@ -8,6 +8,7 @@ import * as eduTypes from "../../types/eduTypes";
 import * as commonTypes from "../../types/commonTypes";
 import { ChangeEvent, useEffect, useState } from "react";
 import BackHistoryButton from "../common/BackHistoryButton";
+import RequiredText from "../common/RequiredText";
 
 const ArticleEduContentWriteTemplateBlock = styled.div`
   width: 1150;
@@ -116,12 +117,14 @@ const ArticleEduContentWriteTemplate = ({
       </select>
       </ArticleCategoryBox>
       <ArticleTitleBox>
+        <RequiredText/>
         <TitleInput
           name="title" 
           onChange={handleChangeInput} 
           value={contentForm.title} 
           placeholder="챕터 제목" />
       </ArticleTitleBox>
+      <RequiredText/>
       <ArticleContentBox>
         <MDEditor
           height={400} 

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Button from "./Button";
 import { useState } from "react";
+import RequiredText from "./RequiredText";
 
 const HeaderBlock = styled.div``;
 
@@ -110,9 +111,9 @@ const Header = ({
               {showRegistBox && (
                 <UserInfo>
                   <form onSubmit={handleRegistSubmit}>
-                    <input name="ladderAccountId" placeholder="id" />
-                    <input name="ladderAccountPassword" placeholder="pw" />
-                    <input name="ladderAccountName" placeholder="name" />
+                  <RequiredText/><input name="ladderAccountId" placeholder="id" />
+                  <RequiredText/><input name="ladderAccountPassword" placeholder="pw" />
+                  <input name="ladderAccountName" placeholder="name" />
                     <input
                       name="ladderAccountEmail"
                       placeholder="email"
