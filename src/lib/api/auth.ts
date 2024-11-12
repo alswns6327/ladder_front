@@ -29,9 +29,9 @@ export const login = ({
   apiClient.post("/login", {
     ladderAccountId,
     ladderAccountPassword,
-  });
+  }, { withCredentials: true });
 
 export const searchUsers = () => 
   apiClient.get("/account/list")
 
-export const logout = () => apiClient.post("/logout");
+export const logout = () => apiClient.post("/logout", {}, { withCredentials: true });
