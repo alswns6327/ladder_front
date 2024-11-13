@@ -21,7 +21,6 @@ const ArticleListContainer = () => {
             const resultData =  await requestApiFn<void, authTypes.ladderUserSelectType[]>(
                 authApiRequestParam.searchUsers()
             );
-            console.log(resultData);
             if(resultData.msg === "success") setUserList(resultData.data);
             else alert(resultData.msg);
         }
@@ -38,7 +37,6 @@ const ArticleListContainer = () => {
             const resultData =  await requestApiFn<void, commonTypes.categoryType[]>(
                 articleApiRequestParam.searchArticleGroupList(ladderAccountId)
             )
-            console.log(resultData);
             if(resultData.msg === "success") setArticleCategoryList(resultData.data);
             else alert(resultData.msg);
         }
@@ -50,7 +48,6 @@ const ArticleListContainer = () => {
             const resultData =  await requestApiFn<void, commonTypes.article[]>(
                 articleApiRequestParam.searchArticleList(encodeURIComponent(`{"ladderAccountId":"${ladderAccountId}","categorySeq":${null},"subCategorySeq":${null}}`))
             );
-            console.log(resultData);
             if(resultData.msg === "success") setArticleList(resultData.data);
             else alert(resultData.msg);
         }

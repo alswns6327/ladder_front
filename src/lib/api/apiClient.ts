@@ -52,7 +52,6 @@ export const requestApiFn = async <T, RT> (
       const newAccessToken : string | undefined = (response.headers as AxiosHeaders).get("new-access-token") as string | undefined;
       if(newAccessToken){
         localStorage.setItem("accessToken", newAccessToken);
-        console.log(newAccessToken);
         apiClient.defaults.headers.Authorization = "Bearer ".concat(newAccessToken);
       }
 
@@ -62,7 +61,6 @@ export const requestApiFn = async <T, RT> (
       else alert(data.msg);
     }
   }catch(e){
-    console.log(e);
     result = {
       msg : "실행 오류",
       code : "400",

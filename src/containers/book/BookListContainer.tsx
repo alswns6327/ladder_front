@@ -20,7 +20,6 @@ const BookListContainer = () => {
         const resultData =  await requestApiFn<void, authTypes.ladderUserSelectType[]>(
           authApiRequestParam.searchUsers()
         );
-        console.log(resultData);
         if(resultData.msg === "success") setUserList(resultData.data);
         else alert(resultData.msg);
     }
@@ -37,7 +36,6 @@ const BookListContainer = () => {
       const resultData =  await requestApiFn<void, bookTypes.bookInfoFileStringType[]>(
         bookApiRequestParam.searchBookInfoList(ladderAccountId)
       );
-      console.log(resultData);
       if (resultData.msg === "success") setBookInfoList(resultData.data);
       else alert(resultData.msg);
     };
