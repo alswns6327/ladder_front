@@ -4,8 +4,9 @@ import * as articleTypes from "../../types/articleTypes";
 import * as authTypes from "../../types/authTypes";
 import * as commonTypes from "../../types/commonTypes";
 import { useSelector } from 'react-redux';
-import * as api from "../../lib/api/article";
+import * as articleApiRequestParam from "../../lib/api/article";
 import { useNavigate } from 'react-router-dom';
+import { requestApiFn } from '../../lib/api/apiClient';
 
 const ArticleContentWriteContainer = () => {
 
@@ -22,9 +23,11 @@ const ArticleContentWriteContainer = () => {
 
     useEffect(() => {
         const searchArticleCategoryList = async () => {
-            const response = await api.searchArticleGroupList(auth.ladderAccountId);
-            if(response.data.msg === "success") setArticleCategoryList(response.data.data);
-            else alert("목록 조회 실패");
+            const resultData =  await requestApiFn<void, commonTypes.categoryType[]>(
+                articleApiRequestParam.searchArticleGroupList(auth.ladderAccountId)
+            );
+            if(resultData.msg === "success") setArticleCategoryList(resultData.data);
+            else alert(resultData.msg);
         }
         searchArticleCategoryList();
     }, []);
@@ -52,14 +55,17 @@ const ArticleContentWriteContainer = () => {
         if(!articleForm.content.trim() || !articleForm.title.trim()){
             return alert("필수값을 입력해주세요.");
         }
-        const response = await api.saveArticle(
-            {
-                ...articleForm, 
-                categorySeq : articleForm.categorySeq === "전체" ? null : articleForm.categorySeq, 
-                subCategorySeq : articleForm.subCategorySeq === "전체" ? null : articleForm.subCategorySeq}
+        const resultData =  await requestApiFn<commonTypes.article, commonTypes.article>(
+            articleApiRequestParam.saveArticle(
+                {
+                    ...articleForm, 
+                    categorySeq : articleForm.categorySeq === "전체" ? null : articleForm.categorySeq, 
+                    subCategorySeq : articleForm.subCategorySeq === "전체" ? null : articleForm.subCategorySeq
+                }
+            )
         );
-        if(response.data.msg === "success") navigator("/article");
-        else alert("저장 실패");
+        if(resultData.msg === "success") navigator("/article");
+        else alert(resultData.msg);
     }
 
     return (

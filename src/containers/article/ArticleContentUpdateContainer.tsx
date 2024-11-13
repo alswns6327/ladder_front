@@ -5,7 +5,8 @@ import * as commonTypes from "../../types/commonTypes";
 import * as authTypes from "../../types/authTypes";
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import * as api from "../../lib/api/article";
+import * as articleApiRequestParam from "../../lib/api/article";
+import { requestApiFn } from '../../lib/api/apiClient';
 
 const ArticleContentUpdateContainer = () => {
 
@@ -24,20 +25,24 @@ const ArticleContentUpdateContainer = () => {
 
     useEffect(() => {
         const searchArticleCategoryList = async () => {
-            const response = await api.searchArticleGroupList(auth.ladderAccountId);
-            if(response.data.msg === "success") {
-                setArticleCategoryList(response.data.data);
+            const resultData =  await requestApiFn<void, commonTypes.categoryType[]>(
+                articleApiRequestParam.searchArticleGroupList(auth.ladderAccountId)
+            );
+            if(resultData.msg === "success") {
+                setArticleCategoryList(resultData.data);
             }
-            else alert("목록 조회 실패");
+            else alert(resultData.msg);
         }
         searchArticleCategoryList();
     }, []);
 
     useEffect(() => {
         const searchArticle = async () => {
-            const response = await api.searchArticle(Number(articleSeq));
-            if(response.data.msg === "success") {
-                const article : commonTypes.article = response.data.data as commonTypes.article;
+            const resultData =  await requestApiFn<void, commonTypes.article>(
+                articleApiRequestParam.searchArticle(Number(articleSeq))
+            )
+            if(resultData.msg === "success") {
+                const article : commonTypes.article = resultData.data as commonTypes.article;
                 setArticleForm(
                     {
                         ...article,
@@ -46,7 +51,7 @@ const ArticleContentUpdateContainer = () => {
                     }
                 );
             }
-            else alert("조회 실패");
+            else alert(resultData.msg);
         }
         searchArticle();
     }, []);
@@ -71,14 +76,17 @@ const ArticleContentUpdateContainer = () => {
             return alert("필수값을 입력해주세요.");
         }
 
-        const response = await api.updateArticle(
-            {
-                ...articleForm, 
-                categorySeq : articleForm.categorySeq === "전체" ? null : articleForm.categorySeq, 
-                subCategorySeq : articleForm.subCategorySeq === "전체" ? null : articleForm.subCategorySeq}
+        const resultData =  await requestApiFn<commonTypes.article, commonTypes.article>(
+            articleApiRequestParam.updateArticle(
+                {
+                    ...articleForm, 
+                    categorySeq : articleForm.categorySeq === "전체" ? null : articleForm.categorySeq, 
+                    subCategorySeq : articleForm.subCategorySeq === "전체" ? null : articleForm.subCategorySeq
+                }
+            )
         );
-        if(response.data.msg === "success") navigator("/article");
-        else alert("저장 실패");
+        if(resultData.msg === "success") navigator("/article");
+        else alert(resultData.msg);
     }
 
     return (

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import BookContentViewTemplate from "../../components/book/BookContentViewTemplate";
 import { useNavigate, useParams } from "react-router-dom";
-import * as api from "../../lib/api/book";
+import * as bookApiRequestParam from "../../lib/api/book";
 import { useSelector } from "react-redux";
 import * as authTypes from "../../types/authTypes";
 import * as bookTypes from "../../types/bookTypes";
+import { requestApiFn } from "../../lib/api/apiClient";
 
 const BookContentViewContainer = () => {
   const { bookChapterInfoId } = useParams();
@@ -21,21 +22,25 @@ const BookContentViewContainer = () => {
   );
   useEffect(() => {
     const searchBookChapterInfo = async () => {
-      const response = await api.searchBookContent(
-        Number(bookChapterInfoId) as number
+      const resultData =  await requestApiFn<void, bookTypes.bookContentType>(
+        bookApiRequestParam.searchBookContent(
+          Number(bookChapterInfoId) as number
+        )
       );
-      if (response.data.msg === "success")
-        setBookChapterInfo(response.data.data);
-      else alert("저장 실패");
+      if (resultData.msg === "success")
+        setBookChapterInfo(resultData.data);
+      else alert(resultData.msg);
     };
     searchBookChapterInfo();
   }, []);
 
   const handleDeleteChapter = async (bookChapterInfoId: number) => {
-    const response = await api.deleteBookChapter(bookChapterInfoId);
-    if (response.data.msg === "success")
+    const resultData =  await requestApiFn<void, bookTypes.bookContentType>(
+      bookApiRequestParam.deleteBookChapter(bookChapterInfoId)
+    );
+    if (resultData.msg === "success")
       navigator(`/book/chapter/${bookChapterInfo?.bookInfoId}`);
-    else alert("삭제 실패");
+    else alert(resultData.msg);
   };
   return (
     <BookContentViewTemplate

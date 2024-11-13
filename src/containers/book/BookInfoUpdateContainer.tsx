@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import BookInfoSaveUpdateTemplate from "../../components/book/BookInfoSaveUpdateTemplate";
 import { useNavigate, useParams } from "react-router-dom";
-import * as api from "../../lib/api/book";
+import * as bookApiRequestParam from "../../lib/api/book";
 import * as bookTypes from "../../types/bookTypes";
+import { requestApiFn } from "../../lib/api/apiClient";
 
 const BookInfoUpdateContainer = () => {
   const { bookInfoId } = useParams();
@@ -12,9 +13,11 @@ const BookInfoUpdateContainer = () => {
 
   useEffect(() => {
     const searchBookInfo = async () => {
-      const response = await api.searchBookInfo(Number(bookInfoId));
-      if (response.data.msg === "success") setBookInfo(response.data.data);
-      else alert("저장 실패");
+      const resultData =  await requestApiFn<void, bookTypes.bookInfoFileStringType>(
+        bookApiRequestParam.searchBookInfo(Number(bookInfoId))
+      );
+      if (resultData.msg === "success") setBookInfo(resultData.data);
+      else alert(resultData.msg);
     };
     searchBookInfo();
   }, []);
@@ -24,11 +27,11 @@ const BookInfoUpdateContainer = () => {
     const data: bookTypes.bookInfoType = Object.assign(bookInfoForm, {
       bookInfoId: bookInfoId,
     }) as bookTypes.bookInfoType;
-    console.log(data);
-    const response = await api.updateBookInfo(data);
-    console.log(response);
-    if (response.data.msg === "success") navigator("/");
-    else alert("저장 실패");
+    const resultData =  await requestApiFn<bookTypes.bookInfoType, bookTypes.bookInfoType>(
+      bookApiRequestParam.updateBookInfo(data)
+    );
+    if (resultData.msg === "success") navigator("/");
+    else alert(resultData.msg);
   };
   return (
     <BookInfoSaveUpdateTemplate

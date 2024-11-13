@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import * as api from "../lib/api/auth";
-import apiClient from "../lib/api/apiClient";
+import * as authApiRequestParam from "../lib/api/auth";
+import apiClient, { requestApiFn } from "../lib/api/apiClient";
 import * as authTypes from "../types/authTypes";
 
 const REGIST: string = "auth/REGIST";
@@ -22,37 +22,43 @@ export const asyncRegist = createAsyncThunk(
     ladderAccountName,
     ladderAccountEmail,
   }: authTypes.ladderUserType) => {
-    const response = await api.regist({
-      ladderAccountId,
-      ladderAccountPassword,
-      ladderAccountName,
-      ladderAccountEmail,
-    });
+    const resultData =  await requestApiFn<authTypes.ladderUserType, {ladderAccountId : string}>(
+      authApiRequestParam.regist({
+        ladderAccountId,
+        ladderAccountPassword,
+        ladderAccountName,
+        ladderAccountEmail,
+      })
+    );
 
-    return response.data;
+    return resultData;
   }
 );
 
 export const asyncLogin = createAsyncThunk(
   LOGIN,
   async ({ ladderAccountId, ladderAccountPassword }: authTypes.ladderUserType) => {
-    const response = await api.login({
-      ladderAccountId,
-      ladderAccountPassword,
-    });
-    localStorage.setItem("accessToken", response.data.data.accessToken);
+    const resultData =  await requestApiFn<authTypes.ladderUserType, authTypes.ladderUserType>(
+      authApiRequestParam.login({
+        ladderAccountId,
+        ladderAccountPassword,
+      })
+    );
+    localStorage.setItem("accessToken", resultData.data.accessToken as string);
     apiClient.defaults.headers.Authorization = "Bearer ".concat(
       localStorage.getItem("accessToken") as string
     );
-    return response.data;
+    return resultData;
   }
 );
 
 export const asyncLogout = createAsyncThunk(LOGOUT, async () => {
-  const response = await api.logout();
+  const resultData =  await requestApiFn<void, string>(
+    authApiRequestParam.logout()
+  );
   localStorage.setItem("accessToken", "");
   apiClient.defaults.headers.Authorization = "";
-  return response.data;
+  return resultData;
 });
 
 const authSlice = createSlice({

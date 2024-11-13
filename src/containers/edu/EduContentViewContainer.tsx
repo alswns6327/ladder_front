@@ -3,14 +3,16 @@ import ArticleEduContentViewTemplate from '../../components/article_edu/ArticleE
 import * as eduTypes from "../../types/eduTypes";
 import * as commonTypes from "../../types/commonTypes";
 import * as authTypes from "../../types/authTypes";
-import * as api from "../../lib/api/edu";
-import * as authApi from "../../lib/api/auth";
+import * as eduApiRequestParam from "../../lib/api/edu";
+import * as authApiRequestParam from "../../lib/api/auth";
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+import { requestApiFn } from '../../lib/api/apiClient';
 
 const EduContentViewContainer = () => {
     const { eduSeq } = useParams();
     const navigator = useNavigate();
+    const auth = useSelector(({auth} : {auth : authTypes.authInitialStateType}) => auth);
     const [edu, setEdu] = useState<commonTypes.edu>({
         eduSeq : "",
         categorySeq : "",
@@ -19,28 +21,34 @@ const EduContentViewContainer = () => {
         content : "",
         categoryName : "",
         subCategoryName : "",
+        firstSaveUser : "",
     });
 
     useEffect(() => {
         const searchEdu = async () => {
-            const response = await api.searchEdu(Number(eduSeq));
-            if(response.data.msg === "success") setEdu(response.data.data);
-            else alert("조회 실패");
+            const resultData =  await requestApiFn<void, commonTypes.edu>(
+                eduApiRequestParam.searchEdu(Number(eduSeq))
+            );
+            if(resultData.msg === "success") setEdu(resultData.data);
+            else alert(resultData.msg);
         }
         searchEdu();
     }, []);
 
     const handleRemoveEdu = async () => {
-        const response = await api.deleteEdu(Number(eduSeq));
-        if(response.data.msg === "success") {alert("삭제 성공"); navigator("/edu");}
-        else alert("삭제 실패");
+        const resultData =  await requestApiFn<void, commonTypes.edu>(
+            eduApiRequestParam.deleteEdu(Number(eduSeq))
+        );
+        if(resultData.msg === "success") {alert("삭제 성공"); navigator("/edu");}
+        else alert(resultData.msg);
     }
 
     return (
         <ArticleEduContentViewTemplate
             handleRemove={handleRemoveEdu}
             menuType='edu'
-            content={edu}/>
+            content={edu}
+            ladderAccountId={auth.ladderAccountId}/>
     );
 };
 

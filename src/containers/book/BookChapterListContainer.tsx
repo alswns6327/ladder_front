@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import BookChapterListTemplate from "../../components/book/BookChapterListTemplate";
 import { useParams } from "react-router-dom";
-import * as api from "../../lib/api/book";
+import * as bookApiRequestParam from "../../lib/api/book";
 import { useSelector } from "react-redux";
 import * as authTypes from "../../types/authTypes";
 import * as bookTypes from "../../types/bookTypes";
+import { requestApiFn } from "../../lib/api/apiClient";
 
 const BookChapterListContainer = () => {
   const { bookInfoId } = useParams();
@@ -22,21 +23,26 @@ const BookChapterListContainer = () => {
   );
   useEffect(() => {
     const searchChapterList = async () => {
-      const response = await api.searchBookContentList(Number(bookInfoId));
-      if (response.data.msg === "success") setChapterList(response.data.data);
-      else alert("저장 실패");
+      const resultData =  await requestApiFn<void, bookTypes.bookContentType[]>(
+        bookApiRequestParam.searchBookContentList(Number(bookInfoId))
+      );
+      if (resultData.msg === "success") setChapterList(resultData.data);
+      else alert(resultData.msg);
     };
     searchChapterList();
   }, []);
 
   useEffect(() => {
     const searchBookInfo = async () => {
-      const response = await api.searchBookInfo(Number(bookInfoId));
-      if (response.data.msg === "success") setBookInfo(response.data.data);
-      else alert("저장 실패");
+      const resultData =  await requestApiFn<void, bookTypes.bookInfoFileStringType>(
+        bookApiRequestParam.searchBookInfo(Number(bookInfoId))
+      );
+      if (resultData.msg === "success") setBookInfo(resultData.data);
+      else alert(resultData.msg);
     };
     searchBookInfo();
   }, []);
+  
   return (
     <BookChapterListTemplate
       chapterList={chapterList}

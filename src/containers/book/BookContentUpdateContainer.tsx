@@ -2,7 +2,8 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import BookContentWriteTemplate from '../../components/book/BookContentWriteTemplate';
 import { useNavigate, useParams } from 'react-router-dom';
 import * as bookTypes from "../../types/bookTypes";
-import * as api from "../../lib/api/book";
+import * as bookApiRequestParam from "../../lib/api/book";
+import { requestApiFn } from '../../lib/api/apiClient';
 
 const BookContentUpdateContainer = () => {
     const navigator = useNavigate();
@@ -17,9 +18,11 @@ const BookContentUpdateContainer = () => {
     
     useEffect(() => {
         const searchBookChapterInfo = async () => {
-            const response = await api.searchBookContent(Number(bookChapterInfoId));
-            if(response.data.msg === "success") setBookChapterInfo(response.data.data);
-            else alert("챕터 정보가 없습니다.");
+            const resultData =  await requestApiFn<void, bookTypes.bookContentType>(
+                bookApiRequestParam.searchBookContent(Number(bookChapterInfoId))
+            );
+            if(resultData.msg === "success") setBookChapterInfo(resultData.data);
+            else alert(resultData.msg);
         }
         searchBookChapterInfo();
     }, []);
@@ -39,9 +42,11 @@ const BookContentUpdateContainer = () => {
     const handleUpdateContent = async () => {
       if(!bookChapterInfo.bookChapterInfoTitle.trim() || !bookChapterInfo.bookChapterInfoContent?.trim()) return alert("필수값을 입력해주세요.");
       
-      const response = await api.updateBookContent(bookChapterInfo);
-      if (response.data.msg === "success") navigator(`/book/chapter/${response.data.data.bookInfoId}`);
-      else alert(response.data.msg);
+      const resultData =  await requestApiFn<bookTypes.bookContentType, bookTypes.bookContentType>(
+        bookApiRequestParam.updateBookContent(bookChapterInfo)
+      );
+      if (resultData.msg === "success") navigator(`/book/chapter/${resultData.data.bookInfoId}`);
+      else alert(resultData.msg);
     };
 
     return (

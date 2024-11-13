@@ -5,7 +5,8 @@ import * as commonTypes from "../../types/commonTypes";
 import * as authTypes from "../../types/authTypes";
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import * as api from "../../lib/api/edu";
+import * as eduApiRequestParam from "../../lib/api/edu";
+import { requestApiFn } from '../../lib/api/apiClient';
 
 
 const EduContentUpdateContainer = () => {
@@ -25,20 +26,24 @@ const EduContentUpdateContainer = () => {
 
     useEffect(() => {
         const searchEduCategoryList = async () => {
-            const response = await api.searchEduGroupList(auth.ladderAccountId);
-            if(response.data.msg === "success") {
-                setEduCategoryList(response.data.data);
+            const resultData =  await requestApiFn<void, commonTypes.categoryType[]>(
+                eduApiRequestParam.searchEduGroupList(auth.ladderAccountId)
+            );
+            if(resultData.msg === "success") {
+                setEduCategoryList(resultData.data);
             }
-            else alert("목록 조회 실패");
+            else alert(resultData.msg);
         }
         searchEduCategoryList();
     }, []);
 
     useEffect(() => {
         const searchEdu = async () => {
-            const response = await api.searchEdu(Number(eduSeq));
-            if(response.data.msg === "success") {
-                const edu : commonTypes.edu = response.data.data as commonTypes.edu;
+            const resultData =  await requestApiFn<void, commonTypes.edu>(
+                eduApiRequestParam.searchEdu(Number(eduSeq))
+            );
+            if(resultData.msg === "success") {
+                const edu : commonTypes.edu = resultData.data;
                 setEduForm(
                     {
                         ...edu,
@@ -47,7 +52,7 @@ const EduContentUpdateContainer = () => {
                     }
                 );
             }
-            else alert("조회 실패");
+            else alert(resultData.msg);
         }
         searchEdu();
     }, []);
@@ -70,14 +75,17 @@ const EduContentUpdateContainer = () => {
         if(!eduForm.content.trim() || !eduForm.title.trim()) return alert("필수값을 입력해주세요.");
         
 
-        const response = await api.updateEdu(
-            {
-                ...eduForm, 
-                categorySeq : eduForm.categorySeq === "전체" ? null : eduForm.categorySeq, 
-                subCategorySeq : eduForm.subCategorySeq === "전체" ? null : eduForm.subCategorySeq}
+        const resultData =  await requestApiFn<commonTypes.edu, commonTypes.edu>(
+            eduApiRequestParam.updateEdu(
+                {
+                    ...eduForm, 
+                    categorySeq : eduForm.categorySeq === "전체" ? null : eduForm.categorySeq, 
+                    subCategorySeq : eduForm.subCategorySeq === "전체" ? null : eduForm.subCategorySeq
+                }
+            )
         );
-        if(response.data.msg === "success") navigator("/edu");
-        else alert("저장 실패");
+        if(resultData.msg === "success") navigator("/edu");
+        else alert(resultData.msg);
     }
 
     return (

@@ -3,10 +3,11 @@ import ArticleEduListTemplate from '../../components/article_edu/ArticleEduListT
 import * as eduTypes from "../../types/eduTypes";
 import * as commonTypes from "../../types/commonTypes";
 import * as authTypes from "../../types/authTypes";
-import * as api from "../../lib/api/edu";
-import * as authApi from "../../lib/api/auth";
+import * as eduApiRequestParam from "../../lib/api/edu";
+import * as authApiRequestParam from "../../lib/api/auth";
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { requestApiFn } from '../../lib/api/apiClient';
 
 const EduListContainer = () => {
 
@@ -23,9 +24,11 @@ const EduListContainer = () => {
             return navigator("/");
         }
         const searchEduCategoryList = async () => {
-            const response = await api.searchEduGroupList(ladderAccountId);
-            if(response.data.msg === "success") setEduCategoryList(response.data.data);
-            else alert("목록 조회 실패");
+            const resultData =  await requestApiFn<void, commonTypes.categoryType[]>(
+                eduApiRequestParam.searchEduGroupList(ladderAccountId)
+            );
+            if(resultData.msg === "success") setEduCategoryList(resultData.data);
+            else alert(resultData.msg);
         }
         searchEduCategoryList();
     }, [ladderAccountId]);
@@ -33,9 +36,11 @@ const EduListContainer = () => {
     useEffect(() => {
         if(["STUDENT", "ADMIN"].includes(auth.ladderAccountAuth)){
             const searchEduList = async () => {
-                const response = await api.searchEduList(encodeURIComponent(`{"ladderAccountId":"${ladderAccountId}","categorySeq":${null},"subCategorySeq":${null}}`));
-                if(response.data.msg === "success") setEduList(response.data.data);
-                else alert("조회 실패");
+                const resultData =  await requestApiFn<void, commonTypes.edu[]>(
+                    eduApiRequestParam.searchEduList(encodeURIComponent(`{"ladderAccountId":"${ladderAccountId}","categorySeq":${null},"subCategorySeq":${null}}`))
+                );
+                if(resultData.msg === "success") setEduList(resultData.data);
+                else alert(resultData.msg);
             }
             searchEduList();
         }
@@ -43,9 +48,11 @@ const EduListContainer = () => {
 
     useEffect(() => {
         const searchUsers = async () => {
-            const response = await authApi.searchUsers();
-            if(response.data.msg === "success") setUserList(response.data.data);
-            else alert("조회 실패");
+            const resultData =  await requestApiFn<void, authTypes.ladderUserSelectType[]>(
+                authApiRequestParam.searchUsers()
+            );
+            if(resultData.msg === "success") setUserList(resultData.data);
+            else alert(resultData.msg);
         }
         searchUsers();
     }, []);
@@ -55,9 +62,11 @@ const EduListContainer = () => {
     }
 
     const handleClickCategory = async (categorySeq : number | null, subCategorySeq : number | null) => {
-        const response = await api.searchEduList(encodeURIComponent(`{"ladderAccountId":"${ladderAccountId}","categorySeq":${categorySeq},"subCategorySeq":${subCategorySeq}}`));
-        if(response.data.msg === "success") setEduList(response.data.data);
-        else alert("조회 실패");
+        const resultData =  await requestApiFn<void, commonTypes.edu[]>(
+            eduApiRequestParam.searchEduList(encodeURIComponent(`{"ladderAccountId":"${ladderAccountId}","categorySeq":${categorySeq},"subCategorySeq":${subCategorySeq}}`))
+        );
+        if(resultData.msg === "success") setEduList(resultData.data);
+        else alert(resultData.msg);
     }
 
     return (

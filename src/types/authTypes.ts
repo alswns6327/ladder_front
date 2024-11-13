@@ -12,7 +12,7 @@ export type ladderUserType = {
     ladderAccountEmail?: string;
     ladderAccountAuth?: string;
     accessToken?: string;
-  };
+};
 
 export type ladderUserSelectType = {
   ladderAccountSeq : number;

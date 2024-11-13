@@ -35,12 +35,14 @@ type ArticleEduContentViewTemplateProps = {
   menuType : string;
   content : commonTypes.article | commonTypes.edu;
   handleRemove : () => Promise<void>;
+  ladderAccountId : string;
 }
 
 const ArticleEduContentViewTemplate = ({
   menuType,
   content,
   handleRemove,
+  ladderAccountId,
 } : ArticleEduContentViewTemplateProps) => {
 
   let updateLink = null;
@@ -58,8 +60,8 @@ const ArticleEduContentViewTemplate = ({
       </ArticleContentBox>
       <RightMenu>
         <BackHistoryButton>이전으로</BackHistoryButton>
-        {updateLink}
-        <Button onClick={handleRemove}>삭제</Button>
+         {content.firstSaveUser === ladderAccountId && <>{updateLink}</>}
+        {content.firstSaveUser === ladderAccountId && <Button onClick={handleRemove}>삭제</Button>}
       </RightMenu>
     </ArticleEduContentViewTemplateBlock>
   );

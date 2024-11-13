@@ -3,6 +3,9 @@ import Button from "../common/Button";
 import { Link } from "react-router-dom";
 import LinkButton from "../common/LinkButton";
 import * as bookTypes from "../../types/bookTypes";
+import * as authTypes from "../../types/authTypes";
+import { ChangeEvent } from "react";
+import { useSelector } from "react-redux";
 const BookListTemplateBlock = styled.div`
   width: 1150;
   margin-left: 150px;
@@ -13,6 +16,20 @@ const BookTopHeader = styled.div`
   width: 85%;
   display: flex;
   justify-content: flex-end;
+  select {
+    width: 150px;
+    height: 35px;
+    background: white;
+    background-size: 20px;
+    padding: 5px 30px 5px 10px;
+    border-radius: 4px;
+    outline: 0 none;
+  }
+  select option {    
+    background: white;
+    color: black;
+    padding: 3px 0;
+  }
 `;
 
 const BookGridList = styled.div`
@@ -104,18 +121,33 @@ type BookListTemplateProps = {
   bookInfoList: bookTypes.bookInfoFileStringType[];
   ladderAccountId: string;
   handleDeleteBookItem: (bookInfoId: number) => void;
+  userList : authTypes.ladderUserSelectType[];
+  handleSelectBoxChange : (e : ChangeEvent<HTMLSelectElement>) => void;
 };
 
 const BookListTemplate = ({
   bookInfoList,
   ladderAccountId,
   handleDeleteBookItem,
+  userList,
+  handleSelectBoxChange,
 }: BookListTemplateProps) => {
+  const auth = useSelector(({auth} : {auth : authTypes.authInitialStateType}) => auth);
   return (
     <BookListTemplateBlock>
       <BookTopHeader>
-        {ladderAccountId && <LinkButton text={"추가"} link={"/book/info"} />}
-        <Button>2</Button>
+        {ladderAccountId === auth.ladderAccountId && <LinkButton text={"추가"} link={"/book/info"} />}
+        <select 
+          value={ladderAccountId}
+          onChange={handleSelectBoxChange}>
+          {userList.map(user => (
+            <option 
+              value={user.ladderAccountId}
+              key={user.ladderAccountSeq}>
+              {user.ladderAccountId}
+            </option>
+          ))}
+        </select>
       </BookTopHeader>
       <BookGridList>
         {bookInfoList?.map((bookInfo) => (
@@ -137,7 +169,7 @@ const BookListTemplate = ({
                 <span>chapter3</span>
               </BookItemSecondPage>
             </Link>
-            {ladderAccountId === bookInfo.firstSaveUser && (
+            {auth.ladderAccountId === bookInfo.firstSaveUser && (
               <>
                 <BookUpdateLink to={`/book/info/${bookInfo.bookInfoId}`}>
                   수정
@@ -157,7 +189,6 @@ const BookListTemplate = ({
           </BookItem>
         ))}
       </BookGridList>
-      {" <   > "}
     </BookListTemplateBlock>
   );
 };

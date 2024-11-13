@@ -3,14 +3,16 @@ import ArticleEduContentViewTemplate from '../../components/article_edu/ArticleE
 import * as articleTypes from "../../types/articleTypes";
 import * as commonTypes from "../../types/commonTypes";
 import * as authTypes from "../../types/authTypes";
-import * as api from "../../lib/api/article";
-import * as authApi from "../../lib/api/auth";
+import * as articleApiRequestParam from "../../lib/api/article";
+import * as authApiRequestParam from "../../lib/api/auth";
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+import { requestApiFn } from '../../lib/api/apiClient';
 
 const ArticleContentViewContainer = () => {
     const { articleSeq } = useParams();
     const navigator = useNavigate();
+    const auth = useSelector(({auth} : {auth : authTypes.authInitialStateType}) => auth);
     const [article, setArticle] = useState<commonTypes.article>({
         articleSeq : "",
         categorySeq : "",
@@ -19,28 +21,34 @@ const ArticleContentViewContainer = () => {
         content : "",
         categoryName : "",
         subCategoryName : "",
+        firstSaveUser : "",
     });
 
     useEffect(() => {
         const searchArticle = async () => {
-            const response = await api.searchArticle(Number(articleSeq));
-            if(response.data.msg === "success") setArticle(response.data.data);
-            else alert("조회 실패");
+            const resultData =  await requestApiFn<void, commonTypes.article>(
+                articleApiRequestParam.searchArticle(Number(articleSeq))
+            )
+            if(resultData.msg === "success") setArticle(resultData.data);
+            else alert(resultData.msg);
         }
         searchArticle();
     }, []);
 
     const handleRemoveArticle = async () => {
-        const response = await api.deleteArticle(Number(articleSeq));
-        if(response.data.msg === "success") {alert("삭제 완료"); navigator("/article");}
-        else alert("삭제 실패");
+        const resultData =  await requestApiFn<void, commonTypes.article>(
+            articleApiRequestParam.deleteArticle(Number(articleSeq))
+        );
+        if(resultData.msg === "success") navigator("/article");
+        else alert(resultData.msg);
     }
 
     return (
         <ArticleEduContentViewTemplate
             handleRemove={handleRemoveArticle}
             menuType='article'
-            content={article}/>
+            content={article}
+            ladderAccountId={auth.ladderAccountId}/>
     );
 };
 

@@ -1,37 +1,15 @@
 import { AxiosInstance } from "axios";
-import apiClient from "./apiClient";
+import apiClient, { httpMethods } from "./apiClient";
+import * as authTypes from "../../types/authTypes"
+import * as commonTypes from "../../types/commonTypes"
 
-type ladderUserType = {
-  ladderAccountId: string;
-  ladderAccountPassword: string;
-  ladderAccountName?: string;
-  ladderAccountEmail?: string;
-  ladderAccountAuth?: string;
-};
+export const regist = (userInfo: authTypes.ladderUserType) : commonTypes.apiRequestInfo<authTypes.ladderUserType>=>
+  ({uri : "/account", httpMethod : httpMethods.POST, param : userInfo});
 
-export const regist = ({
-  ladderAccountId,
-  ladderAccountPassword,
-  ladderAccountName,
-  ladderAccountEmail,
-}: ladderUserType) =>
-  apiClient.post("/account", {
-    ladderAccountId,
-    ladderAccountPassword,
-    ladderAccountName,
-    ladderAccountEmail,
-  });
+export const login = (loginInfo: authTypes.ladderUserType) : commonTypes.apiRequestInfo<authTypes.ladderUserType> =>
+  ({uri : "/login", httpMethod : httpMethods.POST, param : loginInfo});
 
-export const login = ({
-  ladderAccountId,
-  ladderAccountPassword,
-}: ladderUserType) =>
-  apiClient.post("/login", {
-    ladderAccountId,
-    ladderAccountPassword,
-  }, { withCredentials: true });
+export const searchUsers = () : commonTypes.apiRequestInfo<void> => 
+  ({uri : "/account/list", httpMethod : httpMethods.GET});
 
-export const searchUsers = () => 
-  apiClient.get("/account/list")
-
-export const logout = () => apiClient.post("/logout", {}, { withCredentials: true });
+export const logout = () : commonTypes.apiRequestInfo<void> => ({uri : "/logout", httpMethod : httpMethods.DELETE});

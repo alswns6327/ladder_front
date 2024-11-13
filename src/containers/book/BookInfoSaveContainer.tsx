@@ -1,8 +1,9 @@
 import React from "react";
 import BookInfoSaveUpdateTemplate from "../../components/book/BookInfoSaveUpdateTemplate";
-import * as api from "../../lib/api/book";
+import * as bookApiRequestParam from "../../lib/api/book";
 import { useNavigate } from "react-router-dom";
 import * as bookTypes from "../../types/bookTypes";
+import { requestApiFn } from "../../lib/api/apiClient";
 
 const BookInfoSaveContainer = () => {
   const navigator = useNavigate();
@@ -11,9 +12,11 @@ const BookInfoSaveContainer = () => {
   ): Promise<void> => {
     if(!bookInfoForm.bookName.trim()) return alert("책 제목을 입력해주세요.");
 
-    const response = await api.bookInfoSave(bookInfoForm);
-    if (response.data.msg === "success") navigator("/");
-    else alert("저장 실패");
+    const resultData =  await requestApiFn<bookTypes.bookInfoType, bookTypes.bookInfoType>(
+      bookApiRequestParam.bookInfoSave(bookInfoForm)
+    );
+    if (resultData.msg === "success") navigator("/");
+    else alert(resultData.msg);
   };
 
   return <BookInfoSaveUpdateTemplate handleBookInfoSave={handleBookInfoSave} />;

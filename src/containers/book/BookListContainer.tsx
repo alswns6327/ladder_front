@@ -1,39 +1,69 @@
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import BookListTemplate from "../../components/book/BookListTemplate";
-import * as api from "../../lib/api/book";
+import * as bookApiRequestParam from "../../lib/api/book";
+import * as authApiRequestParam from "../../lib/api/auth";
 import { useSelector } from "react-redux";
 import * as authTypes from "../../types/authTypes";
 import * as bookTypes from "../../types/bookTypes";
+import { requestApiFn } from "../../lib/api/apiClient";
 
 const BookListContainer = () => {
-  const [bookInfoList, setBookInfoList] = useState<bookTypes.bookInfoFileStringType[]>([]);
   const auth: authTypes.authInitialStateType = useSelector(
     ({ auth }: { auth: authTypes.authInitialStateType }) => auth
   );
+  const [bookInfoList, setBookInfoList] = useState<bookTypes.bookInfoFileStringType[]>([]);
+  const [userList, setUserList] = useState<authTypes.ladderUserSelectType[]>([]);
+  const [ladderAccountId, setLadderAccountId] = useState<string>(auth.ladderAccountId);
+  
   useEffect(() => {
-    const getBookInfoList = async () => {
-      const response = await api.searchBookInfoList();
-      if (response.data.msg === "success") setBookInfoList(response.data.data);
-      else alert("조회 실패");
-    };
-
-    getBookInfoList();
+    const searchUsers = async () => {
+        const resultData =  await requestApiFn<void, authTypes.ladderUserSelectType[]>(
+          authApiRequestParam.searchUsers()
+        );
+        console.log(resultData);
+        if(resultData.msg === "success") setUserList(resultData.data);
+        else alert(resultData.msg);
+    }
+    searchUsers();
   }, []);
 
+  useEffect(() => {
+    const initLadderAccountId = ladderAccountId ? ladderAccountId :  userList[0]?.ladderAccountId;
+    setLadderAccountId(initLadderAccountId);
+  }, [userList]);
+
+  useEffect(() => {
+    const getBookInfoList = async () => {
+      const resultData =  await requestApiFn<void, bookTypes.bookInfoFileStringType[]>(
+        bookApiRequestParam.searchBookInfoList(ladderAccountId)
+      );
+      console.log(resultData);
+      if (resultData.msg === "success") setBookInfoList(resultData.data);
+      else alert(resultData.msg);
+    };
+    getBookInfoList();
+  }, [ladderAccountId]);
+
   const handleDeleteBookItem = async (bookInfoId: number) => {
-    const response = await api.deleteBookInfo(bookInfoId);
-    if (response.data.msg === "success")
+    const resultData =  await requestApiFn<void, bookTypes.bookInfoFileStringType[]>(
+      bookApiRequestParam.deleteBookInfo(bookInfoId)
+    );
+    if (resultData.msg === "success")
       setBookInfoList(
         bookInfoList.filter((bookInfo) => bookInfo.bookInfoId !== bookInfoId)
       );
-    else alert("조회 실패");
+    else alert(resultData.msg);
   };
-
+  const handleSelectBoxChange = (e : ChangeEvent<HTMLSelectElement>) => {
+    setLadderAccountId(e.target.value);
+  }
   return (
     <BookListTemplate
-      ladderAccountId={auth?.ladderAccountId}
+      userList={userList}
+      ladderAccountId={ladderAccountId}
       bookInfoList={bookInfoList}
       handleDeleteBookItem={handleDeleteBookItem}
+      handleSelectBoxChange={handleSelectBoxChange}
     />
   );
 };

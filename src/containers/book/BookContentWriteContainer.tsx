@@ -1,8 +1,9 @@
 import React, { ChangeEvent, useState } from "react";
 import BookContentWriteTemplate from "../../components/book/BookContentWriteTemplate";
 import { useNavigate, useParams } from "react-router-dom";
-import * as api from "../../lib/api/book";
+import * as bookApiRequestParam from "../../lib/api/book";
 import * as bookTypes from "../../types/bookTypes";
+import { requestApiFn } from "../../lib/api/apiClient";
 
 const BookContentWriteContainer = () => {
   const navigator = useNavigate();
@@ -27,9 +28,11 @@ const BookContentWriteContainer = () => {
   const handleSaveContent = async () => {
     if(!bookChapterInfo.bookChapterInfoTitle.trim() || !bookChapterInfo.bookChapterInfoContent?.trim()) return alert("필수값을 입력해주세요.");
     
-    const response = await api.saveBookContent(bookChapterInfo);
-    if (response.data.msg === "success") navigator(`/book/chapter/${bookInfoId}`);
-    else alert("저장 실패");
+    const resultData =  await requestApiFn<bookTypes.bookContentType, bookTypes.bookContentType>(
+      bookApiRequestParam.saveBookContent(bookChapterInfo)
+    );
+    if (resultData.msg === "success") navigator(`/book/chapter/${bookInfoId}`);
+    else alert(resultData.msg);
   };
 
   return (

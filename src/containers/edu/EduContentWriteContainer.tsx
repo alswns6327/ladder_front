@@ -4,8 +4,9 @@ import * as eduTypes from "../../types/eduTypes";
 import * as authTypes from "../../types/authTypes";
 import * as commonTypes from "../../types/commonTypes";
 import { useSelector } from 'react-redux';
-import * as api from "../../lib/api/edu";
+import * as eduApiRequestParam from "../../lib/api/edu";
 import { useNavigate } from 'react-router-dom';
+import { requestApiFn } from '../../lib/api/apiClient';
 
 const EduContentWriteContainer = () => {
     const [eduCategoryList, setEduCategoryList] = useState<commonTypes.categoryType[]>([]);
@@ -21,9 +22,11 @@ const EduContentWriteContainer = () => {
 
     useEffect(() => {
         const searchEduCategoryList = async () => {
-            const response = await api.searchEduGroupList(auth.ladderAccountId);
-            if(response.data.msg === "success") setEduCategoryList(response.data.data);
-            else alert("목록 조회 실패");
+            const resultData =  await requestApiFn<void, commonTypes.categoryType[]>(
+                eduApiRequestParam.searchEduGroupList(auth.ladderAccountId)
+            );
+            if(resultData.msg === "success") setEduCategoryList(resultData.data);
+            else alert(resultData.msg);
         }
         searchEduCategoryList();
     }, []);
@@ -50,15 +53,17 @@ const EduContentWriteContainer = () => {
     const handleSave = async () => {
         if(!eduForm.content.trim() || !eduForm.title.trim()) return alert("필수값을 입력해주세요.");
         
-
-        const response = await api.saveEdu(
-            {
-                ...eduForm, 
-                categorySeq : eduForm.categorySeq === "전체" ? null : eduForm.categorySeq, 
-                subCategorySeq : eduForm.subCategorySeq === "전체" ? null : eduForm.subCategorySeq}
+        const resultData =  await requestApiFn<commonTypes.edu, commonTypes.edu>(
+            eduApiRequestParam.saveEdu(
+                {
+                    ...eduForm, 
+                    categorySeq : eduForm.categorySeq === "전체" ? null : eduForm.categorySeq, 
+                    subCategorySeq : eduForm.subCategorySeq === "전체" ? null : eduForm.subCategorySeq
+                }
+            )
         );
-        if(response.data.msg === "success") navigator("/edu");
-        else alert("저장 실패");
+        if(resultData.msg === "success") navigator("/edu");
+        else alert(resultData.msg);
     }
 
     return (
