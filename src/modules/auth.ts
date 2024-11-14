@@ -3,9 +3,9 @@ import * as authApiRequestParam from "../lib/api/auth";
 import apiClient, { requestApiFn } from "../lib/api/apiClient";
 import * as authTypes from "../types/authTypes";
 
-const REGIST: string = "auth/REGIST";
 const LOGIN: string = "auth/LOGIN";
 const LOGOUT: string = "auth/LOGOUT";
+const WITHDRAW_ACCOUNT: string = "auth/WITHDRAW_ACCOUNT";
 
 const initialState: authTypes.authInitialStateType = {
   ladderAccountId: "",
@@ -13,27 +13,6 @@ const initialState: authTypes.authInitialStateType = {
   ladderAccountEmail: "",
   ladderAccountAuth: "",
 };
-
-export const asyncRegist = createAsyncThunk(
-  REGIST,
-  async ({
-    ladderAccountId,
-    ladderAccountPassword,
-    ladderAccountName,
-    ladderAccountEmail,
-  }: authTypes.ladderUserType) => {
-    const resultData =  await requestApiFn<authTypes.ladderUserType, {ladderAccountId : string}>(
-      authApiRequestParam.regist({
-        ladderAccountId,
-        ladderAccountPassword,
-        ladderAccountName,
-        ladderAccountEmail,
-      })
-    );
-
-    return resultData;
-  }
-);
 
 export const asyncLogin = createAsyncThunk(
   LOGIN,
@@ -61,16 +40,18 @@ export const asyncLogout = createAsyncThunk(LOGOUT, async () => {
   return resultData;
 });
 
+export const asyncWithdrawAccount = createAsyncThunk(WITHDRAW_ACCOUNT, async (ladderAccountId : string) => {
+  const resultData = await requestApiFn<string, string>(
+    authApiRequestParam.withdrawAccount(ladderAccountId)
+  );
+  return resultData;
+});
+
 const authSlice = createSlice({
   name: "authSlice",
   initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(asyncRegist.pending, (state, action) => {});
-    builder.addCase(asyncRegist.fulfilled, (state, action) => {
-      state.ladderAccountId = "";
-    });
-    builder.addCase(asyncRegist.rejected, (state, action) => {});
     builder.addCase(asyncLogin.pending, (state, action) => {});
     builder.addCase(asyncLogin.fulfilled, (state, { payload }) => {
       const { data: ladderUser }: { data: authTypes.ladderUserType } = payload;
@@ -80,6 +61,14 @@ const authSlice = createSlice({
       state.ladderAccountAuth = ladderUser.ladderAccountAuth as string;
     });
     builder.addCase(asyncLogin.rejected, (state, action) => {});
+    builder.addCase(asyncWithdrawAccount.pending, (state, action) => {});
+    builder.addCase(asyncWithdrawAccount.fulfilled, (state, action) => {
+      state.ladderAccountId = "";
+      state.ladderAccountAuth = "";
+      state.ladderAccountAuth = "";
+      state.ladderAccountAuth = "";
+    });
+    builder.addCase(asyncWithdrawAccount.rejected, (state, action) => {});
     builder.addCase(asyncLogout.pending, (state, action) => {});
     builder.addCase(asyncLogout.fulfilled, (state, action) => {
       state.ladderAccountId = "";

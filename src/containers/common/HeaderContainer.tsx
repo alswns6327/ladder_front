@@ -2,7 +2,7 @@ import React, { ChangeEvent, useState } from "react";
 import Header from "../../components/common/Header";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { asyncLogin, asyncLogout, asyncRegist } from "../../modules/auth";
+import { asyncLogin, asyncLogout, asyncWithdrawAccount } from "../../modules/auth";
 import { AppDispatch } from "../../modules";
 import * as authTypes from "../../types/authTypes";
 import * as commonTypes from "../../types/commonTypes";
@@ -44,14 +44,25 @@ const HeaderContainer = () => {
       checkRegistResult = false;
     }
 
-    if(checkRegistResult) {
-      const {payload : resultData} : {payload : commonTypes.apiReturnType<String>} 
-        = await dispatch(asyncRegist(registForm)) as {payload : commonTypes.apiReturnType<String>};
-        if(resultData.code !== "200") {
-          checkRegistResult = false;
-          alert(resultData.msg);
-        }
+    if(!checkRegistResult) return checkRegistResult;
+
+    const resultData =  await requestApiFn<authTypes.ladderUserType, {ladderAccountId : string}>(
+      authApiRequestParam.regist(registForm)
+    );
+
+    if(resultData.code === "200") {
+      setRegistForm({
+        ladderAccountId : "",
+        ladderAccountPassword : "",
+        recheckLadderAccountPassword : "",
+        ladderAccountName : "",
+        ladderAccountEmail : "",
+      });
+    }else{
+      checkRegistResult = false;
+      alert(resultData.msg);
     }
+
     return checkRegistResult;
   };
 
@@ -111,6 +122,16 @@ const HeaderContainer = () => {
     }
   }
 
+  const handlewithdrawAccount = () => {
+    dispatch(asyncWithdrawAccount(auth.ladderAccountId))
+    .then(response => {
+      const resultData = response.payload as commonTypes.apiReturnType<authTypes.ladderUserType>;
+      if(resultData.code !== "200"){
+        alert(resultData.msg);
+      }
+    });
+  }
+
   return (
     <Header
       handleIdDuplicationCheck={handleIdDuplicationCheck}
@@ -120,6 +141,7 @@ const HeaderContainer = () => {
       auth={auth}
       registForm={registForm}
       handleRegistFormChange={handleRegistFormChange}
+      handlewithdrawAccount={handlewithdrawAccount}
     />
   );
 };

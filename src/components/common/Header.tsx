@@ -61,6 +61,7 @@ interface HeaderProps {
   auth: ladderFormType;
   registForm : authTypes.ladderUserType;
   handleRegistFormChange : (e : ChangeEvent<HTMLInputElement>) => void;
+  handlewithdrawAccount : () => void;
 }
 
 const Header = ({
@@ -71,6 +72,7 @@ const Header = ({
   auth,
   registForm,
   handleRegistFormChange,
+  handlewithdrawAccount
 }: HeaderProps) => {
   const [showAccountInfo, setShowAccountInfo] = useState<boolean>(false);
   const [showLoginBox, setShowLoginBox] = useState<boolean>(false);
@@ -89,6 +91,9 @@ const Header = ({
             </UserButtonBox>
             <UserButtonBox>
               <Button onClick={handleLogout}>로그아웃</Button>
+            </UserButtonBox>
+            <UserButtonBox>
+              <Button onClick={handlewithdrawAccount}>회원탈퇴</Button>
             </UserButtonBox>
           </>
         ) : (
@@ -142,7 +147,7 @@ const Header = ({
                     <input 
                       name="recheckLadderAccountPassword"
                       type="password" 
-                      placeholder="retype pw" 
+                      placeholder="pw" 
                       value={registForm.recheckLadderAccountPassword}
                       onChange={handleRegistFormChange}
                     />

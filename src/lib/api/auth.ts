@@ -17,3 +17,6 @@ export const logout = () : commonTypes.apiRequestInfo<void> =>
 
 export const idDuplicationCheck = (userId : string) : commonTypes.apiRequestInfo<string> =>
   ({uri : `/account/${userId}`, httpMethod : httpMethods.GET});
+
+export const withdrawAccount = (userId : string) : commonTypes.apiRequestInfo<string> =>
+  ({uri : `/account/${userId}`, httpMethod : httpMethods.DELETE});
