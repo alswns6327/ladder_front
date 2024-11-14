@@ -67,7 +67,9 @@ const authSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(asyncRegist.pending, (state, action) => {});
-    builder.addCase(asyncRegist.fulfilled, (state, action) => {});
+    builder.addCase(asyncRegist.fulfilled, (state, action) => {
+      state.ladderAccountId = "";
+    });
     builder.addCase(asyncRegist.rejected, (state, action) => {});
     builder.addCase(asyncLogin.pending, (state, action) => {});
     builder.addCase(asyncLogin.fulfilled, (state, { payload }) => {

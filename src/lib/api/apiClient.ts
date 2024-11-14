@@ -57,7 +57,10 @@ export const requestApiFn = async <T, RT> (
 
       const data = response.data as commonTypes.apiReturnType<RT>;
       if(data.code === "200") result = data;
-      else if(response.status === 204) result = data;
+      else if(response.status === 204) {
+        result.code = "200";
+        result.msg = "success";
+      }
       else alert(data.msg);
     }
   }catch(e){

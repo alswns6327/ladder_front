@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import Button from "./Button";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import RequiredText from "./RequiredText";
+import * as authTypes from "../../types/authTypes";
 
 const HeaderBlock = styled.div``;
 
@@ -53,22 +54,28 @@ type ladderFormType = {
 };
 
 interface HeaderProps {
-  handleRegistSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  handleIdDuplicationCheck: () => Promise<void>;
+  handleRegistSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<boolean>;
   handleLogout: () => void;
   handleLoginSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   auth: ladderFormType;
+  registForm : authTypes.ladderUserType;
+  handleRegistFormChange : (e : ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Header = ({
+  handleIdDuplicationCheck,
   handleRegistSubmit,
   handleLogout,
   handleLoginSubmit,
   auth,
+  registForm,
+  handleRegistFormChange,
 }: HeaderProps) => {
   const [showAccountInfo, setShowAccountInfo] = useState<boolean>(false);
   const [showLoginBox, setShowLoginBox] = useState<boolean>(false);
   const [showRegistBox, setShowRegistBox] = useState<boolean>(false);
-
+  
   return (
     <HeaderBlock>
       <TopHeader>
@@ -110,14 +117,47 @@ const Header = ({
               </Button>
               {showRegistBox && (
                 <UserInfo>
-                  <form onSubmit={handleRegistSubmit}>
-                  <RequiredText/><input name="ladderAccountId" placeholder="id" />
-                  <RequiredText/><input name="ladderAccountPassword" placeholder="pw" />
-                  <input name="ladderAccountName" placeholder="name" />
+                  <form onSubmit={async (e) => {
+                      const registResult = await handleRegistSubmit(e);
+                      setShowRegistBox(!registResult);
+                      if(registResult) setShowLoginBox(registResult);
+                    }
+                  }>
+                    <RequiredText/>
+                    <input 
+                      name="ladderAccountId" 
+                      placeholder="id"
+                      value={registForm.ladderAccountId}
+                      onChange={handleRegistFormChange}
+                    />
+                    <Button type="button" onClick={() => handleIdDuplicationCheck()}>중복체크</Button>
+                    <RequiredText/>
+                    <input 
+                      name="ladderAccountPassword" 
+                      type="password"
+                      placeholder="pw"
+                      value={registForm.ladderAccountPassword}
+                      onChange={handleRegistFormChange} />
+                    <RequiredText/>
+                    <input 
+                      name="recheckLadderAccountPassword"
+                      type="password" 
+                      placeholder="retype pw" 
+                      value={registForm.recheckLadderAccountPassword}
+                      onChange={handleRegistFormChange}
+                    />
+                    <input 
+                      name="ladderAccountName" 
+                      placeholder="name" 
+                      value={registForm.ladderAccountName}
+                      onChange={handleRegistFormChange}  
+                    />
                     <input
                       name="ladderAccountEmail"
                       placeholder="email"
                       type="email"
+                      value={registForm.ladderAccountEmail}
+                      onChange={handleRegistFormChange}
                     />
                     <Button type="submit">submit</Button>
                   </form>

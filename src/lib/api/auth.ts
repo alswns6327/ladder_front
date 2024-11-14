@@ -12,4 +12,8 @@ export const login = (loginInfo: authTypes.ladderUserType) : commonTypes.apiRequ
 export const searchUsers = () : commonTypes.apiRequestInfo<void> => 
   ({uri : "/account/list", httpMethod : httpMethods.GET});
 
-export const logout = () : commonTypes.apiRequestInfo<void> => ({uri : "/logout", httpMethod : httpMethods.DELETE});
+export const logout = () : commonTypes.apiRequestInfo<void> => 
+  ({uri : "/logout", httpMethod : httpMethods.DELETE});
+
+export const idDuplicationCheck = (userId : string) : commonTypes.apiRequestInfo<string> =>
+  ({uri : `/account/${userId}`, httpMethod : httpMethods.GET});
