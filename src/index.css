@@ -100,10 +100,33 @@ nav,
 section {
   display: block;
 }
+	
 body {
   line-height: 1;
-  width: 1300px;
   margin: 0 auto;
+}
+@media (min-width: 576px) {
+  body {
+    width: 576px;
+  }
+}
+
+
+@media (min-width: 768px) {
+  body {
+    width: 768px;
+  }
+}
+@media (min-width: 992px) {
+  body {
+    width: 992px;
+  }
+}
+
+@media (min-width: 1300px) {
+  body {
+    width: 1300px;
+  }
 }
 ol,
 ul {

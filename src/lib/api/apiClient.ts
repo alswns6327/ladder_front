@@ -1,4 +1,4 @@
-import axios, { AxiosHeaders, AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosHeaders, AxiosResponse } from "axios";
 import * as commonTypes from "../../types/commonTypes";
 
 const apiClient = axios.create({
@@ -49,7 +49,10 @@ export const requestApiFn = async <T, RT> (
         break;
     }
     if(response){
-      const newAccessToken : string | undefined = (response.headers as AxiosHeaders).get("new-access-token") as string | undefined;
+      const responseHeaders : AxiosHeaders = response.headers as AxiosHeaders;
+      const newAccessToken : string | undefined = responseHeaders.get("new-access-token") as string | undefined;
+      const isTrueNeedReLogin : string | undefined = responseHeaders.get("need-re-login-check") as string | undefined;
+
       if(newAccessToken){
         localStorage.setItem("accessToken", newAccessToken);
         apiClient.defaults.headers.Authorization = "Bearer ".concat(newAccessToken);
@@ -62,11 +65,15 @@ export const requestApiFn = async <T, RT> (
       } else result = data;
     }
   }catch(e){
+    const error : AxiosError = e as AxiosError;
+    const status = error.status;
     result = {
       msg : "실행 오류",
       code : "400",
       data : {} as RT
     }
+    if(status === 403) result.msg = "권한 없음";
+    else if(status === 401) result.msg = "재로그인 필요";
   }
   return result;
 }
