@@ -6,45 +6,44 @@ import * as articleTypes from "../../types/articleTypes";
 import * as eduTypes from "../../types/eduTypes";
 import * as authTypes from "../../types/authTypes";
 import * as commonTypes from "../../types/commonTypes";
-import { ArticleEduCategoryButton, ArticleEduCategoryItemBox, ArticleEduSubCategoryItemBox } from "./ArticleEduCategoryManageTemplate";
+import { ArticleEduCategoryItemBox, ArticleEduSubCategoryItemBox } from "./ArticleEduCategoryManageTemplate";
 import { ChangeEvent } from "react";
 import { useSelector } from "react-redux";
+import TemplateBox from "../common/TemplateBox";
+import CategoryButton from "../common/CategoryButton";
+import NoneDecoLink from "../common/NoneDecoLink";
 
-const ArticleEduListTemplateBlock = styled.div`
-  width: 1150;
-  margin-left: 150px;
-  background-color: red;
-  position: relative;
-`;
+const ArticleEduListTemplateBlock = styled(TemplateBox)``;
 
 const ArticleEduListHeader = styled.div`
-  width: 85%;
+  width: calc(100% - 120px);
   display: flex;
   justify-content: flex-end;
   select {
     width: 150px;
     height: 35px;
-    background: white;
     background-size: 20px;
     padding: 5px 30px 5px 10px;
     border-radius: 4px;
     outline: 0 none;
   }
   select option {    
-    background: white;
-    color: black;
     padding: 3px 0;
   }
 `;
 const GroupList = styled.div`
+  width: 100px;
   position: absolute;
   top: 0;
   right: 0;
-  background-color: aqua;
+  button {
+    font-size: 9px;
+    text-align: left;
+  }
 `;
 
 const ArticleEduList = styled.div`
-  width: 85%;
+  width: calc(100% - 120px);
   display: flex;
   row-gap: 20px;
   align-items: center;
@@ -91,35 +90,35 @@ const ArticleEduListTemplate = ({
       </ArticleEduListHeader>
       <ArticleEduList>
         {list.map(item => {
-          if("articleSeq" in item) return <Link key={item.articleSeq} to={`/${menuType}/${item.articleSeq}`}>{item.title}</Link>
-          else if("eduSeq" in item) return <Link key={item.eduSeq} to={`/${menuType}/${item.eduSeq}`}>{item.title}</Link>
+          if("articleSeq" in item) return <NoneDecoLink key={item.articleSeq} to={`/${menuType}/${item.articleSeq}`}>{item.title}</NoneDecoLink>
+          else if("eduSeq" in item) return <NoneDecoLink key={item.eduSeq} to={`/${menuType}/${item.eduSeq}`}>{item.title}</NoneDecoLink>
           }
         )}
       </ArticleEduList>
       <GroupList>
-        <ArticleEduCategoryButton
+        <CategoryButton
           onClick={() => handleClickCategory(null, null)}>
           전체
-        </ArticleEduCategoryButton>
+        </CategoryButton>
         {categoryList.map(category => (
           <ArticleEduCategoryItemBox 
             key={category.categorySeq}>
-            <ArticleEduCategoryButton
+            <CategoryButton
               onClick={() => handleClickCategory(Number(category.categorySeq), null)}>
               {category.categoryName}
-            </ArticleEduCategoryButton>
+            </CategoryButton>
             {category.subCategories?.map(subCategory => (
               <ArticleEduSubCategoryItemBox 
                 key={subCategory.subCategorySeq}>
-                <ArticleEduCategoryButton
+                <CategoryButton
                   onClick={() => handleClickCategory(null, Number(subCategory.subCategorySeq))}>
                   {subCategory.subCategoryName}
-                </ArticleEduCategoryButton>
+                </CategoryButton>
               </ArticleEduSubCategoryItemBox>
             ))}
           </ArticleEduCategoryItemBox>
         ))}
-        {ladderAccountId === auth.ladderAccountId && <Link to={`/${menuType}/group`}>관리</Link>}
+        {ladderAccountId === auth.ladderAccountId && <LinkButton text="카테고리 관리" link={`/${menuType}/group`}/>}
       </GroupList>
     </ArticleEduListTemplateBlock>
   );

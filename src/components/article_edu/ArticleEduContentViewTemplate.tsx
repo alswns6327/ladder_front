@@ -8,26 +8,22 @@ import * as eduTypes from "../../types/eduTypes";
 import * as authTypes from "../../types/authTypes";
 import * as commonTypes from "../../types/commonTypes";
 import BackHistoryButton from "../common/BackHistoryButton";
+import TemplateBox from "../common/TemplateBox";
 
-const ArticleEduContentViewTemplateBlock = styled.div`
-  width: 1150;
-  margin-left: 150px;
-  background-color: red;
-  position: relative;
-`;
+const ArticleEduContentViewTemplateBlock = styled(TemplateBox)``;
 
 const ArticleCategoryBox = styled.div`
-  width: 85%;
+  width: calc(100% - 120px);
   text-align: right;
 `
 
 const ArticleTitleBox = styled.div`
-  width: 85%;
+  width: calc(100% - 120px);
   text-align: center;
 `;
 
 const ArticleContentBox = styled.div`
-  width: 85%;
+  width: calc(100% - 120px);
   text-align: center;
 `;
 
@@ -53,7 +49,8 @@ const ArticleEduContentViewTemplate = ({
     <ArticleEduContentViewTemplateBlock>
       <ArticleCategoryBox>{content.categoryName?.concat(" > ")}{content.subCategoryName}</ArticleCategoryBox>
       <ArticleTitleBox>{content.title}</ArticleTitleBox>
-      <ArticleContentBox>
+      <hr/>
+      <ArticleContentBox data-color-mode="light">
         <MDEditor.Markdown
           style={{ padding: 10 }}
           source={content.content}/>

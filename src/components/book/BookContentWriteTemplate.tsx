@@ -8,22 +8,18 @@ import BackHistoryButton from "../common/BackHistoryButton";
 import { TitleInput } from "../common/TitleInput";
 import { RightMenu } from "../common/RightMenu";
 import RequiredText from "../common/RequiredText";
+import TemplateBox from "../common/TemplateBox";
 
-const BookContentWriteTemplateBlock = styled.div`
-  width: 1150;
-  margin-left: 150px;
-  background-color: red;
-  position: relative;
-`;
+const BookContentWriteTemplateBlock = styled(TemplateBox)``;
 
 const BookTitleBox = styled.div`
-  width: 85%;
+  width: calc(100% - 120px);
   text-align: center;
   margin-bottom: 30px;
 `;
 
 const BookContentBox = styled.div`
-  width: 85%;
+  width: calc(100% - 120px);
 `;
 
 type BookContentWriteTemplateProps = {

@@ -6,13 +6,9 @@ import Input from "../common/Input";
 import { RightMenu } from "../common/RightMenu";
 import BackHistoryButton from "../common/BackHistoryButton";
 import RequiredText from "../common/RequiredText";
+import TemplateBox from "../common/TemplateBox";
 
-const ArticleEduCategoryManageTemplateBlock = styled.div`
-  width: 1150;
-  margin-left: 150px;
-  background-color: red;
-  position: relative;
-`;
+const ArticleEduCategoryManageTemplateBlock = styled(TemplateBox)``;
 
 const ArticleEduCategoryManageTopLine = styled.div`
   position: absolute;
@@ -26,10 +22,6 @@ export const ArticleEduCategoryItemBox = styled.div`
 
 export const ArticleEduSubCategoryItemBox = styled(ArticleEduCategoryItemBox)`
   margin-left: 20px;
-`
-
-export const ArticleEduCategoryButton = styled.button`
-  
 `
 
 type ArticleEduCategoryManageTemplatePropsType = {
@@ -170,7 +162,7 @@ const ArticleEduCategoryManageTemplate = ({
   }
 
   return (
-    <ArticleEduCategoryManageTemplateBlock>
+    <ArticleEduCategoryManageTemplateBlock topMargin="120px">
       <ArticleEduCategoryManageTopLine>
         <Button onClick={handleAddCategory}>추가</Button>
       </ArticleEduCategoryManageTopLine>
@@ -208,6 +200,7 @@ const ArticleEduCategoryManageTemplate = ({
                   onClick={() => handleSaveSubCategoryWrapper(subCategory)}>저장</Button>
               </ArticleEduSubCategoryItemBox>
             ))}
+            <hr/>
           </ArticleEduCategoryItemBox>
       ))}
       <RightMenu>

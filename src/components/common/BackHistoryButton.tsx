@@ -5,6 +5,7 @@ const BackHistoryButtonBlock = styled.button`
   border-radius: 8px;
   width: 100px;
   background-color: white;
+  border: 2px solid black;
 `;
 
 const BackHistoryButton = (props: any) => {

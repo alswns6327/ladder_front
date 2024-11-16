@@ -6,13 +6,9 @@ import BackHistoryButton from "../common/BackHistoryButton";
 import { RightMenu } from "../common/RightMenu";
 import * as bookTypes from "../../types/bookTypes";
 import RequiredText from "../common/RequiredText";
+import TemplateBox from "../common/TemplateBox";
 
-const BookInfoSaveUpdateTemplateBlock = styled.div`
-  width: 1150;
-  margin-left: 150px;
-  background-color: red;
-  position: relative;
-`;
+const BookInfoSaveUpdateTemplateBlock = styled(TemplateBox)``;
 
 const BookInfoBox = styled.div`
   display: flex;

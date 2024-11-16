@@ -6,45 +6,54 @@ import * as bookTypes from "../../types/bookTypes";
 import * as authTypes from "../../types/authTypes";
 import { ChangeEvent } from "react";
 import { useSelector } from "react-redux";
-const BookListTemplateBlock = styled.div`
-  width: 1150;
-  margin-left: 150px;
-  background-color: red;
-`;
+import TemplateBox from "../common/TemplateBox";
+
+const BookListTemplateBlock = styled(TemplateBox)``;
 
 const BookTopHeader = styled.div`
-  width: 85%;
+  width: calc(100%);
   display: flex;
   justify-content: flex-end;
   select {
     width: 150px;
     height: 35px;
-    background: white;
     background-size: 20px;
     padding: 5px 30px 5px 10px;
     border-radius: 4px;
     outline: 0 none;
   }
-  select option {    
-    background: white;
-    color: black;
+  select option {
     padding: 3px 0;
   }
 `;
 
 const BookGridList = styled.div`
-  width: 85%;
+  width: calc(100%);
   display: grid;
   grid-row-gap: 10px;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(2, 1fr);
+  justify-items: center;
+  align-items: center;
+  @media (min-width: 400px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (min-width: 576px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media (min-width: 992px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  @media (min-width: 1300px) {
+    grid-template-columns: repeat(5, 1fr);
+  }
 `;
 
 const BookItem = styled.div`
   width: 130px;
   height: 180px;
   background-color: white;
-  justify-self: end;
   position: relative;
   perspective: 1000px;
   &:hover > .firstPage {
@@ -63,14 +72,12 @@ const BookItemPage = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  /* box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3); */
 `;
 
 const BookItemFirstPage = styled(BookItemPage)`
   z-index: 1;
   transform-origin: left center;
   transition-duration: 1s;
-  background-color: white;
 `;
 
 const BookItemFirstPageBack = styled(BookItemFirstPage)`
@@ -82,7 +89,6 @@ const BookItemFirstPageBack = styled(BookItemFirstPage)`
 
 const BookItemSecondPage = styled(BookItemPage)`
   z-index: 0;
-  background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -99,22 +105,34 @@ const BookItemImg = styled.img`
 `;
 
 const BookUpdateLink = styled(Link)`
-  position: absolute;
-  background-color: red;
+  position: absolute; 
   border: 2px solid black;
-  width: 50px;
+  width: 44px;
   left: 0;
   bottom: 0;
   border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
+  padding: 1px 1px;
+  color: black;
+  &:link, &:visited, &:hover, &:active {
+    color: black;
+    text-decoration: none;
+  }
+  font-size: 14px;
+  height: 18px;
 `;
 
 const BookDeleteButton = styled(Button)`
   position: absolute;
-  background-color: red;
+  border-radius: 8px;
+  padding: 1px 1px;
   width: 50px;
   bottom: 0;
   right: 0;
+  font-size: 14px;
 `;
 
 type BookListTemplateProps = {

@@ -9,7 +9,7 @@ export const saveCategory = (category : commonTypes.categoryType) : commonTypes.
     ({uri : "/article/category", httpMethod : httpMethods.POST, param : category});
 
 export const updateCategory = (category : commonTypes.categoryType) : commonTypes.apiRequestInfo<commonTypes.categoryType> => 
-    ({uri : "/article/category", httpMethod : httpMethods.GET, param : category});
+    ({uri : "/article/category", httpMethod : httpMethods.PUT, param : category});
 
 export const deleteCategory = (categorySeq : number) : commonTypes.apiRequestInfo<void> => 
     ({uri : `/article/category/${categorySeq}`, httpMethod : httpMethods.PUT});

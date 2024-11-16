@@ -4,7 +4,27 @@ import { ChangeEvent, useState } from "react";
 import RequiredText from "./RequiredText";
 import * as authTypes from "../../types/authTypes";
 
-const HeaderBlock = styled.div``;
+const HeaderBlock = styled.div`
+  position: fixed;
+  top: 0;
+  z-index: 100;
+  min-width: 400px;
+  @media (min-width: 400px) {
+    width: 400px;
+  }
+  @media (min-width: 576px) {
+    width: 576px;
+  }
+  @media (min-width: 768px) {
+    width: 768px;
+  }
+  @media (min-width: 992px) {
+    width: 992px;
+  }
+  @media (min-width: 1300px) {
+    width: 1300px;
+  }
+`;
 
 const TopHeader = styled.div`
   display: flex;
@@ -12,7 +32,9 @@ const TopHeader = styled.div`
   align-items: flex-start;
 `;
 
-const UserButtonBox = styled.div``;
+const UserButtonBox = styled.div`
+  width: 100px;
+`;
 
 const SubHeader = styled.div`
   display: flex;

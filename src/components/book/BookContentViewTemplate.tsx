@@ -5,21 +5,17 @@ import LinkButton from "../common/LinkButton";
 import * as bookTypes from "../../types/bookTypes";
 import BackHistoryButton from "../common/BackHistoryButton";
 import { RightMenu } from "../common/RightMenu";
+import TemplateBox from "../common/TemplateBox";
 
-const BookContentViewTemplateBlock = styled.div`
-  width: 1150;
-  margin-left: 150px;
-  background-color: red;
-  position: relative;
-`;
+const BookContentViewTemplateBlock = styled(TemplateBox)``;
 
 const BookTitleBox = styled.div`
-  width: 85%;
+  width: calc(100% - 120px);
   text-align: center;
 `;
 
 const BookContentBox = styled.div`
-  width: 85%;
+  width: calc(100% - 120px);
   text-align: center;
 `;
 
@@ -37,7 +33,8 @@ const BookContentViewTemplate = ({
   return (
     <BookContentViewTemplateBlock>
       <BookTitleBox>{bookChapterInfo?.bookChapterInfoTitle}</BookTitleBox>
-      <BookContentBox>
+      <BookContentBox data-color-mode="light">
+        <hr/>
         <MDEditor.Markdown
           style={{ padding: 10 }}
           source={bookChapterInfo?.bookChapterInfoContent}

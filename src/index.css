@@ -103,28 +103,37 @@ section {
 	
 body {
   line-height: 1;
-  margin: 0 auto;
 }
+#root {
+  margin: 0 auto;
+  position: relative;
+  min-width: 400px;
+}
+@media (min-width: 400px) {
+  #root {
+    width: 400px;
+  }
+}
+
 @media (min-width: 576px) {
-  body {
+  #root {
     width: 576px;
   }
 }
 
-
 @media (min-width: 768px) {
-  body {
+  #root {
     width: 768px;
   }
 }
 @media (min-width: 992px) {
-  body {
+  #root {
     width: 992px;
   }
 }
 
 @media (min-width: 1300px) {
-  body {
+  #root {
     width: 1300px;
   }
 }

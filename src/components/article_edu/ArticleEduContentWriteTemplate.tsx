@@ -9,40 +9,33 @@ import * as commonTypes from "../../types/commonTypes";
 import { ChangeEvent, useEffect, useState } from "react";
 import BackHistoryButton from "../common/BackHistoryButton";
 import RequiredText from "../common/RequiredText";
+import TemplateBox from "../common/TemplateBox";
 
-const ArticleEduContentWriteTemplateBlock = styled.div`
-  width: 1150;
-  margin-left: 150px;
-  background-color: red;
-  position: relative;
-`;
+const ArticleEduContentWriteTemplateBlock = styled(TemplateBox)``;
 
 const ArticleCategoryBox = styled.div`
-  width: 85%;
+  width: calc(100% - 120px);
   text-align: right;
   select {
     width: 150px;
     height: 35px;
-    background: white;
     background-size: 20px;
     padding: 5px 30px 5px 10px;
     border-radius: 4px;
     outline: 0 none;
   }
   select option {    
-    background: white;
-    color: black;
     padding: 3px 0;
   }
 `
 
 const ArticleTitleBox = styled.div`
-  width: 85%;
+  width: calc(100% - 120px);
   text-align: center;
 `;
 
 const ArticleContentBox = styled.div`
-  width: 85%;
+  width: calc(100% - 120px);
   text-align: center;
 `;
 

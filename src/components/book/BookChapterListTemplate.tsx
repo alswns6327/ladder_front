@@ -5,34 +5,24 @@ import LinkButton from "../common/LinkButton";
 import BackHistoryButton from "../common/BackHistoryButton";
 import { RightMenu } from "../common/RightMenu";
 import * as bookTypes from "../../types/bookTypes";
-const BookChapterListTemplateBlock = styled.div`
-  width: 1150;
-  margin-left: 150px;
-  background-color: red;
-  position: relative;
-`;
+import TemplateBox from "../common/TemplateBox";
+import NoneDecoLink from "../common/NoneDecoLink";
+
+const BookChapterListTemplateBlock = styled(TemplateBox)``;
 
 const BookTopHeader = styled.div`
-  width: 85%;
+  width: calc(100% - 120px);
   display: flex;
   justify-content: flex-end;
 `;
 
 const BookChapterList = styled.div`
   margin-left: 7.5%;
-  width: 85%;
+  width: calc(100% - 120px);
   display: flex;
   row-gap: 20px;
   align-items: center;
   flex-direction: column;
-`;
-
-const ChapterLink = styled(Link)`
-  width: 450px;
-
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 `;
 
 type BookChanterListTemplateProps = {
@@ -60,12 +50,12 @@ const BookChapterListTemplate = ({
       </BookTopHeader>
       <BookChapterList>
         {chapterList?.map((chapter) => (
-          <ChapterLink
+          <NoneDecoLink
             key={chapter.bookChapterInfoId}
             to={`/book/content/${chapter.bookChapterInfoId}`}
           >
             {chapter.bookChapterInfoTitle}
-          </ChapterLink>
+          </NoneDecoLink>
         ))}
       </BookChapterList>
       <RightMenu>
