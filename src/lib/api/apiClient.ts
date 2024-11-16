@@ -23,7 +23,6 @@ export const requestApiFn = async <T, RT> (
   apiRequestInfo : commonTypes.apiRequestInfo<T>
 ) : Promise<commonTypes.apiReturnType<RT>>  => {
   const {uri, httpMethod, param, headers} : commonTypes.apiRequestInfo<T> = apiRequestInfo;
-  console.log(apiRequestInfo);
   let result : commonTypes.apiReturnType<RT> = {
     msg : "",
     code : "400",
