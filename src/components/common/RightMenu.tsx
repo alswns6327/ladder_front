@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const RightMenu = styled.div`
-    width: 120px;
+    width: 100px;
     min-width: 100px;
     position: absolute;
     top: 0;

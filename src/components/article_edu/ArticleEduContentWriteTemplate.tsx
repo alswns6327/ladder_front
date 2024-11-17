@@ -14,7 +14,7 @@ import TemplateBox from "../common/TemplateBox";
 const ArticleEduContentWriteTemplateBlock = styled(TemplateBox)``;
 
 const ArticleCategoryBox = styled.div`
-  width: calc(100% - 120px);
+  width: calc(100% - 140px);
   text-align: right;
   select {
     width: 150px;
@@ -30,12 +30,12 @@ const ArticleCategoryBox = styled.div`
 `
 
 const ArticleTitleBox = styled.div`
-  width: calc(100% - 120px);
+  width: calc(100% - 140px);
   text-align: center;
 `;
 
 const ArticleContentBox = styled.div`
-  width: calc(100% - 120px);
+  width: calc(100% - 140px);
   text-align: center;
 `;
 

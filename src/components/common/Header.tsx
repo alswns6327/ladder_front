@@ -9,6 +9,9 @@ const HeaderBlock = styled.div`
   top: 0;
   z-index: 100;
   min-width: 400px;
+  background-color: white;
+  padding-bottom: 5px;
+  border-bottom: 1px solid black;
   @media (min-width: 400px) {
     width: 400px;
   }
@@ -24,6 +27,7 @@ const HeaderBlock = styled.div`
   @media (min-width: 1300px) {
     width: 1300px;
   }
+  z-index: 110;
 `;
 
 const TopHeader = styled.div`
@@ -65,6 +69,7 @@ const UserInfo = styled.div`
     display: flex;
     flex-direction: column;
   }
+  background-color: white;
 `;
 
 type ladderFormType = {

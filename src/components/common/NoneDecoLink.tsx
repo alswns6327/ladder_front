@@ -9,6 +9,9 @@ const NoneDecoLinkBlock = styled(Link)`
     color: black;
     text-decoration: none;
   }
+  &:hover {
+    color: red;
+  }
 `;
 
 const NoneDecoLink = (props : any) => {
