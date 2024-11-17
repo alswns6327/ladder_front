@@ -4,8 +4,8 @@ import styled from 'styled-components';
 const TemplateBoxBlock = styled.div<{$topMargin? : string}>`
   margin-top: ${props => props.$topMargin || '100px'};
   @media (min-width: 769px) {
-    margin-left: 138px;
-    width: calc(100% - 138px);
+    margin-left: 140px;
+    width: calc(100% - 140px);
   }
   position: relative;
 `;

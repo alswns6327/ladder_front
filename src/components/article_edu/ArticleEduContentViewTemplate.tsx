@@ -13,17 +13,17 @@ import TemplateBox from "../common/TemplateBox";
 const ArticleEduContentViewTemplateBlock = styled(TemplateBox)``;
 
 const ArticleCategoryBox = styled.div`
-  width: calc(100% - 120px);
+  width: calc(100% - 105px);
   text-align: right;
 `
 
 const ArticleTitleBox = styled.div`
-  width: calc(100% - 120px);
+  width: calc(100% - 101px);
   text-align: center;
 `;
 
 const ArticleContentBox = styled.div`
-  width: calc(100% - 120px);
+  width: calc(100% - 101px);
   text-align: center;
 `;
 

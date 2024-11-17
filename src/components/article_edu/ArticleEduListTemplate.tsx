@@ -16,7 +16,7 @@ import NoneDecoLink from "../common/NoneDecoLink";
 const ArticleEduListTemplateBlock = styled(TemplateBox)``;
 
 const ArticleEduListHeader = styled.div`
-  width: calc(100% - 120px);
+  width: calc(100% - 101px);
   display: flex;
   justify-content: flex-end;
   select {
@@ -43,7 +43,7 @@ const GroupList = styled.div`
 `;
 
 const ArticleEduList = styled.div`
-  width: calc(100% - 120px);
+  width: calc(100% - 101px);
   display: flex;
   row-gap: 20px;
   align-items: center;

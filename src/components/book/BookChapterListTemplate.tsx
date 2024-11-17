@@ -11,14 +11,14 @@ import NoneDecoLink from "../common/NoneDecoLink";
 const BookChapterListTemplateBlock = styled(TemplateBox)``;
 
 const BookTopHeader = styled.div`
-  width: calc(100% - 120px);
+  width: calc(100% - 101px);
   display: flex;
   justify-content: flex-end;
 `;
 
 const BookChapterList = styled.div`
   margin-left: 7.5%;
-  width: calc(100% - 120px);
+  width: calc(100% - 101px);
   display: flex;
   row-gap: 20px;
   align-items: center;

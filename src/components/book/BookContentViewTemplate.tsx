@@ -10,12 +10,12 @@ import TemplateBox from "../common/TemplateBox";
 const BookContentViewTemplateBlock = styled(TemplateBox)``;
 
 const BookTitleBox = styled.div`
-  width: calc(100% - 120px);
+  width: calc(100% - 101px);
   text-align: center;
 `;
 
 const BookContentBox = styled.div`
-  width: calc(100% - 120px);
+  width: calc(100% - 101px);
   text-align: center;
 `;
 

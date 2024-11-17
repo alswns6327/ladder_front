@@ -13,13 +13,13 @@ import TemplateBox from "../common/TemplateBox";
 const BookContentWriteTemplateBlock = styled(TemplateBox)``;
 
 const BookTitleBox = styled.div`
-  width: calc(100% - 120px);
+  width: calc(100% - 101px);
   text-align: center;
   margin-bottom: 30px;
 `;
 
 const BookContentBox = styled.div`
-  width: calc(100% - 120px);
+  width: calc(100% - 101px);
 `;
 
 type BookContentWriteTemplateProps = {
