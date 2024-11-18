@@ -7,7 +7,7 @@ import * as authTypes from "../../types/authTypes";
 const HeaderBlock = styled.div`
   position: fixed;
   top: 0;
-  z-index: 100;
+  z-index: 110;
   min-width: 400px;
   background-color: white;
   padding-bottom: 5px;
@@ -27,7 +27,6 @@ const HeaderBlock = styled.div`
   @media (min-width: 1300px) {
     width: 1300px;
   }
-  z-index: 110;
 `;
 
 const TopHeader = styled.div`
