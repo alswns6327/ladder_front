@@ -106,8 +106,10 @@ body {
 }
 #root {
   margin: 0 auto;
+  padding-top: 1px;
   position: relative;
   min-width: 400px;
+  min-height: 400px;
 }
 @media (min-width: 400px) {
   #root {
