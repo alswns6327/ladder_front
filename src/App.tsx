@@ -22,6 +22,7 @@ import EduContentViewPage from "./pages/edu/EduContentViewPage";
 import EduContentWritePage from "./pages/edu/EduContentWritePage";
 import EduContentUpdatePage from "./pages/edu/EduContentUpdatePage";
 import EduCategoryManagePage from "./pages/edu/EduCategoryManagePage";
+import ModalContainer from "./containers/common/ModalContainer";
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
         <Route path="/edu/write/:eduSeq" element={<EduContentUpdatePage />} />
         <Route path="/edu/group" element={<EduCategoryManagePage />} />
       </Routes>
+      <ModalContainer/>
     </>
   );
 }

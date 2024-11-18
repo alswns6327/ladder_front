@@ -3,6 +3,7 @@ import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
 import { configureStore } from "@reduxjs/toolkit";
 import auth from "./auth";
+import modal from "./modal";
 import { useDispatch } from "react-redux";
 
 const persistConfig = {
@@ -13,7 +14,7 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(
   persistConfig,
-  combineReducers({ auth })
+  combineReducers({ auth, modal })
 );
 
 const store = configureStore({

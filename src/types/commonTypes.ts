@@ -49,3 +49,30 @@ export type apiRequestInfo<T> = {
     param? : T
     headers? : apiRequestHeadersType
 }
+
+export type modalInitialType = {
+    toast : toastModalType,
+    alert : alertModalType,
+    confirm : confirmModalType
+}
+
+export type toastModalType = {
+    display : boolean;
+    type : string;
+    text : string;
+}
+
+export type alertModalType = {
+    display : boolean;
+    width : string;
+    height : string;
+    text : string;
+}
+
+export type confirmModalType = {
+    display : boolean;
+    width : string;
+    height : string;
+    text : string;
+    confirmFn : () => void;
+}
