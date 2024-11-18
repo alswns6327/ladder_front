@@ -33,14 +33,17 @@ const ModalContainer = () => {
         $display={modal.confirm.display} 
         $width={modal.confirm.width} 
         $height={modal.confirm.height}>
-        {modal.confirm.text}
-        <div>
-          <Button onClick={() => {modal.confirm.confirmFn(); dispatch(modalDodules.closeConfirmModal())}}>
-            확인
-          </Button>
-          <Button onClick={() => dispatch(modalDodules.closeConfirmModal())}>
-            닫기
-          </Button>
+        <div className='background'></div>
+        <div className='conFirmModal'>
+          {modal.confirm.text}
+          <div>
+            <Button onClick={() => {modal.confirm.confirmFn(); dispatch(modalDodules.closeConfirmModal())}}>
+              확인
+            </Button>
+            <Button onClick={() => dispatch(modalDodules.closeConfirmModal())}>
+              취소
+            </Button>
+          </div>
         </div>
       </Modals.ConfirmModal>
     </>

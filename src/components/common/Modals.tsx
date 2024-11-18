@@ -12,6 +12,7 @@ const fadeOut = keyframes`
 `;
 
 export const ToastModal = styled.div<{$display : boolean, $type : string}>`
+  z-index: 999;
   width: 100px;
   height: 34px;
   position: absolute;
@@ -40,6 +41,7 @@ export const ToastModal = styled.div<{$display : boolean, $type : string}>`
 `;
 
 export const AlertModal = styled.div<{$display : boolean, $width : string, $height : string}>`
+  z-index: 999;
   width: ${props => props.$width.concat("px")};
   height: ${props => props.$height.concat("px")};
   position: absolute;
@@ -66,33 +68,52 @@ export const AlertModal = styled.div<{$display : boolean, $width : string, $heig
 `;
 
 export const ConfirmModal = styled.div<{$display : boolean, $width : string, $height : string}>`
-  width: ${props => props.$width.concat("px")};
-  height: ${props => props.$height.concat("px")};
+  z-index: 999;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  background-color: green;
-  display: ${props => props.$display ? "flex" : "none"};
-  justify-content: center;
-  align-items: center;
-  transform: translate(${props => (Number(props.$width) * -0.5) + "px"}, ${props => (Number(props.$height) * -0.5) + "px"});
-  border-radius: 8px;
-  div {
+  display: ${props => props.$display ? "block" : "none"};
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  .background{
     position: absolute;
-    bottom: 5px;
-    right: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 10px;
+    display: ${props => props.$display ? "block" : "none"};
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.8);
   }
-  button {
+
+  .conFirmModal{
+    width: ${props => props.$width.concat("px")};
+    height: ${props => props.$height.concat("px")};
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background-color: green;
+    display: ${props => props.$display ? "flex" : "none"};
+    justify-content: center;
+    align-items: center;
+    transform: translate(${props => (Number(props.$width) * -0.5) + "px"}, ${props => (Number(props.$height) * -0.5) + "px"});
     border-radius: 8px;
-    width: 40px;
-    font-size: 12px;
-    background-color: white;
-    border: 1px solid black;
-    text-align: center;
-    color: black;
+    div {
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    button {
+      border-radius: 8px;
+      width: 40px;
+      font-size: 12px;
+      background-color: white;
+      border: 1px solid black;
+      text-align: center;
+      color: black;
+    }
   }
 `;
