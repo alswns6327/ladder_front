@@ -8,13 +8,12 @@ import { AppDispatch } from '../../modules';
 
 const ModalContainer = () => {
   const modal = useSelector(({modal} : {modal : commonTypes.modalInitialType}) => modal);
-  const dispatch = useDispatch<AppDispatch>();
-
+  const dispatch = useDispatch<AppDispatch>();  
   return (
     <>
-      <Modals.ToastModal 
-        $display={modal.toast.display} 
-        $type={modal.toast.type}>
+      <Modals.ToastModal
+        $display={modal.toast.display}
+        $messageType={modal.toast.messageType}>
         {modal.toast.text}
         <button onClick={() => dispatch(modalDodules.closeToastModal())}/>
       </Modals.ToastModal>

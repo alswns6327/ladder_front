@@ -7,9 +7,10 @@ import { useSelector } from 'react-redux';
 import * as articleApiRequestParam from "../../lib/api/article";
 import { useNavigate } from 'react-router-dom';
 import { requestApiFn } from '../../lib/api/apiClient';
+import useModal from "../../hooks/modal/useModal";
 
 const ArticleContentWriteContainer = () => {
-
+    const modal = useModal();
     const [articleCategoryList, setArticleCategoryList] = useState<commonTypes.categoryType[]>([]);
     const auth : authTypes.authInitialStateType = useSelector(({auth} : {auth : authTypes.authInitialStateType}) => auth);
     const navigator = useNavigate();
@@ -27,7 +28,7 @@ const ArticleContentWriteContainer = () => {
                 articleApiRequestParam.searchArticleGroupList(auth.ladderAccountId)
             );
             if(resultData.msg === "success") setArticleCategoryList(resultData.data);
-            else alert(resultData.msg);
+            else modal.openToastModal(resultData.msg, "error");
         }
         searchArticleCategoryList();
     }, []);
@@ -53,7 +54,7 @@ const ArticleContentWriteContainer = () => {
 
     const handleSave = async () => {
         if(!articleForm.content.trim() || !articleForm.title.trim()){
-            return alert("필수값을 입력해주세요.");
+            return modal.openToastModal("필수값을 입력해주세요.", "warning");
         }
         const resultData =  await requestApiFn<commonTypes.article, commonTypes.article>(
             articleApiRequestParam.saveArticle(
@@ -65,7 +66,7 @@ const ArticleContentWriteContainer = () => {
             )
         );
         if(resultData.msg === "success") navigator("/article");
-        else alert(resultData.msg);
+        else modal.openToastModal(resultData.msg, "error");
     }
 
     return (

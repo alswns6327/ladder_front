@@ -6,8 +6,10 @@ import * as eduApiRequestParam from "../../lib/api/edu";
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { requestApiFn } from '../../lib/api/apiClient';
+import useModal from "../../hooks/modal/useModal";
 
 const EduCategoryManageContainer = () => {
+    const modal = useModal();
     const [eduCategoryList, setEduCategoryList] = useState<commonTypes.categoryType[]>([]);
     const auth : authTypes.authInitialStateType = useSelector(({auth} : {auth : authTypes.authInitialStateType}) => auth);
     useEffect(() => {
@@ -16,7 +18,7 @@ const EduCategoryManageContainer = () => {
                 eduApiRequestParam.searchEduGroupList(auth.ladderAccountId)
             );
             if(resultData.msg === "success") setEduCategoryList(resultData.data);
-            else alert(resultData.msg);
+            else modal.openToastModal(resultData.msg, "error");
         }
         searchEduCategoryList();
     }, []);

@@ -6,10 +6,12 @@ import { useSelector } from "react-redux";
 import * as authTypes from "../../types/authTypes";
 import * as bookTypes from "../../types/bookTypes";
 import { requestApiFn } from "../../lib/api/apiClient";
+import useModal from "../../hooks/modal/useModal";
 
 const BookContentViewContainer = () => {
   const { bookChapterInfoId } = useParams();
   const navigator = useNavigate();
+  const modal = useModal();
   const [bookChapterInfo, setBookChapterInfo] = useState<bookTypes.bookContentType>({
     bookInfoId: "",
     bookChapterInfoId: "",
@@ -29,7 +31,7 @@ const BookContentViewContainer = () => {
       );
       if (resultData.msg === "success")
         setBookChapterInfo(resultData.data);
-      else alert(resultData.msg);
+      else modal.openToastModal(resultData.msg, "error");
     };
     searchBookChapterInfo();
   }, []);
@@ -40,7 +42,7 @@ const BookContentViewContainer = () => {
     );
     if (resultData.msg === "success")
       navigator(`/book/chapter/${bookChapterInfo?.bookInfoId}`);
-    else alert(resultData.msg);
+    else modal.openToastModal(resultData.msg, "error");
   };
   return (
     <BookContentViewTemplate

@@ -8,8 +8,10 @@ import * as authApiRequestParam from "../../lib/api/auth";
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { requestApiFn } from '../../lib/api/apiClient';
+import useModal from "../../hooks/modal/useModal";
 
 const ArticleContentViewContainer = () => {
+    const modal = useModal();
     const { articleSeq } = useParams();
     const navigator = useNavigate();
     const auth = useSelector(({auth} : {auth : authTypes.authInitialStateType}) => auth);
@@ -30,7 +32,7 @@ const ArticleContentViewContainer = () => {
                 articleApiRequestParam.searchArticle(Number(articleSeq))
             )
             if(resultData.msg === "success") setArticle(resultData.data);
-            else alert(resultData.msg);
+            else modal.openToastModal(resultData.msg, "error");
         }
         searchArticle();
     }, []);
@@ -40,7 +42,7 @@ const ArticleContentViewContainer = () => {
             articleApiRequestParam.deleteArticle(Number(articleSeq))
         );
         if(resultData.msg === "success") navigator("/article");
-        else alert(resultData.msg);
+        else modal.openToastModal(resultData.msg, "error");
     }
 
     return (

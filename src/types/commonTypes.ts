@@ -58,21 +58,21 @@ export type modalInitialType = {
 
 export type toastModalType = {
     display : boolean;
-    type : string;
+    messageType : "success" | "warning" | "error";
     text : string;
 }
 
 export type alertModalType = {
     display : boolean;
-    width : string;
-    height : string;
     text : string;
+    width : number;
+    height : number;
 }
 
 export type confirmModalType = {
     display : boolean;
-    width : string;
-    height : string;
     text : string;
+    width : number;
+    height : number;
     confirmFn : () => void;
 }

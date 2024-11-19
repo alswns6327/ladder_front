@@ -152,6 +152,7 @@ const BookListTemplate = ({
   handleSelectBoxChange,
 }: BookListTemplateProps) => {
   const auth = useSelector(({auth} : {auth : authTypes.authInitialStateType}) => auth);
+
   return (
     <BookListTemplateBlock>
       <BookTopHeader>

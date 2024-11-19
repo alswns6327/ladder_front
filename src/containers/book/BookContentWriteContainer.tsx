@@ -4,9 +4,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import * as bookApiRequestParam from "../../lib/api/book";
 import * as bookTypes from "../../types/bookTypes";
 import { requestApiFn } from "../../lib/api/apiClient";
+import useModal from "../../hooks/modal/useModal";
 
 const BookContentWriteContainer = () => {
   const navigator = useNavigate();
+  const modal = useModal();
   const { bookInfoId } = useParams();
   const [bookChapterInfo, setBookChapterInfo] = useState<bookTypes.bookContentType>({
     bookInfoId: bookInfoId,
@@ -26,13 +28,13 @@ const BookContentWriteContainer = () => {
   }
 
   const handleSaveContent = async () => {
-    if(!bookChapterInfo.bookChapterInfoTitle.trim() || !bookChapterInfo.bookChapterInfoContent?.trim()) return alert("필수값을 입력해주세요.");
+    if(!bookChapterInfo.bookChapterInfoTitle.trim() || !bookChapterInfo.bookChapterInfoContent?.trim()) return modal.openToastModal("필수값을 입력해주세요.", "warning");
     
     const resultData =  await requestApiFn<bookTypes.bookContentType, bookTypes.bookContentType>(
       bookApiRequestParam.saveBookContent(bookChapterInfo)
     );
     if (resultData.msg === "success") navigator(`/book/chapter/${bookInfoId}`);
-    else alert(resultData.msg);
+    else modal.openToastModal(resultData.msg, "error");
   };
 
   return (

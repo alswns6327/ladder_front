@@ -25,6 +25,7 @@ import EduCategoryManagePage from "./pages/edu/EduCategoryManagePage";
 import ModalContainer from "./containers/common/ModalContainer";
 
 function App() {
+  
   return (
     <>
       <HeaderContainer />

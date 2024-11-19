@@ -6,9 +6,11 @@ import { useSelector } from "react-redux";
 import * as authTypes from "../../types/authTypes";
 import * as bookTypes from "../../types/bookTypes";
 import { requestApiFn } from "../../lib/api/apiClient";
+import useModal from "../../hooks/modal/useModal";
 
 const BookChapterListContainer = () => {
   const { bookInfoId } = useParams();
+  const modal = useModal();
   const [chapterList, setChapterList] = useState<bookTypes.bookContentType[]>([]);
   const [bookInfo, setBookInfo] = useState<bookTypes.bookInfoFileStringType>({
     bookInfoId: Number(bookInfoId),
@@ -27,7 +29,7 @@ const BookChapterListContainer = () => {
         bookApiRequestParam.searchBookContentList(Number(bookInfoId))
       );
       if (resultData.msg === "success") setChapterList(resultData.data);
-      else alert(resultData.msg);
+      else modal.openToastModal(resultData.msg, "error");
     };
     searchChapterList();
   }, []);
@@ -38,7 +40,7 @@ const BookChapterListContainer = () => {
         bookApiRequestParam.searchBookInfo(Number(bookInfoId))
       );
       if (resultData.msg === "success") setBookInfo(resultData.data);
-      else alert(resultData.msg);
+      else modal.openToastModal(resultData.msg, "error");
     };
     searchBookInfo();
   }, []);

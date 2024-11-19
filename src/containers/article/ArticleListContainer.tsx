@@ -7,9 +7,10 @@ import * as articleApiRequestParam from "../../lib/api/article";
 import * as authApiRequestParam from "../../lib/api/auth";
 import { useSelector } from 'react-redux';
 import { requestApiFn } from '../../lib/api/apiClient';
+import useModal from "../../hooks/modal/useModal";
 
 const ArticleListContainer = () => {
-
+    const modal = useModal();
     const [articleList, setArticleList] = useState<commonTypes.article[]>([]);
     const [articleCategoryList, setArticleCategoryList] = useState<commonTypes.categoryType[]>([]);
     const [userList, setUserList] = useState<authTypes.ladderUserSelectType[]>([]);
@@ -22,7 +23,7 @@ const ArticleListContainer = () => {
                 authApiRequestParam.searchUsers()
             );
             if(resultData.msg === "success") setUserList(resultData.data);
-            else alert(resultData.msg);
+            else modal.openToastModal(resultData.msg, "error");
         }
         searchUsers();
     }, []);
@@ -38,7 +39,7 @@ const ArticleListContainer = () => {
                 articleApiRequestParam.searchArticleGroupList(ladderAccountId)
             )
             if(resultData.msg === "success") setArticleCategoryList(resultData.data);
-            else alert(resultData.msg);
+            else modal.openToastModal(resultData.msg, "error");
         }
         searchArticleCategoryList();
     }, [ladderAccountId]);
@@ -49,7 +50,7 @@ const ArticleListContainer = () => {
                 articleApiRequestParam.searchArticleList(encodeURIComponent(`{"ladderAccountId":"${ladderAccountId}","categorySeq":${null},"subCategorySeq":${null}}`))
             );
             if(resultData.msg === "success") setArticleList(resultData.data);
-            else alert(resultData.msg);
+            else modal.openToastModal(resultData.msg, "error");
         }
         searchArticleList();
     }, [ladderAccountId]);
@@ -63,7 +64,7 @@ const ArticleListContainer = () => {
             articleApiRequestParam.searchArticleList(encodeURIComponent(`{"ladderAccountId":"${ladderAccountId}","categorySeq":${categorySeq},"subCategorySeq":${subCategorySeq}}`))
         );
         if(resultData.msg === "success") setArticleList(resultData.data);
-        else alert(resultData.msg);
+        else modal.openToastModal(resultData.msg, "error");
     }
 
     return (

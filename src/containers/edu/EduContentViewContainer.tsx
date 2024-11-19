@@ -8,10 +8,12 @@ import * as authApiRequestParam from "../../lib/api/auth";
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { requestApiFn } from '../../lib/api/apiClient';
+import useModal from "../../hooks/modal/useModal";
 
 const EduContentViewContainer = () => {
     const { eduSeq } = useParams();
     const navigator = useNavigate();
+    const modal = useModal();
     const auth = useSelector(({auth} : {auth : authTypes.authInitialStateType}) => auth);
     const [edu, setEdu] = useState<commonTypes.edu>({
         eduSeq : "",
@@ -30,7 +32,7 @@ const EduContentViewContainer = () => {
                 eduApiRequestParam.searchEdu(Number(eduSeq))
             );
             if(resultData.msg === "success") setEdu(resultData.data);
-            else alert(resultData.msg);
+            else modal.openToastModal(resultData.msg, "error");
         }
         searchEdu();
     }, []);
@@ -39,8 +41,8 @@ const EduContentViewContainer = () => {
         const resultData =  await requestApiFn<void, commonTypes.edu>(
             eduApiRequestParam.deleteEdu(Number(eduSeq))
         );
-        if(resultData.msg === "success") {alert("삭제 성공"); navigator("/edu");}
-        else alert(resultData.msg);
+        if(resultData.msg === "success") {modal.openToastModal("삭제 성공", "success"); navigator("/edu");}
+        else modal.openToastModal(resultData.msg, "error");
     }
 
     return (

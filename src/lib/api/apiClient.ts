@@ -51,7 +51,6 @@ export const requestApiFn = async <T, RT> (
     if(response){
       const responseHeaders : AxiosHeaders = response.headers as AxiosHeaders;
       const newAccessToken : string | undefined = responseHeaders.get("new-access-token") as string | undefined;
-      const isTrueNeedReLogin : string | undefined = responseHeaders.get("need-re-login-check") as string | undefined;
 
       if(newAccessToken){
         localStorage.setItem("accessToken", newAccessToken);

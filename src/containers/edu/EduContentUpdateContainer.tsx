@@ -7,11 +7,12 @@ import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import * as eduApiRequestParam from "../../lib/api/edu";
 import { requestApiFn } from '../../lib/api/apiClient';
-
+import useModal from "../../hooks/modal/useModal";
 
 const EduContentUpdateContainer = () => {
     
     const { eduSeq } = useParams();
+    const modal = useModal();
     const [eduCategoryList, setEduCategoryList] = useState<commonTypes.categoryType[]>([]);
     const auth : authTypes.authInitialStateType = useSelector(({auth} : {auth : authTypes.authInitialStateType}) => auth);
     const navigator = useNavigate();
@@ -32,7 +33,7 @@ const EduContentUpdateContainer = () => {
             if(resultData.msg === "success") {
                 setEduCategoryList(resultData.data);
             }
-            else alert(resultData.msg);
+            else modal.openToastModal(resultData.msg, "error");
         }
         searchEduCategoryList();
     }, []);
@@ -52,7 +53,7 @@ const EduContentUpdateContainer = () => {
                     }
                 );
             }
-            else alert(resultData.msg);
+            else modal.openToastModal(resultData.msg, "error");
         }
         searchEdu();
     }, []);
@@ -72,7 +73,7 @@ const EduContentUpdateContainer = () => {
     }
 
     const handleSave = async () => {
-        if(!eduForm.content.trim() || !eduForm.title.trim()) return alert("필수값을 입력해주세요.");
+        if(!eduForm.content.trim() || !eduForm.title.trim()) return modal.openToastModal("필수값을 입력해주세요.", "warning");
         
 
         const resultData =  await requestApiFn<commonTypes.edu, commonTypes.edu>(
@@ -85,7 +86,7 @@ const EduContentUpdateContainer = () => {
             )
         );
         if(resultData.msg === "success") navigator("/edu");
-        else alert(resultData.msg);
+        else modal.openToastModal(resultData.msg, "error");
     }
 
     return (

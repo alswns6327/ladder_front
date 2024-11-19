@@ -8,11 +8,12 @@ import * as authApiRequestParam from "../../lib/api/auth";
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { requestApiFn } from '../../lib/api/apiClient';
+import useModal from "../../hooks/modal/useModal";
 
 const EduListContainer = () => {
 
     const navigator = useNavigate();
-
+    const modal = useModal();
     const [eduList, setEduList] = useState<commonTypes.edu[]>([]);
     const [eduCategoryList, setEduCategoryList] = useState<commonTypes.categoryType[]>([]);
     const [userList, setUserList] = useState<authTypes.ladderUserSelectType[]>([]);
@@ -20,7 +21,7 @@ const EduListContainer = () => {
     const [ladderAccountId, setLadderAccountId] = useState<string>(auth.ladderAccountId);
     useEffect(() => {
         if(!["STUDENT", "ADMIN"].includes(auth.ladderAccountAuth)) {
-            alert("권한 없음");
+            modal.openToastModal("권한 없음", "warning");
             return navigator("/");
         }
         const searchEduCategoryList = async () => {
@@ -28,7 +29,7 @@ const EduListContainer = () => {
                 eduApiRequestParam.searchEduGroupList(ladderAccountId)
             );
             if(resultData.msg === "success") setEduCategoryList(resultData.data);
-            else alert(resultData.msg);
+            else modal.openToastModal(resultData.msg, "error");
         }
         searchEduCategoryList();
     }, [ladderAccountId]);
@@ -40,7 +41,7 @@ const EduListContainer = () => {
                     eduApiRequestParam.searchEduList(encodeURIComponent(`{"ladderAccountId":"${ladderAccountId}","categorySeq":${null},"subCategorySeq":${null}}`))
                 );
                 if(resultData.msg === "success") setEduList(resultData.data);
-                else alert(resultData.msg);
+                else modal.openToastModal(resultData.msg, "error");
             }
             searchEduList();
         }
@@ -52,7 +53,7 @@ const EduListContainer = () => {
                 authApiRequestParam.searchUsers()
             );
             if(resultData.msg === "success") setUserList(resultData.data);
-            else alert(resultData.msg);
+            else modal.openToastModal(resultData.msg, "error");
         }
         searchUsers();
     }, []);
@@ -66,7 +67,7 @@ const EduListContainer = () => {
             eduApiRequestParam.searchEduList(encodeURIComponent(`{"ladderAccountId":"${ladderAccountId}","categorySeq":${categorySeq},"subCategorySeq":${subCategorySeq}}`))
         );
         if(resultData.msg === "success") setEduList(resultData.data);
-        else alert(resultData.msg);
+        else modal.openToastModal(resultData.msg, "error");
     }
 
     return (

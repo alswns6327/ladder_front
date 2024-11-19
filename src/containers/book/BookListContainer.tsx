@@ -6,8 +6,10 @@ import { useSelector } from "react-redux";
 import * as authTypes from "../../types/authTypes";
 import * as bookTypes from "../../types/bookTypes";
 import { requestApiFn } from "../../lib/api/apiClient";
+import useModal from "../../hooks/modal/useModal";
 
 const BookListContainer = () => {
+  const modal = useModal();
   const auth: authTypes.authInitialStateType = useSelector(
     ({ auth }: { auth: authTypes.authInitialStateType }) => auth
   );
@@ -21,7 +23,7 @@ const BookListContainer = () => {
           authApiRequestParam.searchUsers()
         );
         if(resultData.msg === "success") setUserList(resultData.data);
-        else alert(resultData.msg);
+        else modal.openToastModal(resultData.msg, "error");
     }
     searchUsers();
   }, []);
@@ -37,9 +39,9 @@ const BookListContainer = () => {
         bookApiRequestParam.searchBookInfoList(ladderAccountId)
       );
       if (resultData.msg === "success") setBookInfoList(resultData.data);
-      else alert(resultData.msg);
+      else modal.openToastModal(resultData.msg, "error");
     };
-    getBookInfoList();
+    if(ladderAccountId) getBookInfoList();
   }, [ladderAccountId]);
 
   const handleDeleteBookItem = async (bookInfoId: number) => {
@@ -50,7 +52,7 @@ const BookListContainer = () => {
       setBookInfoList(
         bookInfoList.filter((bookInfo) => bookInfo.bookInfoId !== bookInfoId)
       );
-    else alert(resultData.msg);
+    else modal.openToastModal(resultData.msg, "error");
   };
   const handleSelectBoxChange = (e : ChangeEvent<HTMLSelectElement>) => {
     setLadderAccountId(e.target.value);

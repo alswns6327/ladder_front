@@ -4,10 +4,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import * as bookApiRequestParam from "../../lib/api/book";
 import * as bookTypes from "../../types/bookTypes";
 import { requestApiFn } from "../../lib/api/apiClient";
+import useModal from "../../hooks/modal/useModal";
 
 const BookInfoUpdateContainer = () => {
   const { bookInfoId } = useParams();
   const navigator = useNavigate();
+  const modal = useModal();
 
   const [bookInfo, setBookInfo] = useState<bookTypes.bookInfoFileStringType>();
 
@@ -17,12 +19,12 @@ const BookInfoUpdateContainer = () => {
         bookApiRequestParam.searchBookInfo(Number(bookInfoId))
       );
       if (resultData.msg === "success") setBookInfo(resultData.data);
-      else alert(resultData.msg);
+      else modal.openToastModal(resultData.msg, "error");
     };
     searchBookInfo();
   }, []);
   const handleBookInfoUpdate = async (bookInfoForm: bookTypes.bookInfoType) => {
-    if(!bookInfoForm.bookName.trim()) return alert("책 제목을 입력해주세요.");
+    if(!bookInfoForm.bookName.trim()) return modal.openToastModal("책 제목을 입력해주세요.", "warning");
 
     const data: bookTypes.bookInfoType = Object.assign(bookInfoForm, {
       bookInfoId: bookInfoId,
@@ -31,7 +33,7 @@ const BookInfoUpdateContainer = () => {
       bookApiRequestParam.updateBookInfo(data)
     );
     if (resultData.msg === "success") navigator("/");
-    else alert(resultData.msg);
+    else modal.openToastModal(resultData.msg, "error");
   };
   return (
     <BookInfoSaveUpdateTemplate

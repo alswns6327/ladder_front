@@ -6,8 +6,10 @@ import * as articleApiRequestParam from "../../lib/api/article";
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { requestApiFn } from '../../lib/api/apiClient';
+import useModal from "../../hooks/modal/useModal";
 
 const ArticleCategoryManageContainer = () => {
+    const modal = useModal();
     const [articleCategoryList, setArticleCategoryList] = useState<commonTypes.categoryType[]>([]);
     const auth : authTypes.authInitialStateType = useSelector(({auth} : {auth : authTypes.authInitialStateType}) => auth);
     useEffect(() => {
@@ -16,7 +18,7 @@ const ArticleCategoryManageContainer = () => {
                 articleApiRequestParam.searchArticleGroupList(auth.ladderAccountId)
             );
             if(resultData.msg === "success") setArticleCategoryList(resultData.data);
-            else alert(resultData.msg);
+            else modal.openToastModal(resultData.msg, "error");
         }
         searchArticleCategoryList();
     }, []);

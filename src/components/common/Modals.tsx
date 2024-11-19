@@ -11,15 +11,15 @@ const fadeOut = keyframes`
   }
 `;
 
-export const ToastModal = styled.div<{$display : boolean, $type : string}>`
+export const ToastModal = styled.div<{$display : boolean, $messageType : string}>`
   z-index: 999;
-  width: 100px;
-  height: 34px;
-  position: absolute;
+  width: 150px;
+  height: 70px;
+  position: fixed;
   text-align: center;
-  top: 50%;
+  top: 35%;
   left: 50%;
-  background-color: rgba(${props => props.$type === "success" ? 0 : 255}, ${props => props.$type === "success" ? 255 : 0}, 0, 1);
+  background-color: rgba(${props => props.$messageType === "success" ? 0 : 255}, ${props => ["success", "warning"].includes(props.$messageType) ? 255 : 0}, 0, 1);
   display: ${props => props.$display ? "flex" : "none"};
   justify-content: center;
   align-items: center;
@@ -40,19 +40,21 @@ export const ToastModal = styled.div<{$display : boolean, $type : string}>`
   }
 `;
 
-export const AlertModal = styled.div<{$display : boolean, $width : string, $height : string}>`
+export const AlertModal = styled.div<{$display : boolean, $width : number, $height : number}>`
   z-index: 999;
-  width: ${props => props.$width.concat("px")};
-  height: ${props => props.$height.concat("px")};
-  position: absolute;
-  top: 50%;
+  width: ${props => props.$width + "px"};
+  height: ${props => props.$height + "px"};
+  position: fixed;
+  top: 35%;
   left: 50%;
-  background-color: green;
+  background-color: white;
   display: ${props => props.$display ? "flex" : "none"};
   justify-content: center;
   align-items: center;
-  transform: translate(${props => (Number(props.$width) * -0.5) + "px"}, ${props => (Number(props.$height) * -0.5) + "px"});
+  transform: translate(${props => props.$width * -0.5 + "px"}, ${props => props.$height * -0.5 + "px"});
   border-radius: 8px;
+  border: 1px solid black;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
   button {
     position: absolute;
     bottom: 5px;
@@ -67,9 +69,9 @@ export const AlertModal = styled.div<{$display : boolean, $width : string, $heig
   }
 `;
 
-export const ConfirmModal = styled.div<{$display : boolean, $width : string, $height : string}>`
+export const ConfirmModal = styled.div<{$display : boolean, $width : number, $height : number}>`
   z-index: 999;
-  position: absolute;
+  position: fixed;
   display: ${props => props.$display ? "block" : "none"};
   top: 0;
   left: 0;
@@ -81,22 +83,23 @@ export const ConfirmModal = styled.div<{$display : boolean, $width : string, $he
     top: 0;
     left: 0;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     background-color: rgba(0,0,0,0.8);
   }
 
   .conFirmModal{
-    width: ${props => props.$width.concat("px")};
-    height: ${props => props.$height.concat("px")};
+    width: ${props => props.$width + "px"};
+    height: ${props => props.$height + "px"};
     position: absolute;
-    top: 50%;
+    top: 35%;
     left: 50%;
-    background-color: green;
+    background-color: white;
     display: ${props => props.$display ? "flex" : "none"};
     justify-content: center;
     align-items: center;
-    transform: translate(${props => (Number(props.$width) * -0.5) + "px"}, ${props => (Number(props.$height) * -0.5) + "px"});
+    transform: translate(${props => props.$width * -0.5 + "px"}, ${props => props.$height * -0.5 + "px"});
     border-radius: 8px;
+    border: 1px solid black;
     div {
       position: absolute;
       bottom: 5px;

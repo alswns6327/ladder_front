@@ -44,6 +44,8 @@ export const asyncWithdrawAccount = createAsyncThunk(WITHDRAW_ACCOUNT, async (la
   const resultData = await requestApiFn<string, string>(
     authApiRequestParam.withdrawAccount(ladderAccountId)
   );
+  localStorage.setItem("accessToken", "");
+  apiClient.defaults.headers.Authorization = "";
   return resultData;
 });
 

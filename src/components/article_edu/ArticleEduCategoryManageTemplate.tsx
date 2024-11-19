@@ -7,6 +7,7 @@ import { RightMenu } from "../common/RightMenu";
 import BackHistoryButton from "../common/BackHistoryButton";
 import RequiredText from "../common/RequiredText";
 import TemplateBox from "../common/TemplateBox";
+import useModal from "../../hooks/modal/useModal";
 
 const ArticleEduCategoryManageTemplateBlock = styled(TemplateBox)``;
 
@@ -44,6 +45,7 @@ const ArticleEduCategoryManageTemplate = ({
   const newCategoryKey = useRef<number>(0);
   const buttonWidth : string = '50px';
   const inputWidth : string = '100px';
+  const modal = useModal();
 
   useEffect(() => {
     setCategoryListImitate(categoryList);
@@ -60,7 +62,7 @@ const ArticleEduCategoryManageTemplate = ({
 
   const handleAddSubCategory = (categorySeq : number | string) => {
 
-    if(typeof categorySeq === 'string') return alert("상위 카테고리를 저장해주세요.");
+    if(typeof categorySeq === 'string') return modal.openToastModal("상위 카테고리를 저장해주세요.", "warning");
 
     const emptyCategory : commonTypes.subCategoryType = {
       subCategorySeq : `new${newCategoryKey.current++}`,
@@ -82,12 +84,16 @@ const ArticleEduCategoryManageTemplate = ({
     if(typeof categorySeq === 'string') checkDelete = !checkDelete;
     else checkDelete = (await handleRemoveCategory(categorySeq)) === "success" ? true : false;
 
-    if(checkDelete)
+    if(checkDelete){
+      modal.openToastModal("삭제 성공", "success");
       setCategoryListImitate(
         categoryListImitate.filter(
           category => category.categorySeq !== categorySeq
         )
       )
+    }else{
+      modal.openToastModal("삭제 실패", "error");
+    }
   }
 
   const handleRemoveSubCategoryWrapper = async (categorySeq: number | string, subCategorySeq : number | string) => {
@@ -95,7 +101,8 @@ const ArticleEduCategoryManageTemplate = ({
     if(typeof subCategorySeq === 'string') checkDelete = !checkDelete;
     else checkDelete = (await handleRemoveSubCategory(subCategorySeq)) === "success" ? true : false;
 
-    if(checkDelete)
+    if(checkDelete){
+      modal.openToastModal("삭제 성공", "success");
       setCategoryListImitate(
         categoryListImitate.map(
           category => category.categorySeq === categorySeq ? 
@@ -103,6 +110,9 @@ const ArticleEduCategoryManageTemplate = ({
             : category
         )
       )
+    }else{
+      modal.openToastModal("삭제 실패", "error");
+    }
   }
 
   const handleCategoryChange = (categorySeq: number | string, e : ChangeEvent<HTMLInputElement>) => {
@@ -129,10 +139,9 @@ const ArticleEduCategoryManageTemplate = ({
   }
 
   const handleSaveCategoryWrapper = async (category : commonTypes.categoryType) => {
-
-      if(!category.categoryName.trim()) return alert("카테고리 명을 입력해주세요.");
+      if(!category.categoryName.trim()) return modal.openToastModal("카테고리 명을 입력해주세요.", "warning");
       const responseCategorySeq = await handleSaveCategory(category);
-      if(responseCategorySeq === -1) return alert("저장 실패");
+      if(responseCategorySeq === -1) return modal.openToastModal("저장 실패", "error");
 
       if(typeof category.categorySeq === 'string')
         setCategoryListImitate(
@@ -140,14 +149,15 @@ const ArticleEduCategoryManageTemplate = ({
             c => c.categorySeq === category.categorySeq ? {...c, categorySeq : responseCategorySeq} : c
           )
         )
-      alert("저장 성공");
+      
+      modal.openToastModal("저장 성공", "success");
   }
 
   const handleSaveSubCategoryWrapper = async (subCategory : commonTypes.subCategoryType) => {
-    if(!subCategory.subCategoryName.trim()) return alert("카테고리 명을 입력해주세요.");
-
+    if(!subCategory.subCategoryName.trim()) return modal.openToastModal("카테고리 명을 입력해주세요.", "warning");
+    
     const responseSubCategorySeq = await handleSaveSubCategory(subCategory);
-    if(responseSubCategorySeq === -1) return alert("저장 실패");
+    if(responseSubCategorySeq === -1) return modal.openToastModal("저장 실패", "error");
     
     if(typeof subCategory.subCategorySeq === 'string')
       setCategoryListImitate(
@@ -158,7 +168,7 @@ const ArticleEduCategoryManageTemplate = ({
         )
       )
     
-    alert("저장 성공");
+    modal.openToastModal("저장 성공", "success");
   }
 
   return (
