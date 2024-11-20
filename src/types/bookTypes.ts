@@ -12,6 +12,7 @@ export type bookInfoType = {
     bookAuthorName?: string;
     bookTranslatorName?: string;
     bookImgFile?: File;
+    bookDescription? : string;
   };
 
 export type bookInfoFileStringType = {
@@ -22,5 +23,6 @@ export type bookInfoFileStringType = {
   bookImgFile?: string;
   bookImgUrl?: string;
   bookImgFileExtension?: string;
+  bookDescription? : string;
   firstSaveUser: string;
 }

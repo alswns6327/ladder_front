@@ -95,6 +95,7 @@ const BookInfoSaveUpdateTemplate = ({
     bookAuthorName: "",
     bookTranslatorName: "",
     bookImgFile: undefined,
+    bookDescription: "",
   });
 
   const [bookImgSrc, setBookImgSrc] = useState<string>(`${process.env.PUBLIC_URL}/book.svg`);
@@ -105,6 +106,7 @@ const BookInfoSaveUpdateTemplate = ({
         bookName: bookInfo?.bookName,
         bookAuthorName: bookInfo?.bookAuthorName,
         bookTranslatorName: bookInfo?.bookTranslatorName,
+        bookDescription: bookInfo?.bookDescription,
       });
     }
     if(bookInfo?.bookImgFile) {
@@ -138,6 +140,12 @@ const BookInfoSaveUpdateTemplate = ({
             value={bookInfoForm?.bookName}
             name="bookName"
             placeholder="책 이름"
+          />
+          <Input
+            onChange={handleChangeInput}
+            value={bookInfoForm?.bookDescription}
+            name="bookDescription"
+            placeholder="책 설명"
           />
           <Input
             onChange={handleChangeInput}
