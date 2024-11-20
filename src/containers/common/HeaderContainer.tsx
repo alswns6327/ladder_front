@@ -127,9 +127,7 @@ const HeaderContainer = () => {
   const handlewithdrawAccount = () => {
     modal.openConfirmModal("정말 탈퇴하시겠습니까?", () => dispatch(asyncWithdrawAccount(auth.ladderAccountId))
     .then(response => {
-      console.log(response);
       const resultData = response.payload as commonTypes.apiReturnType<authTypes.ladderUserType>;
-      console.log(resultData);
       if(resultData.code !== "200"){
         modal.openToastModal(resultData.msg, "error");
       }
