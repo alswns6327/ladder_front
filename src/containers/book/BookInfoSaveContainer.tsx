@@ -13,7 +13,7 @@ const BookInfoSaveContainer = () => {
     bookInfoForm: bookTypes.bookInfoType
   ): Promise<void> => {
     if(!bookInfoForm.bookName.trim()) return modal.openToastModal("책 제목을 입력해주세요.", "warning");
-
+    
     const resultData =  await requestApiFn<bookTypes.bookInfoType, bookTypes.bookInfoType>(
       bookApiRequestParam.bookInfoSave(bookInfoForm)
     );

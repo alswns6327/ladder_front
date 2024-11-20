@@ -42,7 +42,6 @@ const UserButtonBox = styled.div`
 const SubHeader = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
 `;
 
 const Banner = styled.div`

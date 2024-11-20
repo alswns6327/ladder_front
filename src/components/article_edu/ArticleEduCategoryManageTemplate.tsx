@@ -18,11 +18,10 @@ const ArticleEduCategoryManageTopLine = styled.div`
 `;
 
 export const ArticleEduCategoryItemBox = styled.div`
-  
 `
 
 export const ArticleEduSubCategoryItemBox = styled(ArticleEduCategoryItemBox)`
-  margin-left: 20px;
+  margin: 5px 0 0 20px;
 `
 
 type ArticleEduCategoryManageTemplatePropsType = {
@@ -184,6 +183,7 @@ const ArticleEduCategoryManageTemplate = ({
               name="categoryName"
               value={category.categoryName}
               onChange={(e : ChangeEvent<HTMLInputElement>) => handleCategoryChange(category.categorySeq, e)}/>
+              &nbsp;
             <Button 
               width={buttonWidth} 
               onClick={() => handleAddSubCategory(category.categorySeq)}>추가</Button>
@@ -200,6 +200,7 @@ const ArticleEduCategoryManageTemplate = ({
                   name="subCategoryName"
                   value={subCategory.subCategoryName}
                   onChange={(e : ChangeEvent<HTMLInputElement>) => handleSubCategoryChange(category.categorySeq, subCategory.subCategorySeq, e)}/>
+                  &nbsp;
                 <Button 
                   width={buttonWidth} 
                   onClick={() => handleRemoveSubCategoryWrapper(category.categorySeq, subCategory.subCategorySeq)}>

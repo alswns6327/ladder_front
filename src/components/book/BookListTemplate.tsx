@@ -7,11 +7,12 @@ import * as authTypes from "../../types/authTypes";
 import { ChangeEvent } from "react";
 import { useSelector } from "react-redux";
 import TemplateBox from "../common/TemplateBox";
+import NoContent from "../common/NoContent";
 
 const BookListTemplateBlock = styled(TemplateBox)``;
 
 const BookTopHeader = styled.div`
-  width: calc(100%);
+  width: 100%;
   display: flex;
   justify-content: flex-end;
   select {
@@ -28,7 +29,7 @@ const BookTopHeader = styled.div`
 `;
 
 const BookGridList = styled.div`
-  width: calc(100%);
+  width: 100%;
   display: grid;
   grid-row-gap: 10px;
   justify-items: center;
@@ -53,7 +54,7 @@ const BookGridList = styled.div`
 const BookItem = styled.div`
   width: 130px;
   height: 180px;
-  background-color: white;
+  
   position: relative;
   perspective: 1000px;
   &:hover > .firstPage {
@@ -78,14 +79,14 @@ const BookItemFirstPage = styled(BookItemPage)`
   z-index: 1;
   transform-origin: left center;
   transition-duration: 1s;
-  background-color: white;
+  background-color: rgb(80, 80, 80);
 `;
 
 const BookItemFirstPageBack = styled(BookItemFirstPage)`
   z-index: 0;
   transform-origin: left center;
   transition-duration: 1s;
-  background-color: white;
+  background-color: rgb(80, 80, 80);
 `;
 
 const BookItemSecondPage = styled(BookItemPage)`
@@ -94,6 +95,17 @@ const BookItemSecondPage = styled(BookItemPage)`
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
+  background-color: rgb(80, 80, 80);
+  div {
+    text-align: center;
+    display: -webkit-box;             /* 텍스트가 여러 줄로 표시될 수 있게 설정 */
+    -webkit-box-orient: vertical;     /* 세로 방향으로 내용 정렬 */
+    -webkit-line-clamp: 8;            /* 최대 3줄까지 표시 */
+    overflow: hidden;
+    text-overflow:ellipsis;
+    width: 90%;   
+    color: white;
+  }
 `;
 
 const BookItemImg = styled.img`
@@ -124,6 +136,7 @@ const BookUpdateLink = styled(Link)`
   }
   font-size: 14px;
   height: 18px;
+  background-color: white;
 `;
 
 const BookDeleteButton = styled(Button)`
@@ -169,46 +182,43 @@ const BookListTemplate = ({
           ))}
         </select>
       </BookTopHeader>
-      <BookGridList>
-        {bookInfoList?.map((bookInfo) => (
-          <BookItem key={bookInfo.bookInfoId}>
-            <BookItemFirstPage className="firstPage">
-              <BookItemImg
-                src={
-                  bookInfo.bookImgFile
-                    ? `data:image/${bookInfo.bookImgFileExtension};base64,${bookInfo.bookImgFile}`
-                    : `${process.env.PUBLIC_URL}/book.svg`
-                }
-              />
-            </BookItemFirstPage>
-            <BookItemFirstPageBack className="firstPageBack" />
-            <Link to={`/book/chapter/${bookInfo.bookInfoId}`}>
-              <BookItemSecondPage>
-                <span>chapter1</span>
-                <span>chapter2</span>
-                <span>chapter3</span>
-              </BookItemSecondPage>
-            </Link>
-            {auth.ladderAccountId === bookInfo.firstSaveUser && (
-              <>
-                <BookUpdateLink to={`/book/info/${bookInfo.bookInfoId}`}>
-                  수정
-                </BookUpdateLink>
-                <BookDeleteButton
-                  onClick={() => handleDeleteBookItem(bookInfo.bookInfoId)}
-                >
-                  삭제
-                </BookDeleteButton>
-              </>
-            )}
-          </BookItem>
-        ))}
-        {[...new Array(10 - bookInfoList.length)].map((_, i) => (
-          <BookItem key={`empty_${i}`}>
-            <BookItemImg src={`${process.env.PUBLIC_URL}/book.svg`} />
-          </BookItem>
-        ))}
-      </BookGridList>
+      {!bookInfoList || bookInfoList.length === 0 ? <NoContent/> : 
+        <BookGridList >
+          {bookInfoList?.map((bookInfo) => (
+            <BookItem key={bookInfo.bookInfoId}>
+              <BookItemFirstPage className="firstPage">
+                <BookItemImg
+                  src={
+                    bookInfo.bookImgFile
+                      ? `data:image/${bookInfo.bookImgFileExtension};base64,${bookInfo.bookImgFile}`
+                      : `${process.env.PUBLIC_URL}/book.svg`
+                  }
+                />
+              </BookItemFirstPage>
+              <BookItemFirstPageBack className="firstPageBack" />
+              <Link to={`/book/chapter/${bookInfo.bookInfoId}`}>
+                <BookItemSecondPage>
+                  <div>
+                    {bookInfo.bookDescription ? bookInfo.bookDescription : "들어가기"}
+                  </div>
+                </BookItemSecondPage>
+              </Link>
+              {auth.ladderAccountId === bookInfo.firstSaveUser && (
+                <>
+                  <BookUpdateLink to={`/book/info/${bookInfo.bookInfoId}`}>
+                    수정
+                  </BookUpdateLink>
+                  <BookDeleteButton
+                    onClick={() => handleDeleteBookItem(bookInfo.bookInfoId)}
+                  >
+                    삭제
+                  </BookDeleteButton>
+                </>
+              )}
+            </BookItem>
+          ))}
+        </BookGridList>
+      }
     </BookListTemplateBlock>
   );
 };

@@ -103,6 +103,7 @@ section {
 	
 body {
   line-height: 1;
+  background-color: rgb(220, 220, 220);
 }
 #root {
   margin: 0 auto;

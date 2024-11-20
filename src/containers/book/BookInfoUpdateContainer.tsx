@@ -25,7 +25,7 @@ const BookInfoUpdateContainer = () => {
   }, []);
   const handleBookInfoUpdate = async (bookInfoForm: bookTypes.bookInfoType) => {
     if(!bookInfoForm.bookName.trim()) return modal.openToastModal("책 제목을 입력해주세요.", "warning");
-
+    
     const data: bookTypes.bookInfoType = Object.assign(bookInfoForm, {
       bookInfoId: bookInfoId,
     }) as bookTypes.bookInfoType;
