@@ -54,8 +54,8 @@ const BookListContainer = () => {
       );
     else modal.openToastModal(resultData.msg, "error");
   };
-  const handleSelectBoxChange = (e : ChangeEvent<HTMLSelectElement>) => {
-    setLadderAccountId(e.target.value);
+  const handleSelectBoxChange = (ladderAccountId : string) => {
+    setLadderAccountId(ladderAccountId);
   }
   return (
     <BookListTemplate

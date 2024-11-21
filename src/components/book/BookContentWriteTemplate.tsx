@@ -51,7 +51,7 @@ const BookContentWriteTemplate = ({
           value={bookChapterInfo.bookChapterInfoTitle} 
           placeholder="챕터 제목" />
       </BookTitleBox>
-      <BookContentBox /*data-color-mode="light"*/ data-color-mode="dark">
+      <BookContentBox data-color-mode="light">
         <RequiredText/>
         <MDEditor 
           height={400} 

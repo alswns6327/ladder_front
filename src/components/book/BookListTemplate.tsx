@@ -4,10 +4,11 @@ import { Link } from "react-router-dom";
 import LinkButton from "../common/LinkButton";
 import * as bookTypes from "../../types/bookTypes";
 import * as authTypes from "../../types/authTypes";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
 import { useSelector } from "react-redux";
 import TemplateBox from "../common/TemplateBox";
 import NoContent from "../common/NoContent";
+import * as SelectStyle from "../common/SelectBox";
 
 const BookListTemplateBlock = styled(TemplateBox)``;
 
@@ -15,17 +16,6 @@ const BookTopHeader = styled.div`
   width: 100%;
   display: flex;
   justify-content: flex-end;
-  select {
-    width: 150px;
-    height: 35px;
-    background-size: 20px;
-    padding: 5px 30px 5px 10px;
-    border-radius: 4px;
-    outline: 0 none;
-  }
-  select option {
-    padding: 3px 0;
-  }
 `;
 
 const BookGridList = styled.div`
@@ -154,7 +144,7 @@ type BookListTemplateProps = {
   ladderAccountId: string;
   handleDeleteBookItem: (bookInfoId: number) => void;
   userList : authTypes.ladderUserSelectType[];
-  handleSelectBoxChange : (e : ChangeEvent<HTMLSelectElement>) => void;
+  handleSelectBoxChange : (ladderAccountId : string) => void;
 };
 
 const BookListTemplate = ({
@@ -165,22 +155,27 @@ const BookListTemplate = ({
   handleSelectBoxChange,
 }: BookListTemplateProps) => {
   const auth = useSelector(({auth} : {auth : authTypes.authInitialStateType}) => auth);
-
+  const [toggleSelectBox, setToggleSelectBox] = useState<boolean>(false);
+  
   return (
     <BookListTemplateBlock>
       <BookTopHeader>
         {ladderAccountId === auth.ladderAccountId && <LinkButton text={"추가"} link={"/book/info"} />}
-        <select 
-          value={ladderAccountId}
-          onChange={handleSelectBoxChange}>
-          {userList.map(user => (
-            <option 
-              value={user.ladderAccountId}
-              key={user.ladderAccountSeq}>
-              {user.ladderAccountId}
-            </option>
-          ))}
-        </select>
+        <SelectStyle.SelectBoxContainer>
+          <SelectStyle.DropdownBtn onClick={() => setToggleSelectBox(!toggleSelectBox)}>
+            <div className="text">{ladderAccountId}</div>
+            <div className="btn">▼</div>
+          </SelectStyle.DropdownBtn>
+          
+          <SelectStyle.DropdownList $display={toggleSelectBox}>
+            {userList.map(user => (
+              <SelectStyle.DropdownItem key={user.ladderAccountSeq}
+                onClick={() => handleSelectBoxChange(user.ladderAccountId)}>
+                {user.ladderAccountId}
+              </SelectStyle.DropdownItem>
+            ))}
+          </SelectStyle.DropdownList>
+        </SelectStyle.SelectBoxContainer>
       </BookTopHeader>
       {!bookInfoList || bookInfoList.length === 0 ? <NoContent/> : 
         <BookGridList >

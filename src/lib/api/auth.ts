@@ -1,5 +1,4 @@
-import { AxiosInstance } from "axios";
-import apiClient, { httpMethods } from "./apiClient";
+import { httpMethods } from "./apiClient";
 import * as authTypes from "../../types/authTypes"
 import * as commonTypes from "../../types/commonTypes"
 

@@ -19,11 +19,12 @@ const EduContentUpdateContainer = () => {
     const [eduForm, setEduForm] = useState<commonTypes.edu>({
         eduSeq : eduSeq,
         categorySeq : "전체",
+        categoryName : "전체",
         subCategorySeq : "전체",
+        subCategoryName : "전체",
         title : "",
         content : "",
     });
-    const subCategorySelectBoxRef = useRef<HTMLSelectElement>(null);
 
     useEffect(() => {
         const searchEduCategoryList = async () => {
@@ -67,9 +68,9 @@ const EduContentUpdateContainer = () => {
         setEduForm({...eduForm, [name] : value});
     }
 
-    const handleChangeSelectBox = (e : ChangeEvent<HTMLSelectElement>) => {
-        const {name, value} : {name : string, value : string} = e.target;
-        setEduForm({...eduForm, [name] : value, subCategorySeq : name === "categorySeq" ? "전체" : value});
+    const handleChangeSelectBox = (category : commonTypes.categoryType | commonTypes.subCategoryType) => {
+        if("categoryName" in category) setEduForm({...eduForm, categorySeq : category.categorySeq, categoryName : category.categoryName, subCategorySeq : "전체", subCategoryName : "전체"});
+        if("subCategorySeq" in category) setEduForm({...eduForm, subCategorySeq : category.subCategorySeq, subCategoryName : category.subCategoryName});
     }
 
     const handleSave = async () => {
@@ -96,8 +97,7 @@ const EduContentUpdateContainer = () => {
             handleChangeSelectBox={handleChangeSelectBox}
             handleChangeInput={handleChangeInput}
             handleChangeMdText={handleChangeMdText}
-            handleSave={handleSave}
-            subCategorySelectBoxRef={subCategorySelectBoxRef}/>
+            handleSave={handleSave}/>
     );
 };
 

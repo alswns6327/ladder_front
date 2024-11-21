@@ -7,12 +7,14 @@ import * as eduTypes from "../../types/eduTypes";
 import * as authTypes from "../../types/authTypes";
 import * as commonTypes from "../../types/commonTypes";
 import { ArticleEduCategoryItemBox, ArticleEduSubCategoryItemBox } from "./ArticleEduCategoryManageTemplate";
-import { ChangeEvent } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import TemplateBox from "../common/TemplateBox";
 import CategoryButton from "../common/CategoryButton";
 import NoneDecoLink from "../common/NoneDecoLink";
 import NoContent from "../common/NoContent";
+import * as SelectStyle from "../common/SelectBox";
+
 
 const ArticleEduListTemplateBlock = styled(TemplateBox)``;
 
@@ -70,7 +72,7 @@ type ArticleEduListTemplateProps = {
   categoryList : commonTypes.categoryType[];
   userList : authTypes.ladderUserSelectType[];
   ladderAccountId : string;
-  handleSelectBoxChange : (e : ChangeEvent<HTMLSelectElement>) => void;
+  handleSelectBoxChange : (ladderAccountId : string) => void;
   handleClickCategory : (categorySeq : number | null, subCategorySeq : number | null) => void;
 }
 
@@ -85,22 +87,26 @@ const ArticleEduListTemplate = ({
 } : ArticleEduListTemplateProps) => {
 
   const auth = useSelector(({auth} : {auth : authTypes.authInitialStateType}) => auth);
-
+  const [toggleSelectBox, setToggleSelectBox] = useState<boolean>(false);
   return (
     <ArticleEduListTemplateBlock>
       <ArticleEduListHeader>
         {ladderAccountId === auth.ladderAccountId && <LinkButton text="추가" link={`/${menuType}/write`}/>}
-        <select 
-          value={ladderAccountId}
-          onChange={handleSelectBoxChange}>
-          {userList.map(user => (
-            <option 
-              value={user.ladderAccountId}
-              key={user.ladderAccountSeq}>
-              {user.ladderAccountId}
-            </option>
-          ))}
-        </select>
+        <SelectStyle.SelectBoxContainer>
+          <SelectStyle.DropdownBtn onClick={() => setToggleSelectBox(!toggleSelectBox)}>
+            <div className="text">{ladderAccountId}</div>
+            <div className="btn">▼</div>
+          </SelectStyle.DropdownBtn>
+          
+          <SelectStyle.DropdownList $display={toggleSelectBox}>
+            {userList.map(user => (
+              <SelectStyle.DropdownItem key={user.ladderAccountSeq}
+                onClick={() => handleSelectBoxChange(user.ladderAccountId)}>
+                {user.ladderAccountId}
+              </SelectStyle.DropdownItem>
+            ))}
+          </SelectStyle.DropdownList>
+        </SelectStyle.SelectBoxContainer>
       </ArticleEduListHeader>
       {!list || list.length === 0 ? <NoContent/> :
         <ArticleEduList>

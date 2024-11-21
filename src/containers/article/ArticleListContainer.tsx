@@ -55,8 +55,8 @@ const ArticleListContainer = () => {
         searchArticleList();
     }, [ladderAccountId]);
 
-    const handleSelectBoxChange = (e : ChangeEvent<HTMLSelectElement>) => {
-        setLadderAccountId(e.target.value);
+    const handleSelectBoxChange = (ladderAccountId : string) => {
+        setLadderAccountId(ladderAccountId);
     }
 
     const handleClickCategory = async (categorySeq : number | null, subCategorySeq : number | null) => {

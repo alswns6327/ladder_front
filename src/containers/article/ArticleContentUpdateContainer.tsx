@@ -18,11 +18,12 @@ const ArticleContentUpdateContainer = () => {
     const [articleForm, setArticleForm] = useState<commonTypes.article>({
         articleSeq : articleSeq,
         categorySeq : "전체",
+        categoryName : "전체",
         subCategorySeq : "전체",
+        subCategoryName : "전체",
         title : "",
         content : "",
     });
-    const subCategorySelectBoxRef = useRef<HTMLSelectElement>(null);
 
     useEffect(() => {
         const searchArticleCategoryList = async () => {
@@ -65,10 +66,9 @@ const ArticleContentUpdateContainer = () => {
         const {name, value} : {name : string, value : string} = e.target;
         setArticleForm({...articleForm, [name] : value});
     }
-
-    const handleChangeSelectBox = (e : ChangeEvent<HTMLSelectElement>) => {
-        const {name, value} : {name : string, value : string} = e.target;
-        setArticleForm({...articleForm, [name] : value, subCategorySeq : name === "categorySeq" ? "전체" : value});
+    const handleChangeSelectBox = (category : commonTypes.categoryType | commonTypes.subCategoryType) => {
+        if("categoryName" in category) setArticleForm({...articleForm, categorySeq : category.categorySeq, categoryName : category.categoryName, subCategorySeq : "전체", subCategoryName : "전체"});
+        if("subCategorySeq" in category) setArticleForm({...articleForm, subCategorySeq : category.subCategorySeq, subCategoryName : category.subCategoryName});
     }
 
     const handleSave = async () => {
@@ -76,7 +76,6 @@ const ArticleContentUpdateContainer = () => {
         if(!articleForm.content.trim() || !articleForm.title.trim()){
             return modal.openToastModal("필수값을 입력해주세요.", "warning");
         }
-
         const resultData =  await requestApiFn<commonTypes.article, commonTypes.article>(
             articleApiRequestParam.updateArticle(
                 {
@@ -97,8 +96,7 @@ const ArticleContentUpdateContainer = () => {
             handleChangeSelectBox={handleChangeSelectBox}
             handleChangeInput={handleChangeInput}
             handleChangeMdText={handleChangeMdText}
-            handleSave={handleSave}
-            subCategorySelectBoxRef={subCategorySelectBoxRef}/>
+            handleSave={handleSave}/>
     );
 };
 

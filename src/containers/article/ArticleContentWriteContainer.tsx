@@ -16,11 +16,12 @@ const ArticleContentWriteContainer = () => {
     const navigator = useNavigate();
     const [articleForm, setArticleForm] = useState<commonTypes.article>({
         categorySeq : "전체",
+        categoryName : "전체",
         subCategorySeq : "전체",
+        subCategoryName : "전체",
         title : "",
         content : "",
     });
-    const subCategorySelectBoxRef = useRef<HTMLSelectElement>(null);
 
     useEffect(() => {
         const searchArticleCategoryList = async () => {
@@ -33,11 +34,6 @@ const ArticleContentWriteContainer = () => {
         searchArticleCategoryList();
     }, []);
 
-    useEffect(() => {
-        if(subCategorySelectBoxRef.current?.value === "전체" && articleForm.subCategorySeq !== subCategorySelectBoxRef.current?.value) 
-            setArticleForm({...articleForm, subCategorySeq : "전체"});
-    }, [articleForm]);
-
     const handleChangeMdText = (value: string | undefined, e: ChangeEvent<HTMLTextAreaElement> | undefined) => {
         setArticleForm({...articleForm, content: value as string});
     };
@@ -46,10 +42,9 @@ const ArticleContentWriteContainer = () => {
         const {name, value} : {name : string, value : string} = e.target;
         setArticleForm({...articleForm, [name] : value});
     }
-
-    const handleChangeSelectBox = (e : ChangeEvent<HTMLSelectElement>) => {
-        const {name, value} : {name : string, value : string} = e.target;        
-        setArticleForm({...articleForm, [name] : value});
+    const handleChangeSelectBox = (category : commonTypes.categoryType | commonTypes.subCategoryType) => {
+        if("categoryName" in category) setArticleForm({...articleForm, categorySeq : category.categorySeq, categoryName : category.categoryName, subCategorySeq : "전체", subCategoryName : "전체"});
+        if("subCategorySeq" in category) setArticleForm({...articleForm, subCategorySeq : category.subCategorySeq, subCategoryName : category.subCategoryName});
     }
 
     const handleSave = async () => {
@@ -76,8 +71,7 @@ const ArticleContentWriteContainer = () => {
             handleChangeSelectBox={handleChangeSelectBox}
             handleChangeInput={handleChangeInput}
             handleChangeMdText={handleChangeMdText}
-            handleSave={handleSave}
-            subCategorySelectBoxRef={subCategorySelectBoxRef}/>
+            handleSave={handleSave}/>
     );
 };
 
