@@ -7,6 +7,7 @@ import { RightMenu } from "../common/RightMenu";
 import * as bookTypes from "../../types/bookTypes";
 import TemplateBox from "../common/TemplateBox";
 import NoneDecoLink from "../common/NoneDecoLink";
+import NoContent from "../common/NoContent";
 
 const BookChapterListTemplateBlock = styled(TemplateBox)``;
 
@@ -17,11 +18,16 @@ const BookTopHeader = styled.div`
 `;
 
 const BookChapterList = styled.div`
-  margin-left: 7.5%;
-  width: calc(100% - 101px);
+  @media (max-width: 768px) {
+    width: calc(100%);
+  }
+  @media (min-width: 769px) {
+    width: calc(100% - 140px);
+  }
   display: flex;
   row-gap: 20px;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
 `;
 
@@ -48,16 +54,18 @@ const BookChapterListTemplate = ({
           />
         )}
       </BookTopHeader>
-      <BookChapterList>
-        {chapterList?.map((chapter) => (
-          <NoneDecoLink
-            key={chapter.bookChapterInfoId}
-            to={`/book/content/${chapter.bookChapterInfoId}`}
-          >
-            {chapter.bookChapterInfoTitle}
-          </NoneDecoLink>
-        ))}
-      </BookChapterList>
+      {!chapterList || chapterList.length === 0 ? <NoContent/> : 
+        <BookChapterList>
+          {chapterList?.map((chapter) => (
+            <NoneDecoLink
+              key={chapter.bookChapterInfoId}
+              to={`/book/content/${chapter.bookChapterInfoId}`}
+            >
+              {chapter.bookChapterInfoTitle}
+            </NoneDecoLink>
+          ))}
+        </BookChapterList>
+      }
       <RightMenu>
         <BackHistoryButton>이전으로</BackHistoryButton>
       </RightMenu>
