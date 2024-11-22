@@ -12,6 +12,10 @@ const BookContentViewTemplateBlock = styled(TemplateBox)``;
 const BookTitleBox = styled.div`
   width: calc(100% - 101px);
   text-align: center;
+  h1 {
+    font-size: 2em;
+    font-weight: bold;
+  }
 `;
 
 const BookContentBox = styled.div`
@@ -32,7 +36,7 @@ const BookContentViewTemplate = ({
 }: BookContentViewTemplatePropsType) => {
   return (
     <BookContentViewTemplateBlock>
-      <BookTitleBox>{bookChapterInfo?.bookChapterInfoTitle}</BookTitleBox>
+      <BookTitleBox><h1>{bookChapterInfo?.bookChapterInfoTitle}</h1></BookTitleBox>
       <BookContentBox data-color-mode="light">
         <hr/>
         <MDEditor.Markdown

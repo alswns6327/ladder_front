@@ -7,6 +7,10 @@ const TemplateBoxBlock = styled.div<{$topMargin? : string}>`
     margin-left: 140px;
     width: calc(100% - 140px);
   }
+  hr {
+    width: calc(100% - 100px);
+    margin-left: 0;
+  }
   position: relative;
 `;
 

@@ -59,7 +59,7 @@ const UserInfo = styled.div<{$infoType : string}>`
   flex-direction: column;
   width: 120px;
   padding: 3px 10px;
-  transform: translateX(-20px);
+  transform: translateX(${props => props.$infoType === "regist" ? "-40px" : "-20px"});
   background-color: black;
   border-radius: 5px;
   color: white;
@@ -81,33 +81,6 @@ const UserInfo = styled.div<{$infoType : string}>`
       margin-top: 5px;
       bottom: 0;
     }
-  }
-  
-  @media (max-width: 440px) {
-    transform: translateX(-40px);
-  }
-
-  @media (min-width: 576px) and (max-width: 616px) {
-    ${props => props.$infoType === "regist" && css`
-      transform: translateX(-40px);
-    `}
-  }
-
-  @media (min-width: 768px) and (max-width: 808px) {
-    ${props => props.$infoType === "regist" && css`
-      transform: translateX(-40px);
-    `}
-  }
-  @media (min-width: 992px) and (max-width: 1032px) {
-    ${props => props.$infoType === "regist" && css`
-      transform: translateX(-40px);
-    `}
-  }
-
-  @media (min-width: 1300px) and (max-width: 1340px) {
-    ${props => props.$infoType === "regist" && css`
-      transform: translateX(-40px);
-    `}
   }
 `;
 

@@ -20,6 +20,10 @@ const ArticleCategoryBox = styled.div`
 const ArticleTitleBox = styled.div`
   width: calc(100% - 101px);
   text-align: center;
+  h1{
+    font-size: 2em;
+    font-weight: bold;
+  }
 `;
 
 const ArticleContentBox = styled.div`
@@ -48,7 +52,7 @@ const ArticleEduContentViewTemplate = ({
   return (
     <ArticleEduContentViewTemplateBlock>
       <ArticleCategoryBox>{content.categoryName?.concat(" > ")}{content.subCategoryName}</ArticleCategoryBox>
-      <ArticleTitleBox>{content.title}</ArticleTitleBox>
+      <ArticleTitleBox><h1>{content.title}</h1></ArticleTitleBox>
       <hr/>
       <ArticleContentBox data-color-mode="light">
         <MDEditor.Markdown
