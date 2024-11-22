@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import * as commonTypes from "../../types/commonTypes";
 
 const MenuTemplateBlock = styled.div`
   top: 80px;
@@ -50,13 +51,15 @@ const StyledLink = styled(Link)`
   }
 `;
 
-const MenuTemplate = () => {
+type MenuTemplateProps = {
+  menuList: commonTypes.menu[];
+}
+
+const MenuTemplate = ({menuList} : MenuTemplateProps) => {
   return (
     <MenuTemplateBlock>
       <h1>메뉴</h1>
-      <StyledLink to={"/"}>책 리뷰/정리</StyledLink>
-      <StyledLink to={"/article"}>사유/아이디어</StyledLink>
-      <StyledLink to={"/edu"}>교육 자료</StyledLink>
+      {menuList.map(menu => <StyledLink key={menu.menuSeq} to={menu.menuPath}>{menu.menuName}</StyledLink>)}
     </MenuTemplateBlock>
   );
 };

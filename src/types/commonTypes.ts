@@ -76,3 +76,9 @@ export type confirmModalType = {
     height : number;
     confirmFn : () => void;
 }
+
+export type menu = {
+    menuSeq : number;
+    menuPath : string;
+    menuName : string;
+}

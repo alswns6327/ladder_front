@@ -23,13 +23,14 @@ import EduContentWritePage from "./pages/edu/EduContentWritePage";
 import EduContentUpdatePage from "./pages/edu/EduContentUpdatePage";
 import EduCategoryManagePage from "./pages/edu/EduCategoryManagePage";
 import ModalContainer from "./containers/common/ModalContainer";
+import MenuContainer from "./containers/common/MenuContainer";
 
 function App() {
   
   return (
     <>
       <HeaderContainer />
-      <MenuTemplate />
+      <MenuContainer />
       <Routes>
         <Route path="/" element={<BookListPage />} />
         <Route path="/book/chapter/:bookInfoId" element={<BookChapterListPage />}/>

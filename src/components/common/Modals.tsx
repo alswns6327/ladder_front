@@ -13,8 +13,8 @@ const fadeOut = keyframes`
 
 export const ToastModal = styled.div<{$display : boolean, $messageType : string}>`
   z-index: 999;
-  width: 150px;
-  height: 70px;
+  width: 200px;
+  height: 100px;
   position: fixed;
   text-align: center;
   top: 35%;
