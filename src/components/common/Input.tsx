@@ -11,7 +11,7 @@ const InputBlock = styled.input<{width : string}>`
 `;
 
 const Input = (props: any) => {
-  return <InputBlock {...props} />;
+  return <InputBlock {...props} autoComplete="off"/>;
 };
 
 export default Input;

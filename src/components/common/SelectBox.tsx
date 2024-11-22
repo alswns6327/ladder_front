@@ -1,24 +1,4 @@
-import styled, { keyframes } from "styled-components";
-
-const showDropdownList = keyframes`
-  0% {
-    max-height: 0;
-    opacity: 0;
-  }
-  100% {
-    max-height: 150px;
-    opacity: 1;
-  }
-`;
-
-const hideDropdownList = keyframes`
-  0% {
-    max-height: 150px;
-  }
-  100% {
-    max-height: 0;
-  }
-`;
+import styled from "styled-components";
 
 export const SelectBoxContainer = styled.div`
   z-index: 100;
@@ -49,7 +29,7 @@ export const DropdownBtn = styled.div`
   }
 `
 
-export const DropdownList = styled.ul<{$display : boolean}>`
+export const DropdownList = styled.ul`
   position: absolute;
   top: 101%;
   left: 0;
@@ -63,8 +43,7 @@ export const DropdownList = styled.ul<{$display : boolean}>`
   &::-webkit-scrollbar {
     display: none;
   }
-  display: ${props => props.$display ? 'block' : 'none'};
-  /* animation: ${props => props.$display ? showDropdownList : hideDropdownList} 2s ease forwards; */
+  display: block;
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
 `
 

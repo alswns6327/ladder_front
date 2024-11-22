@@ -1,8 +1,9 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import Button from "./Button";
 import { ChangeEvent, useState } from "react";
 import RequiredText from "./RequiredText";
 import * as authTypes from "../../types/authTypes";
+import Outside from "./Outside";
 
 const HeaderBlock = styled.div`
   position: fixed;
@@ -51,23 +52,63 @@ const Banner = styled.div`
   padding: 10px 20px;
 `;
 
-const UserInfo = styled.div`
+const UserInfo = styled.div<{$infoType : string}>`
   position: absolute;
-  top: 50px;
+  top: 24px;
   display: flex;
   flex-direction: column;
-
+  width: 120px;
+  padding: 3px 10px;
+  transform: translateX(-20px);
+  background-color: black;
+  border-radius: 5px;
+  color: white;
+  align-items: center;
+  gap: 10px;
   input {
-    width: 100px;
-    padding: 0;
+    width: 120px;
+    padding: 5px 5px;
     border: none;
+    border-bottom: 1px solid black;
+    border-radius: 10px;
+    margin-top: 3px;
   }
-
   form {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    button {
+      margin-top: 5px;
+      bottom: 0;
+    }
   }
-  background-color: white;
+  
+  @media (max-width: 440px) {
+    transform: translateX(-40px);
+  }
+
+  @media (min-width: 576px) and (max-width: 616px) {
+    ${props => props.$infoType === "regist" && css`
+      transform: translateX(-40px);
+    `}
+  }
+
+  @media (min-width: 768px) and (max-width: 808px) {
+    ${props => props.$infoType === "regist" && css`
+      transform: translateX(-40px);
+    `}
+  }
+  @media (min-width: 992px) and (max-width: 1032px) {
+    ${props => props.$infoType === "regist" && css`
+      transform: translateX(-40px);
+    `}
+  }
+
+  @media (min-width: 1300px) and (max-width: 1340px) {
+    ${props => props.$infoType === "regist" && css`
+      transform: translateX(-40px);
+    `}
+  }
 `;
 
 type ladderFormType = {
@@ -108,12 +149,17 @@ const Header = ({
       <TopHeader>
         {auth.ladderAccountId ? (
           <>
-            <UserButtonBox>
+            {/* <UserButtonBox>
               <Button onClick={() => setShowAccountInfo(!showAccountInfo)}>
                 유저 정보
               </Button>
-              {showAccountInfo && <UserInfo>{auth.ladderAccountId}</UserInfo>}
-            </UserButtonBox>
+              <Outside close={() => setShowAccountInfo(false)} $display={showAccountInfo}>
+                <UserInfo $infoType={"userInfo"}>
+                  <span>ID : {auth.ladderAccountId}</span>
+                  <span>이름 : {auth.ladderAccountName}</span>
+                </UserInfo>
+              </Outside>
+            </UserButtonBox> */}
             <UserButtonBox>
               <Button onClick={handleLogout}>로그아웃</Button>
             </UserButtonBox>
@@ -127,26 +173,30 @@ const Header = ({
               <Button onClick={() => setShowLoginBox(!showLoginBox)}>
                 로그인
               </Button>
-              {showLoginBox && (
-                <UserInfo>
+              <Outside close={() => setShowLoginBox(false)} $display={showLoginBox}>
+                <UserInfo $infoType={"login"}>
                   <form onSubmit={handleLoginSubmit}>
-                    <input placeholder="id" name="ladderAccountId" />
+                    <input 
+                      placeholder="id" 
+                      name="ladderAccountId" 
+                      autoComplete="off"/>
                     <input
                       placeholder="pw"
                       type="password"
                       name="ladderAccountPassword"
+                      autoComplete="off"
                     />
                     <Button type="submit">submit</Button>
                   </form>
                 </UserInfo>
-              )}
+              </Outside>
             </UserButtonBox>
             <UserButtonBox>
               <Button onClick={() => setShowRegistBox(!showRegistBox)}>
                 회원가입
               </Button>
-              {showRegistBox && (
-                <UserInfo>
+              <Outside close={() => setShowRegistBox(false)} $display={showRegistBox}>
+                <UserInfo $infoType={"regist"}>
                   <form onSubmit={async (e) => {
                       const registResult = await handleRegistSubmit(e);
                       setShowRegistBox(!registResult);
@@ -159,8 +209,20 @@ const Header = ({
                       placeholder="id"
                       value={registForm.ladderAccountId}
                       onChange={handleRegistFormChange}
+                      autoComplete="off"
                     />
-                    <Button type="button" onClick={() => handleIdDuplicationCheck()}>중복체크</Button>
+                    <Button 
+                      style={{
+                        position: "absolute",
+                        top: "-5px",
+                        right: "5px",
+                        height: "21px",
+                        width: "70px",
+                        fontSize: "12px"
+                      }}
+                      type="button" onClick={() => handleIdDuplicationCheck()}>
+                      중복체크
+                    </Button>
                     <RequiredText/>
                     <input 
                       name="ladderAccountPassword" 
@@ -172,7 +234,7 @@ const Header = ({
                     <input 
                       name="recheckLadderAccountPassword"
                       type="password" 
-                      placeholder="pw" 
+                      placeholder="pw 재입력" 
                       value={registForm.recheckLadderAccountPassword}
                       onChange={handleRegistFormChange}
                     />
@@ -181,6 +243,7 @@ const Header = ({
                       placeholder="name" 
                       value={registForm.ladderAccountName}
                       onChange={handleRegistFormChange}  
+                      autoComplete="off"
                     />
                     <input
                       name="ladderAccountEmail"
@@ -188,11 +251,12 @@ const Header = ({
                       type="email"
                       value={registForm.ladderAccountEmail}
                       onChange={handleRegistFormChange}
+                      autoComplete="off"
                     />
                     <Button type="submit">submit</Button>
                   </form>
                 </UserInfo>
-              )}
+              </Outside>
             </UserButtonBox>
           </>
         )}

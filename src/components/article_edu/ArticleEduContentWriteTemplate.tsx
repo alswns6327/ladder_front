@@ -11,6 +11,7 @@ import BackHistoryButton from "../common/BackHistoryButton";
 import RequiredText from "../common/RequiredText";
 import TemplateBox from "../common/TemplateBox";
 import * as SelectStyle from "../common/SelectBox";
+import Outside from "../common/Outside";
 
 const ArticleEduContentWriteTemplateBlock = styled(TemplateBox)``;
 
@@ -80,19 +81,21 @@ const ArticleEduContentWriteTemplate = ({
           <div className="text">{contentForm.categoryName || categoryList[0]?.categoryName}</div>
           <div className="btn">▼</div>
         </SelectStyle.DropdownBtn>
-        
-        <SelectStyle.DropdownList $display={toggleSelectBox}>
-          <SelectStyle.DropdownItem
-            onClick={() => handleChangeCategory({categorySeq : "전체", categoryName : "전체", subCategories : []})}>
-            전체
-          </SelectStyle.DropdownItem>
-          {categoryList.map(category => (
-            <SelectStyle.DropdownItem key={category.categorySeq}
-              onClick={() => handleChangeCategory(category)}>
-              {category.categoryName}
+
+        <Outside close={() => setToggleSelectBox(false)} $display={toggleSelectBox}>
+          <SelectStyle.DropdownList>
+            <SelectStyle.DropdownItem
+              onClick={() => handleChangeCategory({categorySeq : "전체", categoryName : "전체", subCategories : []})}>
+              전체
             </SelectStyle.DropdownItem>
-          ))}
-        </SelectStyle.DropdownList>
+            {categoryList.map(category => (
+              <SelectStyle.DropdownItem key={category.categorySeq}
+                onClick={() => handleChangeCategory(category)}>
+                {category.categoryName}
+              </SelectStyle.DropdownItem>
+            ))}
+          </SelectStyle.DropdownList>
+        </Outside>
       </SelectStyle.SelectBoxContainer>
 
       <SelectStyle.SelectBoxContainer>
@@ -101,18 +104,20 @@ const ArticleEduContentWriteTemplate = ({
           <div className="btn">▼</div>
         </SelectStyle.DropdownBtn>
         
-        <SelectStyle.DropdownList $display={toggleSubSelectBox}>
-          <SelectStyle.DropdownItem
-            onClick={() => handleChangeSelectBox({subCategorySeq : "전체", subCategoryName : "전체", categorySeq : contentForm.categorySeq ?? "전체"})}>
-            전체
-          </SelectStyle.DropdownItem>
-          {subCategoryList.map(subCategory => (
-            <SelectStyle.DropdownItem key={subCategory.subCategorySeq}
-              onClick={() => handleChangeSelectBox(subCategory)}>
-              {subCategory.subCategoryName}
+        <Outside close={() => setToggleSubSelectBox(false)} $display={toggleSubSelectBox}>
+          <SelectStyle.DropdownList>
+            <SelectStyle.DropdownItem
+              onClick={() => handleChangeSelectBox({subCategorySeq : "전체", subCategoryName : "전체", categorySeq : contentForm.categorySeq ?? "전체"})}>
+              전체
             </SelectStyle.DropdownItem>
-          ))}
-        </SelectStyle.DropdownList>
+            {subCategoryList.map(subCategory => (
+              <SelectStyle.DropdownItem key={subCategory.subCategorySeq}
+                onClick={() => handleChangeSelectBox(subCategory)}>
+                {subCategory.subCategoryName}
+              </SelectStyle.DropdownItem>
+            ))}
+          </SelectStyle.DropdownList>
+        </Outside>
       </SelectStyle.SelectBoxContainer>
       </ArticleCategoryBox>
       <ArticleTitleBox>

@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 
 const RequiredTextBlock = styled.div`
-    color : red;
+  width: 130px;
+  text-align: left;
+  color : red;
 `;
 
 const RequiredText = () => {

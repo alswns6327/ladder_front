@@ -7,6 +7,10 @@ const ButtonBlock = styled.button<{width : string}>`
   border: 2px solid black;
   text-align: center;
   color: black;
+  cursor: pointer;
+  &:hover{
+    color: red;
+  }
 `;
 
 const Button = (props: any) => {

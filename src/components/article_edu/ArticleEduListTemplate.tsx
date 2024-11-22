@@ -14,6 +14,7 @@ import CategoryButton from "../common/CategoryButton";
 import NoneDecoLink from "../common/NoneDecoLink";
 import NoContent from "../common/NoContent";
 import * as SelectStyle from "../common/SelectBox";
+import Outside from "../common/Outside";
 
 
 const ArticleEduListTemplateBlock = styled(TemplateBox)``;
@@ -98,14 +99,16 @@ const ArticleEduListTemplate = ({
             <div className="btn">▼</div>
           </SelectStyle.DropdownBtn>
           
-          <SelectStyle.DropdownList $display={toggleSelectBox}>
-            {userList.map(user => (
-              <SelectStyle.DropdownItem key={user.ladderAccountSeq}
-                onClick={() => handleSelectBoxChange(user.ladderAccountId)}>
-                {user.ladderAccountId}
-              </SelectStyle.DropdownItem>
-            ))}
-          </SelectStyle.DropdownList>
+          <Outside close={() => setToggleSelectBox(false)} $display={toggleSelectBox}>
+            <SelectStyle.DropdownList>
+              {userList.map(user => (
+                <SelectStyle.DropdownItem key={user.ladderAccountSeq}
+                  onClick={() => handleSelectBoxChange(user.ladderAccountId)}>
+                  {user.ladderAccountId}
+                </SelectStyle.DropdownItem>
+              ))}
+            </SelectStyle.DropdownList>
+          </Outside>
         </SelectStyle.SelectBoxContainer>
       </ArticleEduListHeader>
       {!list || list.length === 0 ? <NoContent/> :
